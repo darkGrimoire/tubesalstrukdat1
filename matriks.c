@@ -1,7 +1,3 @@
-/* File ADT Matriks */
-/* Nama : Hansel Grady Daniel Thamrin */
-/* NIM : 13518140 */
-/* Tanggal : 14 September 2019 */
 /* Deskripsi : inplementasi fungsi prosedur header ADT Matriks */
 
 #include <stdio.h>
@@ -138,83 +134,8 @@ void TulisMATRIKS (MATRIKS M)
 	}
 }
 
-/* ********** KELOMPOK OPERASI ARITMATIKA TERHADAP TYPE ********** */
-MATRIKS TambahMATRIKS (MATRIKS M1, MATRIKS M2)
-/* Prekondisi : M1  berukuran sama dengan M2 */
-/* Mengirim hasil penjumlahan matriks: M1 + M2 */
-{	/* Kamus lokal */
-	MATRIKS M3;
-	indeks i, j;
-	/* Algoritma */
-	MakeMATRIKS(NBrsEff(M1), NKolEff(M1), &M3);
-	for (i = GetFirstIdxBrs(M1); i <= GetLastIdxBrs(M1); i++) {
-		for (j = GetFirstIdxKol(M1); j <= GetLastIdxKol(M1); j++) {
-			Elmt(M3, i, j) = Elmt(M1, i, j) + Elmt(M2, i, j);
-		}
-	}
-	return M3;
-}
-MATRIKS KurangMATRIKS (MATRIKS M1, MATRIKS M2)
-/* Prekondisi : M berukuran sama dengan M */
-/* Mengirim hasil pengurangan matriks: salinan M1 – M2 */
-{	/* Kamus lokal */
-	MATRIKS M3;
-	indeks i, j;
-	/* Algoritma */
-	MakeMATRIKS(NBrsEff(M1), NKolEff(M1), &M3);
-	for (i = GetFirstIdxBrs(M1); i <= GetLastIdxBrs(M1); i++) {
-		for (j = GetFirstIdxKol(M1); j <= GetLastIdxKol(M1); j++) {
-			Elmt(M3, i, j) = Elmt(M1, i, j) - Elmt(M2, i, j);
-		}
-	}
-	return M3;
-}
-MATRIKS KaliMATRIKS (MATRIKS M1, MATRIKS M2)
-/* Prekondisi : Ukuran kolom efektif M1 = ukuran baris efektif M2 */
-/* Mengirim hasil perkalian matriks: salinan M1 * M2 */
-{	/* Kamus lokal */
-	MATRIKS M3;
-	indeks i, j, k;
-	/* Algoritma */
-	MakeMATRIKS(NBrsEff(M1), NKolEff(M2), &M3);
-	for (i = GetFirstIdxBrs(M1); i <= GetLastIdxBrs(M1); i++) {
-		for (j = GetFirstIdxKol(M2); j <= GetLastIdxKol(M2); j++) {
-			for (k = GetFirstIdxKol(M1); k <= GetLastIdxKol(M1); k++) {
-				Elmt(M3, i, j) = Elmt(M3, i, j) + (Elmt(M1, i, k) * Elmt(M2, k, j));
-			}
-		}
-	}
-	return M3;
-}
-MATRIKS KaliKons (MATRIKS M, ElType X)
-/* Mengirim hasil perkalian setiap elemen M dengan X */
-{	/* Kamus lokal */
-	MATRIKS M3;
-	indeks i, j;
-	/* Algoritma */
-	MakeMATRIKS(NBrsEff(M), NKolEff(M), &M3);
-	for (i = GetFirstIdxBrs(M); i <= GetLastIdxBrs(M); i++) {
-		for (j = GetFirstIdxKol(M); j <= GetLastIdxKol(M); j++) {
-			Elmt(M3, i, j) = Elmt(M, i, j) * X;
-		}
-	}
-	return M3;
-}
-void PKaliKons (MATRIKS * M, ElType K)
-/* I.S. M terdefinisi, K terdefinisi */
-/* F.S. Mengalikan setiap elemen M dengan K */
-{	/* Kamus lokal */
-	indeks i, j;
-	/* Algoritma */
-	for (i = GetFirstIdxBrs(*M); i <= GetLastIdxBrs(*M); i++) {
-		for (j = GetFirstIdxKol(*M); j <= GetLastIdxKol(*M); j++) {
-			Elmt(*M, i, j) = Elmt(*M, i, j) * K;
-		}
-	}
-}
-
 /* ********** KELOMPOK OPERASI RELASIONAL TERHADAP MATRIKS ********** */
-boolean EQ (MATRIKS M1, MATRIKS M2)
+boolean EQMatriks (MATRIKS M1, MATRIKS M2)
 /* Mengirimkan true jika M1 = M2, yaitu NBElmt(M1) = NBElmt(M2) dan */
 /* untuk setiap i,j yang merupakan indeks baris dan kolom M1(i,j) = M2(i,j) */
 /* Juga merupakan strong EQ karena GetFirstIdxBrs(M1) = GetFirstIdxBrs(M2)
@@ -241,13 +162,13 @@ boolean EQ (MATRIKS M1, MATRIKS M2)
 		return false;
 	}
 }
-boolean NEQ (MATRIKS M1, MATRIKS M2)
+boolean NEQMatriks (MATRIKS M1, MATRIKS M2)
 /* Mengirimkan true jika M1 tidak sama dengan M2 */
 {	/* Kamus lokal */
 	/* Algoritma */
 	return (!EQ(M1, M2));
 }
-boolean EQSize (MATRIKS M1, MATRIKS M2)
+boolean EQSizeMatriks (MATRIKS M1, MATRIKS M2)
 /* Mengirimkan true jika ukuran efektif matriks M1 sama dengan ukuran efektif M2 */
 /* yaitu GetBrsEff(M1) = GetNBrsEff (M2) dan GetNKolEff (M1) = GetNKolEff (M2) */
 {	/* Kamus lokal */
@@ -256,7 +177,7 @@ boolean EQSize (MATRIKS M1, MATRIKS M2)
 }
 
 /* ********** Operasi lain ********** */
-int NBElmt (MATRIKS M)
+int NBElmtMatriks (MATRIKS M)
 /* Mengirimkan banyaknya elemen M */
 {	/* Kamus lokal */
 	/* Algoritma */
@@ -294,33 +215,10 @@ boolean IsSimetri (MATRIKS M)
 		return false;
 	}
 }
-boolean IsSatuan (MATRIKS M)
-/* Mengirimkan true jika M adalah matriks satuan: IsBujurSangkar(M) dan
-   setiap elemen diagonal M bernilai 1 dan elemen yang bukan diagonal bernilai 0 */
-{	/* Kamus lokal */
-	indeks i, j;
-	boolean state;
-	/* Algoritma */
-	if (IsBujurSangkar(M)) {
-		state = true;
-		i = GetFirstIdxBrs(M);
-		while (state == true && i <= GetLastIdxBrs(M)) {
-			j = GetFirstIdxKol(M);
-			while (state == true && j <= GetLastIdxKol(M)) {
-				state = (i != j && Elmt(M, i, j) == 0) || (i == j && Elmt(M, i, j) == 1);
-				j = j + 1;
-			}
-			i = i + 1;
-		}
-		return state;
-	}
-	else {
-		return false;
-	}
-}
+
 boolean IsSparse (MATRIKS M)
 /* Mengirimkan true jika M adalah matriks sparse: mariks “jarang” dengan definisi:
-   hanya maksimal 5% dari memori matriks yang efektif bukan bernilai 0 */
+   hanya maksimal 5% dari memori matriks yang efektif bukan bernilai spasi */
 {	/* Kamus lokal */
 	indeks i, j;
 	int count;
@@ -328,59 +226,28 @@ boolean IsSparse (MATRIKS M)
 	count = 0;
 	for (i = GetFirstIdxBrs(M); i <= GetLastIdxBrs(M); i++) {
 		for (j = GetFirstIdxKol(M); j <= GetLastIdxKol(M); j++) {
-			if (Elmt(M, i, j) != 0) {
+			if (Elmt(M, i, j) != ' ') {
 				count = count + 1;
 			}
 		}
 	}
 	return 20 * count <= NBElmt(M);
 }
-MATRIKS Inverse1 (MATRIKS M)
-/* Menghasilkan salinan M dengan setiap elemen "di-invers", yaitu dinegasikan (dikalikan -1) */
-{	/* Kamus lokal */
-	/* Algoritma */
-	return KaliKons(M, -1);
-}
-float Determinan (MATRIKS M)
-/* Prekondisi: IsBujurSangkar(M) */
-/* Menghitung nilai determinan M */
-{	/* Kamus lokal */
-	float det;
-	indeks i, j, k;
-	int sign;
-	MATRIKS Mcad;
-	/* Algoritma */
-	if (NBElmt(M) == 1) {
-		return Elmt(M, GetFirstIdxBrs(M), GetLastIdxBrs(M));
+
+boolean IsMatriksValid (MATRIKS M)
+/* Mengirimkan true jika banyak masing-masing baris dan kolom lebih dari sama dengan 10 dan
+    kurang dari sama dengan 20 */
+{
+	if ((GetFirstIdxBrs(M) >= 10) && (GetLastIdxBrs(M) <= 20) && (GetFirstIdxKol(M) >= 10) && (GetLastIdxKol(M) <= 20))
+	{
+		return true;
 	}
-	else {
-		det = 0;
-		sign = 1;
-		for (i = GetFirstIdxKol(M); i <= GetLastIdxKol(M); i++) {
-			MakeMATRIKS(NBrsEff(M)-1, NKolEff(M)-1, &Mcad);
-			for (j = GetFirstIdxBrs(M); j <= GetLastIdxBrs(M); j++) {
-				for (k = GetFirstIdxKol(M); k <= GetLastIdxKol(M); k++) {
-					if (i > k) {
-						Elmt(Mcad, j-1, k) = Elmt(M, j, k);
-					}
-					else if (i < k) {
-						Elmt(Mcad, j-1, k-1) = Elmt(M, j, k);
-					}
-				}
-			}
-			det = det + sign * Elmt(M, GetFirstIdxBrs(M), i) * Determinan(Mcad);
-			sign = -1 * sign;
-		}
-		return det;
+	else
+	{
+		return false;
 	}
 }
-void PInverse1 (MATRIKS * M)
-/* I.S. M terdefinisi */
-/* F.S. M di-invers, yaitu setiap elemennya dinegasikan (dikalikan -1) */
-{	/* Kamus lokal */
-	/* Algoritma */
-	*M = KaliKons(*M, -1);
-}
+
 void Transpose (MATRIKS * M)
 /* I.S. M terdefinisi dan IsBujursangkar(M) */
 /* F.S. M "di-transpose", yaitu setiap elemen M(i,j) ditukar nilainya dengan elemen M(j,i) */
