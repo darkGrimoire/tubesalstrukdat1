@@ -44,7 +44,7 @@ void TulisPOINT (POINT P)
 
 
 }
-boolean EQ (POINT P1, POINT P2)
+boolean EQPoint (POINT P1, POINT P2)
 /* Mengirimkan true jika P1 = P2 : absis dan ordinatnya sama */
 {if ( (Absis(P1)==Absis(P2)) && (Ordinat(P1)==Ordinat(P2)) ){
     return true;
@@ -55,10 +55,10 @@ else {
 }
 
 
-boolean NEQ (POINT P1, POINT P2)
+boolean NEQPoint (POINT P1, POINT P2)
 /* Mengirimkan true jika P1 tidak sama dengan P2 */
 {
-if (EQ(P1,P2) == true){
+if (EQPoint(P1,P2) == true){
     return false;
 }
 else
