@@ -8,7 +8,7 @@
 #include "queue.h"
 
 /* ********* Prototype ********* */
-boolean IsEmpty (Queue Q)
+boolean IsEmptyQ (Queue Q)
 /* Mengirim true jika Q kosong: lihat definisi di atas */
 {
     if ((Head(Q) == Nil) && (Tail(Q) == Nil))
@@ -22,11 +22,11 @@ boolean IsEmpty (Queue Q)
     
 }
 
-boolean IsFull (Queue Q)
+boolean IsFullQ (Queue Q)
 /* Mengirim true jika tabel penampung elemen Q sudah penuh */
 /* yaitu mengandung elemen sebanyak MaxEl */
 {
-    if (NBElmt(Q) == MaxEl(Q))
+    if (NBElmtQ(Q) == MaxEl(Q))
     {
         return true;
     }
@@ -37,7 +37,7 @@ boolean IsFull (Queue Q)
     
 }
 
-int NBElmt (Queue Q)
+int NBElmtQ (Queue Q)
 /* Mengirimkan banyaknya elemen queue. Mengirimkan 0 jika Q kosong. */
 {
     if (IsEmpty(Q) == true)
@@ -55,7 +55,7 @@ int NBElmt (Queue Q)
 }
 
 /* *** Kreator *** */
-void CreateEmpty (Queue * Q, int Max)
+void CreateEmptyQ (Queue * Q, int Max)
 /* I.S. sembarang */
 /* F.S. Sebuah Q kosong terbentuk dan salah satu kondisi sbb: */
 /* Jika alokasi berhasil, Tabel memori dialokasi berukuran Max+1 */
@@ -77,7 +77,7 @@ void CreateEmpty (Queue * Q, int Max)
 }
 
 /* *** Destruktor *** */
-void DeAlokasi(Queue * Q)
+void DeAlokasiQ(Queue * Q)
 /* Proses: Mengembalikan memori Q */
 /* I.S. Q pernah dialokasi */
 /* F.S. Q menjadi tidak terdefinisi lagi, MaxEl(Q) diset 0 */
@@ -87,7 +87,7 @@ void DeAlokasi(Queue * Q)
 }
 
 /* *** Primitif Add/Delete *** */
-void Add (Queue * Q, infotype X)
+void AddQ (Queue * Q, infotype X)
 /* Proses: Menambahkan X pada Q dengan aturan FIFO */
 /* I.S. Q mungkin kosong, tabel penampung elemen Q TIDAK penuh */
 /* F.S. X menjadi TAIL yang baru, TAIL "maju" dengan mekanisme circular buffer */
@@ -111,14 +111,14 @@ void Add (Queue * Q, infotype X)
     }
     InfoTail(*Q) = X;   
 }
-void Del (Queue * Q, infotype * X)
+void DelQ (Queue * Q, infotype * X)
 /* Proses: Menghapus X pada Q dengan aturan FIFO */
 /* I.S. Q tidak mungkin kosong */
 /* F.S. X = nilai elemen HEAD pd I.S., HEAD "maju" dengan mekanisme circular buffer; 
         Q mungkin kosong */
 {
     *X = InfoHead(*Q);
-    if(NBElmt(*Q) == 1)
+    if(NBElmtQ(*Q) == 1)
     {
         Head(*Q) = Nil;
         Tail(*Q) = Nil;

@@ -9,7 +9,7 @@
 
 /* PROTOTYPE */
 /****************** TEST LIST KOSONG ******************/
-boolean IsEmpty (List L)
+boolean IsEmptyList (List L)
 /* Mengirim true jika list kosong */
 {
     if (First(L) == Nil)
@@ -22,7 +22,7 @@ boolean IsEmpty (List L)
     }
 }
 /****************** PEMBUATAN LIST KOSONG ******************/
-void CreateEmpty (List *L)
+void CreateList (List *L)
 /* I.S. sembarang             */
 /* F.S. Terbentuk list kosong */
 {
@@ -30,7 +30,7 @@ void CreateEmpty (List *L)
 }
 
 /****************** Manajemen Memori ******************/
-address Alokasi (infotype X)
+address AlokasiList (infotype X)
 /* Mengirimkan address hasil alokasi sebuah elemen */
 /* Jika alokasi berhasil, maka address tidak nil, dan misalnya */
 /* menghasilkan P, maka Info(P)=X, Next(P)=Nil */
@@ -53,7 +53,7 @@ address Alokasi (infotype X)
     }
 }
 
-void Dealokasi (address *P)
+void DealokasiList (address *P)
 /* I.S. P terdefinisi */
 /* F.S. P dikembalikan ke sistem */
 /* Melakukan dealokasi/pengembalian address P */
@@ -62,7 +62,7 @@ void Dealokasi (address *P)
 }
 
 /****************** PENCARIAN SEBUAH ELEMEN LIST ******************/
-address Search (List L, infotype X)
+address SearchList (List L, infotype X)
 /* Mencari apakah ada elemen list dengan Info(P)= X */
 /* Jika ada, mengirimkan address elemen tersebut. */
 /* Jika tidak ada, mengirimkan Nil */
@@ -105,7 +105,7 @@ void InsVFirst (List *L, infotype X)
     address P;
 
     // ALGORITMA
-    P = Alokasi(X);
+    P = AlokasiList(X);
     if (P != Nil)
     {
         InsertFirst(L, P);
@@ -122,7 +122,7 @@ void InsVLast (List *L, infotype X)
     address P;
 
     // ALGORITMA
-    P = Alokasi(X);
+    P = AlokasiList(X);
     if (P != Nil)
     {
         InsertLast(L, P);
@@ -143,7 +143,7 @@ void DelVFirst (List *L, infotype *X)
     *X = Info(P);
     First(*L) = Next(First(*L));
     Next(P) = Nil;
-    Dealokasi(&P);
+    DealokasiList(&P);
 }
 
 void DelVLast (List *L, infotype *X)
@@ -226,7 +226,7 @@ void DelP (List *L, infotype X)
     address temp, prec;
 
     // ALGORITMA
-    temp = Search(*L, X);
+    temp = SearchList(*L, X);
     prec = First(*L);
 
     if (temp != Nil)
@@ -243,7 +243,7 @@ void DelP (List *L, infotype X)
             }
             Next(prec) = Next(temp);
             Next(temp) = Nil;
-            Dealokasi(&temp);
+            DealokasiList(&temp);
         }  
     }
 }
@@ -296,7 +296,7 @@ void PrintInfo (List L)
     address P = First(L);
 
     // ALGORITMA
-    if (IsEmpty(L))
+    if (IsEmptyList(L))
     {
         printf("%s","[]");
     }
@@ -312,7 +312,7 @@ void PrintInfo (List L)
     }
 }
 
-int NbElmt (List L)
+int NbElmtList (List L)
 /* Mengirimkan banyaknya elemen list; mengirimkan 0 jika list kosong */
 {
     // KAMUS LOKAL
@@ -330,7 +330,7 @@ int NbElmt (List L)
 }
 
 /*** Prekondisi untuk Max/Min/rata-rata : List tidak kosong ***/
-infotype Max (List L)
+infotype MaxList (List L)
 /* Mengirimkan nilai Info(P) yang maksimum */
 {
     //KAMUS
@@ -363,7 +363,7 @@ void Konkat1 (List *L1, List *L2, List *L3)
     // KAMUS LOKAL
     address last;
     // ALGORITMA
-    if(IsEmpty(*L1)){
+    if(IsEmptyList(*L1)){
         First(*L3) = First(*L2);
         First(*L2) = Nil;
     }
