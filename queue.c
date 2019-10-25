@@ -26,7 +26,7 @@ boolean IsFullQ (Queue Q)
 /* Mengirim true jika tabel penampung elemen Q sudah penuh */
 /* yaitu mengandung elemen sebanyak MaxEl */
 {
-    if (NBElmtQ(Q) == MaxEl(Q))
+    if (NBElmtQ(Q) == MaxElQ(Q))
     {
         return true;
     }
@@ -46,7 +46,7 @@ int NBElmtQ (Queue Q)
     }
     else if (Head(Q) > Tail(Q))
     {
-        return (MaxEl(Q) - Head(Q) + Tail(Q) + 1);
+        return (MaxElQ(Q) - Head(Q) + Tail(Q) + 1);
     }
     else
     {
@@ -65,13 +65,13 @@ void CreateEmptyQ (Queue * Q, int Max)
     (*Q).T = (infotype *) malloc ((Max + 1) * sizeof(infotype));
     if ((*Q).T != NULL)
     {
-        MaxEl(*Q) = Max;
+        MaxElQ(*Q) = Max;
         Head(*Q) = Nil;
         Tail(*Q) = Nil;
     }
     else
     {
-        MaxEl(*Q) = 0;
+        MaxElQ(*Q) = 0;
     }
     
 }
@@ -82,7 +82,7 @@ void DeAlokasiQ(Queue * Q)
 /* I.S. Q pernah dialokasi */
 /* F.S. Q menjadi tidak terdefinisi lagi, MaxEl(Q) diset 0 */
 {
-    MaxEl(*Q) = 0;
+    MaxElQ(*Q) = 0;
     free((*Q).T);
 }
 
@@ -100,7 +100,7 @@ void AddQ (Queue * Q, infotype X)
     }
     else
     {
-        if (Tail(*Q) == MaxEl(*Q))
+        if (Tail(*Q) == MaxElQ(*Q))
         {
             Tail(*Q) = 1;
         }
@@ -125,7 +125,7 @@ void DelQ (Queue * Q, infotype * X)
     }
     else
     {
-        if (Head(*Q) == MaxEl(*Q))
+        if (Head(*Q) == MaxElQ(*Q))
         {
             Head(*Q) = 1;
         }

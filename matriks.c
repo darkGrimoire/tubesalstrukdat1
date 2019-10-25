@@ -16,15 +16,10 @@ void MakeMATRIKS (int NB, int NK, MATRIKS * M)
     NKolEff(*M) = NK;
     for (i = BrsMin; i <= NB; i++) {
 		for (j = KolMin; j <= NK; j++) {
-			Elmt(*M, i, j) = 0;
+			ElmtMatriks(*M, i, j) = 0;
 		}
 	}
 }
-
-/* *** Selektor *** */
-#define NBrsEff(M) (M).NBrsEff
-#define NKolEff(M) (M).NKolEff
-#define Elmt(M,i,j) (M).Mem[(i)][(j)]
 
 /* *** Selektor "DUNIA MATRIKS" *** */
 boolean IsIdxValid (int i, int j)
@@ -70,7 +65,7 @@ ElType GetElmtDiagonal (MATRIKS M, indeks i)
 /* Mengirimkan elemen M(i,i) */
 {	/* Kamus lokal */
 	/* Algoritma */
-	return Elmt(M, i, i);
+	return ElmtMatriks(M, i, i);
 }
 
 /* ********** Assignment  MATRIKS ********** */
@@ -82,7 +77,7 @@ void CopyMATRIKS (MATRIKS MIn, MATRIKS * MHsl)
 	MakeMATRIKS(NBrsEff(MIn), NKolEff(MIn), &(*MHsl));
 	for (i = GetFirstIdxBrs(MIn); i <= GetLastIdxBrs(MIn); i++) {
 		for (j = GetFirstIdxKol(MIn); j <= GetLastIdxKol(MIn); j++) {
-			Elmt(*MHsl, i, j) = Elmt(MIn, i, j);
+			ElmtMatriks(*MHsl, i, j) = ElmtMatriks(MIn, i, j);
 		}
 	}
 }
@@ -104,7 +99,7 @@ void BacaMATRIKS (MATRIKS * M, int NB, int NK)
 	MakeMATRIKS(NB, NK, &(*M));
 	for (i = GetFirstIdxBrs(*M); i <= GetLastIdxBrs(*M); i++) {
 		for (j = GetFirstIdxKol(*M); j <= GetLastIdxKol(*M); j++) {
-			scanf("%d", &Elmt(*M, i, j));
+			scanf("%d", &ElmtMatriks(*M, i, j));
 		}
 	}
 }
@@ -123,7 +118,7 @@ void TulisMATRIKS (MATRIKS M)
 	/* Algoritma */
 	for (i = GetFirstIdxBrs(M); i <= GetLastIdxBrs(M); i++) {
 		for (j = GetFirstIdxKol(M); j <= GetLastIdxKol(M); j++) {
-			printf("%d", Elmt(M, i, j));
+			printf("%d", ElmtMatriks(M, i, j));
 			if (j == GetLastIdxKol(M) && i < GetLastIdxBrs(M)) {
 				printf("\n");
 			}
@@ -151,7 +146,7 @@ boolean EQMatriks (MATRIKS M1, MATRIKS M2)
 		while (state == true && i <= GetLastIdxBrs(M1)) {
 			j = GetFirstIdxKol(M1);
 			while (state == true && j <= GetLastIdxKol(M1)) {
-				state = Elmt(M1, i, j) == Elmt(M2, i, j);
+				state = ElmtMatriks(M1, i, j) == ElmtMatriks(M2, i, j);
 				j = j + 1;
 			}
 			i = i + 1;
@@ -204,7 +199,7 @@ boolean IsSimetri (MATRIKS M)
 		while (state == true && i <= GetLastIdxBrs(M)) {
 			j = GetFirstIdxKol(M);
 			while (state == true && j <= GetLastIdxKol(M)) {
-				state = Elmt(M, i, j) == Elmt(M, j, i);
+				state = ElmtMatriks(M, i, j) == ElmtMatriks(M, j, i);
 				j = j + 1;
 			}
 			i = i + 1;
@@ -226,12 +221,12 @@ boolean IsSparse (MATRIKS M)
 	count = 0;
 	for (i = GetFirstIdxBrs(M); i <= GetLastIdxBrs(M); i++) {
 		for (j = GetFirstIdxKol(M); j <= GetLastIdxKol(M); j++) {
-			if (Elmt(M, i, j) != ' ') {
+			if (ElmtMatriks(M, i, j) != ' ') {
 				count = count + 1;
 			}
 		}
 	}
-	return 20 * count <= NBElmt(M);
+	return 20 * count <= NBElmtMatriks(M);
 }
 
 boolean IsMatriksValid (MATRIKS M)
@@ -258,7 +253,7 @@ void Transpose (MATRIKS * M)
 	MakeMATRIKS(NKolEff(*M), NBrsEff(*M), &Maja);
 	for (i = GetFirstIdxBrs(*M); i <= GetLastIdxBrs(*M); i++) {
 		for (j = GetFirstIdxKol(*M); j <= GetLastIdxKol(*M); j++) {
-			Elmt(Maja, j, i) = Elmt(*M, i, j);
+			ElmtMatriks(Maja, j, i) = ElmtMatriks(*M, i, j);
 		}
 	}
 	CopyMATRIKS(Maja, M);
