@@ -61,7 +61,10 @@ int main(){
     }
 
     else{ // load game
-        //dat
+        LoadExistingConfig(....);
+        ReadBangunan(...);
+        ReadFlags(...);
+        ReadGraf(...);
     }
 
     return 0;
