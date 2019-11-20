@@ -1,70 +1,83 @@
 #include <stdio.h>
-#include "pcolor.c"
-#include "mesinkata.c"
-#include "queue.c"
 #include "command.h"
+#include "mesinkatainput.c"
+#include "queue.h"
+#include "loadsave.h"
 
-int main(){
+Queue Qplayer, Qskill1, Qskill2;
+str check,mulai;
+Stack S;
+
+void gameOn()
+{
+    // KAMUS LOKAL
+        int choiceBangunan, choicePasukan, choiceLevelUp;
+    // ALGORITMA
+        do
+        {
+            inputCommand();
+            switch(check){
+                case 1:
+                    // show bangunan
+                    printf("Bangunan yang diserang: ");
+                    scanf("%d",&choiceBangunan);
+                    printf("Jumlah pasukan: ");
+                    scanf("%d",&choicePasukan);
+                    ATTACK(...);
+                    break; 
+                case 2:
+                    // show bangunan
+                    printf("Bangunan yang akan di-level up: ");
+                    scanf("%d",%choiceLevelUp);
+                    LEVEL_UP(...);
+                    break;
+                case 3:
+                    SKILL(...);
+                    break;
+                case 4:
+                    UNDO(*S);
+                    break;
+                case 5:
+                    SaveConfig(...);
+                    break;
+                case 6:
+                    EXIT();
+            }
+        }
+}
+
+
+int main()
+{
+    // KAMUS
+    // ALGORITMA
     printf("Selamat datang di Avatar World War!");
-    printf("Pilih mode game:");
+    printf("Mode game: ");
     printf("1. New Game");
     printf("2. Load Game");
 
-    // nerima input start pake mesin kata 
-
-    str inputStart, inputCommand;
-    Queue Qplayer;
-    Stack S;
-    int choiceBangunan,choicePasukan,choiceLevelUp;
-    
-    if(input==New Game){
-        // baca config peta
+    inputStart();
+    if(mulai==1){
         CreateEmptyQ(Qplayer);
-        AddQ(*Qplayer,1);
-        AddQ(*Qplayer,2);
-        //bikin counter buat turn
-        //nambah jumlah pasukan tiap bangunan
-        //show player
-        //show map
-        //show bangunan
-        //show skill
-
-        // baca input command
-        while(inputCommand!=END_TURN){
-            if(inputCommand==ATTACK){
-                //show bangunan
-                printf("Bangunan yang diserang: ");
-                scanf("%d",&choiceBangunan);
-                printf("Jumlah pasukan: ");
-                scanf("%d",&choicePasukan);
-                ATTACK(...);
-            }
-            else if(inputCommand==LEVEL_UP){
-                //show bangunan
-                printf("Bangunan yang akan di-level up: ");
-                scanf("%d",&choiceLevelUp);
-                LEVEL_UP(...);
-            }
-            else if(inputCommand==SKILL{
-                SKILL(...);
-            }
-            else if(inputCommand==UNDO){
-                UNDO(*S);
-            }
-            else if(inputCommand==SAVE){
-                SaveConfig(...);
-            }
-            else if(inputCommand==EXIT){
-                EXIT();
-            }
-        }
+        AddQ(*Qplayer,1); // queue player
+        AddQ(*Qplayer,2); // queue player
+        // bikin counter buat turn
+        // nambah jumlah pasukan tiap bangunan
+        CreatePlayerQueue(*Qs1); // queue skill player 1
+        CreatePlayerQueue(*Qs2); // queue skill player 2
+        // show player
+        // show map
+        // show bangunan
+        // show skill
+        gameOn();
     }
-
-    else{ // load game
-        LoadExistingConfig(....);
+    
+    else{
+        LoadExistingConfig(...);
         ReadBangunan(...);
         ReadFlags(...);
         ReadGraf(...);
+        gameOn();
     }
 
     return 0;
