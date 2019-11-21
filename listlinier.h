@@ -21,7 +21,7 @@ typedef struct tElmtlist {
 typedef struct {
 	address First;
 } List;
-extern List L1,L2;
+extern List GLIST[2];
 /* Definisi list : */
 /* List kosong : First(L) = Nil */
 /* Setiap elemen dengan a1ddress P dapat diacu Info(P), Next(P) */
@@ -141,7 +141,7 @@ void Konkat1 (List *L1, List *L2, List *L3);
 /* dan L1 serta L2 menjadi list kosong.*/
 /* Tidak ada alokasi/dealokasi pada prosedur ini */
 
-void ListBPemilik(List *L1,List *L2);
+void ListBPemilik();
 List GetLPemilik(int kepemilikan);
 
 #endif
