@@ -4,21 +4,77 @@
 #include "queue.c"
 #include "loadsave.h"
 #include "peta.h"
+#include "arraydin.c"
 
-Queue Qplayer, Qskill1, Qskill2;
-str check,mulai;
+Queue Qskill1, Qskill2;
 Stack S;
 Peta P;
-int turn;
+int curPlayer, enemyPlayer;
 
-void changeTurn(int * turn){
+void availableSkill (Queue Q) {
+    // KAMUS LOKAL
+        int skill;
+    // ALGORITMA
+        skill = headOfQueue(Q);
+        if(skill==1){
+            printf("Instant Upgrade");
+        }
+        else if(skill==2){
+            printf("Shield");
+        }
+        else if(skill==3){
+            printf("Extra Turn");
+        }
+        else if(skill==4){
+            printf("Attack Up");
+        }
+        else if(skill==5){
+            printf("Critical Hit");
+        }
+        else if(skill==6){
+            printf("Instant Reinforcement");
+        }
+        else if(skill==7){
+            printf("Barrage");
+        }
+}
+
+void printBuildings (int player, BANGUNAN B ){
+    // KAMUS LOKAL
+        int i;
+    // ALGORITMA
+        printf("Daftar bangunan: ");
+        for(i=1; i<=Neff(B), i++){
+            if(kepemilikan(B)==player){
+                if(jenis(B)=='C'){
+                    printf("Castle ");
+                }
+                else if(jenis(B)=='T'){
+                    printf("Tower ");
+                }
+                else if(jenis(B)=='F'){
+                    printf("Fort ");
+                }
+                printf(lok(B));
+                printf(pasukan(B));
+                printf("lv. ");
+                printf(level(B));
+            }
+        }
+}
+
+void changeTurn(int *curPlayer, int *enemyPlayer){
     // KAMUS LOKAL
     // ALGORITMA
-        if(turn%2==1){
-            *turn=2;
+        if(curPlayer%2==1){
+            *curPlayer=2;
+            *enemyPlayer=1;
+            printf("Player 2\n");
         }
-        else if(turn%2==0){
-            *turn=1;
+        else if(curPlayer%2==0){
+            *curPlayer=1;
+            *enemyPlayer=2;
+            printf("Player 1\n");
         }
 }
 
@@ -26,6 +82,7 @@ int main()
 {
     // KAMUS
         int choiceBangunan, choicePasukan, choiceLevelUp;
+        int haveAttack;
     // ALGORITMA
     printf("Selamat datang di Avatar World War!");
     printf("Mode game: ");
@@ -34,14 +91,15 @@ int main()
 
     inputStart();
     if(mulai==1){
-        turn = 1;
-        // nambah jumlah pasukan tiap bangunan
-        CreatePlayerQueue(*Qs1); // queue skill player 1
-        CreatePlayerQueue(*Qs2); // queue skill player 2
-        // show player
-        DisplayPeta(P);
-        // show bangunan
-        // show skill
+        curPlayer = 1;
+        if(curPlayer%2!=0){
+            printf("Player 1");
+        }
+        else{
+            printf("Player 2");
+        }
+        CreatePlayerQueue(*Qs1,10); // queue skill player 1
+        CreatePlayerQueue(*Qs2,10); // queue skill player 2
     }
     
     else if(mulai==2){
@@ -51,41 +109,63 @@ int main()
         ReadGraf(...);
     }
 
-    do
-    {
-        inputCommand();
-        switch(check){
-            case 1:
-                // show bangunan
-                printf("Bangunan yang diserang: ");
-                scanf("%d",&choiceBangunan);
-                printf("Jumlah pasukan: ");
-                scanf("%d",&choicePasukan);
-                ATTACK(...);
-                break; 
-            case 2:
-                // show bangunan
-                printf("Bangunan yang akan di-level up: ");
-                scanf("%d",%choiceLevelUp);
-                LEVEL_UP(...);
-                break;
-            case 3:
-                SKILL(...);
-                break;
-            case 4:
-                UNDO(*S);
-                break;
-            case 5:
-                SaveConfig(...);
-                break;
-            case 6:
-                EXIT();
-        }
-    }while(check!=7);
+    haveAttack = 0;
 
-    if(check==7){
-        END_TURN(*F);
-        changeTurn(turn);
+    while(!kalah){
+        do
+        {
+            DisplayPeta(P);
+            // nambah jumlah pasukan tiap bangunan untuk curplayer
+            printBuildings(curPlayer,B);
+            printf("Skill Available: ");
+            if(curPlayer%2!=0){
+                availableSkill(Qskill1);
+            }
+            else{
+                availableSkill(Qskill2);
+            }
+            inputCommand();
+            switch(check){
+                case 1:
+                    // mengecek apakah player telah pernah attack dalam giliran tersebut 
+                    if(haveAttack==0){
+                        printBuildings(enemyPlayer,B);
+                        printf("Bangunan yang diserang: ");
+                        scanf("%d",&choiceBangunan);
+                        printf("Jumlah pasukan: ");
+                        scanf("%d",&choicePasukan);
+                        ATTACK(...);
+                        haveAttack = 1;
+                    }
+                    else{
+                        printf("Anda telah menggunakan command ini sebelumnya!");
+                    }
+                    break; 
+                case 2:
+                    printBuildings(enemyPlayer,B);
+                    printf("Bangunan yang akan di-level up: ");
+                    scanf("%d",%choiceLevelUp);
+                    LEVEL_UP(...);
+                    break;
+                case 3:
+                    SKILL(...);
+                    break;
+                case 4:
+                    UNDO(*S);
+                    break;
+                case 5:
+                    SaveConfig(...);
+                    break;
+                case 6:
+                    EXIT();
+            }
+        }while(check!=7);
+
+        if(check==7){
+            END_TURN(*F);
+            // isExtraTurn aktif, maka gausah changeTurn
+            changeTurn(*curPlayer);
+        }
     }
 
     return 0;

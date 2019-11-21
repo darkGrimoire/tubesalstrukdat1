@@ -7,6 +7,7 @@
 #include "boolean.h"
 #include <stdio.h>
 #include "pcolor.h"
+#include "arraydin.h"
 
 typedef MATRIKS Peta;
 
@@ -29,11 +30,13 @@ boolean IsPetaValid(int NB, int NK);
 
 /* Fungsi Display */
 
-void IsiPeta(Peta *P, /*type array bangunan */);
+void IsiPeta(Peta *P, TabInt T);
 // Mengisi matriks peta dengan bangunan pada array bangunan sesuai dengan lokasinya
 
 void DisplayPeta (Peta P);
 // Mencetak peta ke layar
-
+// I.S. Peta tidak kosong
+// F.S. Peta dicetak ke layar dengan warna sesuai kepemilikan bangunan
+// Putih untuk bangunan tanpa kepemilikan, merah untuk player 1, kuning untuk player 2
 #endif
 
