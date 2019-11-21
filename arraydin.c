@@ -50,33 +50,33 @@ IdxType GetLastIdx(TabInt T)
     return Neff(T);
 }
 
-/* ********** Test Indeks yang valid ********** */
-boolean IsIdxValid(TabInt T, IdxType i)
-/* Mengirimkan true jika i adalah indeks yang valid utk ukuran tabel */
-/* yaitu antara indeks yang terdefinisi utk container*/
-{
-    return ((i >= IdxMin) && (i <=MaxEl(T)));
-}
-boolean IsIdxEff(TabInt T, IdxType i)
-/* Mengirimkan true jika i adalah indeks yang terdefinisi utk tabel */
-/* yaitu antara FirstIdx(T)..LastIdx(T) */
-{
-    return ((i >= GetFirstIdx(T))&&(i <= GetLastIdx(T)));
-}
+// * ********** Test Indeks yang valid ********** */
+// boolean IsIdxValid(TabInt T, IdxType i)
+// /* Mengirimkan true jika i adalah indeks yang valid utk ukuran tabel */
+// /* yaitu antara indeks yang terdefinisi utk container*/
+// {
+//     return ((i >= IdxMin) && (i <=MaxEl(T)));
+// }
+// boolean IsIdxEff(TabInt T, IdxType i)
+// /* Mengirimkan true jika i adalah indeks yang terdefinisi utk tabel */
+// /* yaitu antara FirstIdx(T)..LastIdx(T) */
+// {
+//     return ((i >= GetFirstIdx(T))&&(i <= GetLastIdx(T)));
+// }
 
-/* ********** TEST KOSONG/PENUH ********** */
-/* *** Test tabel kosong *** */
-boolean IsEmpty(TabInt T)
-/* Mengirimkan true jika tabel T kosong, mengirimkan false jika tidak */
-{
-    return(Neff(T) == 0);
-}
-/* *** Test tabel penuh *** */
-boolean IsFull(TabInt T)
-/* Mengirimkan true jika tabel T penuh, mengirimkan false jika tidak */
-{
-    return (Neff(T)==MaxEl(T));
-}
+// /* ********** TEST KOSONG/PENUH ********** */
+// /* *** Test tabel kosong *** */
+// boolean IsEmpty(TabInt T)
+// /* Mengirimkan true jika tabel T kosong, mengirimkan false jika tidak */
+// {
+//     return(Neff(T) == 0);
+// }
+// /* *** Test tabel penuh *** */
+// boolean IsFull(TabInt T)
+// /* Mengirimkan true jika tabel T penuh, mengirimkan false jika tidak */
+// {
+//     return (Neff(T)==MaxEl(T));
+// }
 
 /* ********** BACA dan TULIS dengan INPUT/OUTPUT device ********** */
 /* *** Mendefinisikan isi tabel dari pembacaan *** */
@@ -160,8 +160,7 @@ boolean IsFull(TabInt T)
 // {
 //     boolean answer;
 //     answer = true;
-//     if (Neff(T1) != Neff(T2)){
-//         answer = false;
+//     if (Neff(T1) != Neff(T2)){//         answer = false;
 //     }
 //     else{
 //         for (int i = GetFirstIdx(T1);(i<= Neff(T1));i++){
@@ -231,17 +230,23 @@ boolean IsFull(TabInt T)
 // }
 
 /* ********** OPERASI LAIN ********** */
-void CopyTab(TabInt Tin, TabInt *Tout)
-/* I.S. Tin terdefinisi tidak kosong, Tout sembarang */
-/* F.S. Tout berisi salinan dari Tin (identik, Neff dan MaxEl sama) */
-/* Proses : Menyalin isi Tin ke Tout */
-{
+void CopyTab(TabInt Tin, TabInt *Tout){
     MakeEmpty(Tout,MaxEl(Tin));
     Neff(*Tout) = Neff(Tin);
     for (int i=GetFirstIdx(Tin); (i<=Neff(Tin)); i++){
         bangunan(*Tout,i) = bangunan(Tin,i);
     }
 }
+/* I.S. Tin terdefinisi tidak kosong, Tout sembarang */
+/* F.S. Tout berisi salinan dari Tin (identik, Neff dan MaxEl sama) */
+/* Proses : Menyalin isi Tin ke Tout */
+// {
+//     MakeEmpty(Tout,MaxEl(Tin));
+//     Neff(*Tout) = Neff(Tin);
+//     for (int i=GetFirstIdx(Tin); (i<=Neff(Tin)); i++){
+//         bangunan(*Tout,i) = bangunan(Tin,i);
+//     }
+// }
 // ElType SumTab(TabInt T)
 // /* Menghasilkan hasil penjumlahan semua elemen T */
 // /* Jika T kosong menghasilkan 0 */
@@ -336,14 +341,14 @@ void CopyTab(TabInt Tin, TabInt *Tout)
 
 // /* ********** MENAMBAH DAN MENGHAPUS ELEMEN DI AKHIR ********** */
 // /* *** Menambahkan elemen terakhir *** */
-// void AddAsLastEl(TabInt *T, ElType X)
-// /* Proses: Menambahkan X sebagai elemen terakhir tabel */
-// /* I.S. Tabel T boleh kosong, tetapi tidak penuh */
-// /* F.S. X adalah elemen terakhir T yang baru */
-// {
-//     bangunan(*T,(GetLastIdx(*T)+1)) = X;
-//     Neff(*T)+=1;
-// }
+void AddAsLastEl(TabInt *T, BANGUNAN *B)
+/* Proses: Menambahkan X sebagai elemen terakhir tabel */
+/* I.S. Tabel T boleh kosong, tetapi tidak penuh */
+/* F.S. X adalah elemen terakhir T yang baru */
+{
+    bangunan(*T,(GetLastIdx(*T)+1)) = *B;
+    Neff(*T)+=1;
+}
 // /* ********** MENGHAPUS ELEMEN ********** */
 // void DelLastEl(TabInt *T, ElType *X)
 // /* Proses : Menghapus elemen terakhir tabel */

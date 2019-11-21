@@ -17,13 +17,14 @@
 /* Indeks tak terdefinisi*/
 
 /* Definisi elemen dan koleksi objek */
-
+typedef int IdxType;
 typedef struct
 {
   BANGUNAN *TI; /* memori tempat penyimpan elemen (container) */
   int Neff;   /* >=0, banyaknya elemen efektif */
   int MaxEl;  /* ukuran elemen */
 } TabInt;
+extern TabInt arrBan;
 /* Indeks yang digunakan [IdxMin..MaxEl] */
 /* Jika T adalah TabInt, cara deklarasi dan akses: */
 /* Deklarasi : T : TabInt */
@@ -54,7 +55,7 @@ void Dealokasi(TabInt *T);
 
 /* ********** SELEKTOR (TAMBAHAN) ********** */
 /* *** Banyaknya elemen *** */
-int NbElmt(TabInt T);
+int NbBangunan(TabInt T);
 /* Mengirimkan banyaknya elemen efektif tabel */
 /* Mengirimkan nol jika tabel kosong */
 /* *** Daya tampung container *** */
@@ -68,21 +69,21 @@ IdxType GetLastIdx(TabInt T);
 /* Prekondisi : Tabel T tidak kosong */
 /* Mengirimkan indeks elemen T terakhir */
 
-/* ********** Test Indeks yang valid ********** */
-boolean IsIdxValid(TabInt T, IdxType i);
-/* Mengirimkan true jika i adalah indeks yang valid utk ukuran tabel */
-/* yaitu antara indeks yang terdefinisi utk container*/
-boolean IsIdxEff(TabInt T, IdxType i);
-/* Mengirimkan true jika i adalah indeks yang terdefinisi utk tabel */
-/* yaitu antara FirstIdx(T)..LastIdx(T) */
+// /* ********** Test Indeks yang valid ********** */
+// boolean IsIdxValid(TabInt T, IdxType i);
+// /* Mengirimkan true jika i adalah indeks yang valid utk ukuran tabel */
+// /* yaitu antara indeks yang terdefinisi utk container*/
+// boolean IsIdxEff(TabInt T, IdxType i);
+// /* Mengirimkan true jika i adalah indeks yang terdefinisi utk tabel */
+// /* yaitu antara FirstIdx(T)..LastIdx(T) */
 
-/* ********** TEST KOSONG/PENUH ********** */
-/* *** Test tabel kosong *** */
-boolean IsEmpty(TabInt T);
-/* Mengirimkan true jika tabel T kosong, mengirimkan false jika tidak */
-/* *** Test tabel penuh *** */
-boolean IsFull(TabInt T);
-/* Mengirimkan true jika tabel T penuh, mengirimkan false jika tidak */
+// /* ********** TEST KOSONG/PENUH ********** */
+// /* *** Test tabel kosong *** */
+// boolean IsEmpty(TabInt T);
+// /* Mengirimkan true jika tabel T kosong, mengirimkan false jika tidak */
+// /* *** Test tabel penuh *** */
+// boolean IsFull(TabInt T);
+// /* Mengirimkan true jika tabel T penuh, mengirimkan false jika tidak */
 
 // /* ********** BACA dan TULIS dengan INPUT/OUTPUT device ********** */
 // /* *** Mendefinisikan isi tabel dari pembacaan *** */
@@ -137,10 +138,10 @@ boolean IsFull(TabInt T);
 //         Min berisi nilai minimum T */
 
 // /* ********** OPERASI LAIN ********** */
-// void CopyTab(TabInt Tin, TabInt *Tout);
-// /* I.S. Tin terdefinisi tidak kosong, Tout sembarang */
-// /* F.S. Tout berisi salinan dari Tin (identik, Neff dan MaxEl sama) */
-// /* Proses : Menyalin isi Tin ke Tout */
+void CopyTab(TabInt Tin, TabInt *Tout);
+/* I.S. Tin terdefinisi tidak kosong, Tout sembarang */
+/* F.S. Tout berisi salinan dari Tin (identik, Neff dan MaxEl sama) */
+/* Proses : Menyalin isi Tin ke Tout */
 // ElType SumTab(TabInt T);
 // /* Menghasilkan hasil penjumlahan semua elemen T */
 // /* Jika T kosong menghasilkan 0 */
@@ -160,10 +161,10 @@ boolean IsFull(TabInt T);
 
 // /* ********** MENAMBAH DAN MENGHAPUS ELEMEN DI AKHIR ********** */
 // /* *** Menambahkan elemen terakhir *** */
-// void AddAsLastEl(TabInt *T, ElType X);
-// /* Proses: Menambahkan X sebagai elemen terakhir tabel */
-// /* I.S. Tabel T boleh kosong, tetapi tidak penuh */
-// /* F.S. X adalah elemen terakhir T yang baru */
+void AddAsLastEl(TabInt *T, BANGUNAN *B);
+/* Proses: Menambahkan X sebagai elemen terakhir tabel */
+/* I.S. Tabel T boleh kosong, tetapi tidak penuh */
+/* F.S. X adalah elemen terakhir T yang baru */
 // /* ********** MENGHAPUS ELEMEN ********** */
 // void DelLastEl(TabInt *T, ElType *X);
 // /* Proses : Menghapus elemen terakhir tabel */

@@ -41,6 +41,8 @@ void IncreasePasukan(BANGUNAN *B, int pasukan);
 boolean CanLevelUp(BANGUNAN B);
 void LevelUp(BANGUNAN *B);
 boolean IsTherePertahanan (BANGUNAN B);
+boolean validTambahA(BANGUNAN *B);
 void delPasukan(BANGUNAN *B);
+void DecreasePasukan(BANGUNAN *B, int pasukan);
 
 #endif
