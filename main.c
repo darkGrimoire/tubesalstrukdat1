@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include "command.h"
 #include "mesinkatainput.c"
-#include "queue.h"
+#include "queue.c"
 #include "loadsave.h"
 #include "peta.h"
 
@@ -11,53 +11,21 @@ Stack S;
 Peta P;
 int turn;
 
-void gameOn()
-{
+void changeTurn(int * turn){
     // KAMUS LOKAL
-        int choiceBangunan, choicePasukan, choiceLevelUp;
     // ALGORITMA
-        do
-        {
-            inputCommand();
-            switch(check){
-                case 1:
-                    // show bangunan
-                    printf("Bangunan yang diserang: ");
-                    scanf("%d",&choiceBangunan);
-                    printf("Jumlah pasukan: ");
-                    scanf("%d",&choicePasukan);
-                    ATTACK(...);
-                    break; 
-                case 2:
-                    // show bangunan
-                    printf("Bangunan yang akan di-level up: ");
-                    scanf("%d",%choiceLevelUp);
-                    LEVEL_UP(...);
-                    break;
-                case 3:
-                    SKILL(...);
-                    break;
-                case 4:
-                    UNDO(*S);
-                    break;
-                case 5:
-                    SaveConfig(...);
-                    break;
-                case 6:
-                    EXIT();
-            }
-        }while(check!=7);
-
-        if(check==7){
-            DelQ(*Qplayer,*X);
-            AddQ(*Qplayer,turn);
+        if(turn%2==1){
+            *turn=2;
+        }
+        else if(turn%2==0){
+            *turn=1;
         }
 }
-
 
 int main()
 {
     // KAMUS
+        int choiceBangunan, choicePasukan, choiceLevelUp;
     // ALGORITMA
     printf("Selamat datang di Avatar World War!");
     printf("Mode game: ");
@@ -66,9 +34,6 @@ int main()
 
     inputStart();
     if(mulai==1){
-        CreateEmptyQ(Qplayer);
-        AddQ(*Qplayer,1); // queue player
-        AddQ(*Qplayer,2); // queue player
         turn = 1;
         // nambah jumlah pasukan tiap bangunan
         CreatePlayerQueue(*Qs1); // queue skill player 1
@@ -77,7 +42,6 @@ int main()
         DisplayPeta(P);
         // show bangunan
         // show skill
-        gameOn();
     }
     
     else if(mulai==2){
@@ -85,7 +49,43 @@ int main()
         ReadBangunan(...);
         ReadFlags(...);
         ReadGraf(...);
-        gameOn();
+    }
+
+    do
+    {
+        inputCommand();
+        switch(check){
+            case 1:
+                // show bangunan
+                printf("Bangunan yang diserang: ");
+                scanf("%d",&choiceBangunan);
+                printf("Jumlah pasukan: ");
+                scanf("%d",&choicePasukan);
+                ATTACK(...);
+                break; 
+            case 2:
+                // show bangunan
+                printf("Bangunan yang akan di-level up: ");
+                scanf("%d",%choiceLevelUp);
+                LEVEL_UP(...);
+                break;
+            case 3:
+                SKILL(...);
+                break;
+            case 4:
+                UNDO(*S);
+                break;
+            case 5:
+                SaveConfig(...);
+                break;
+            case 6:
+                EXIT();
+        }
+    }while(check!=7);
+
+    if(check==7){
+        END_TURN(*F);
+        changeTurn(turn);
     }
 
     return 0;

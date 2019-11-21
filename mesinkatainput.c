@@ -215,7 +215,10 @@ void inputCommand()
     // ALGORITMA
         check = 0;
         do{
+            printf("Command yang tersedia: ");
+            printf("%s%c", RED);
             printf("Masukkan input: ");
+            printf("%s", NORMAL);
             STARTKATA();
             if(matchString(CKata,KataATTACK)){
                 check=1;
