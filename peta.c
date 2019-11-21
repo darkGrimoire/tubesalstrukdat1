@@ -6,6 +6,7 @@
 #include "pcolor.h"
 #include "peta.h"
 #include "arraydin.h"
+#include "point.h"
 
 /* ==== PROTOTIPE PRIMITIF ==== */
 
@@ -62,11 +63,85 @@ boolean IsPetaValid(int NB, int NK)
     
 }
 
-void IsiPeta(Peta *P, TabInt T);
+void IsiPeta(Peta *P, TabInt T)
 // Mengisi matriks peta dengan bangunan pada array bangunan sesuai dengan lokasinya
 // I.S. Peta Kosong
-// F.S. 
-
+// F.S. Peta diisi sesuai isi array bangunan
+/* Keterangan: castle 0 = C, castle 1 = c, castle 2 = p
+               tower 0 = T, tower 1 = t, tower 2 = q
+               fort 0 = F, fort 1 = f, fort 2 = r
+               village 0 = V, village 1 = v, village 2 = s */
+{
+    int x,y;
+    char b;
+    for (int i = 1; i <= Neff(T); i++)
+    {
+        x = Absis(lok(bangunan(T,i))); // mengambil indeks baris bangunan
+        y = Ordinat(lok(bangunan(T,i)));
+        b = jenis(bangunan(T,i));
+        switch (b)
+        {
+            case 'C':
+                if (kepemilikan(bangunan(T,i)) == 0)
+                {
+                    ElmtMatriks(*P,x,y) = b;
+                }
+                else if (kepemilikan(bangunan(T,i)) == 2)
+                {
+                    ElmtMatriks(*P,x,y) = 'c';
+                }
+                else
+                {
+                    ElmtMatriks(*P,x,y) = 'p';
+                }
+                break;
+            case 'T':
+                if (kepemilikan(bangunan(T,i)) == 0)
+                {
+                    ElmtMatriks(*P,x,y) = b;
+                }
+                else if (kepemilikan(bangunan(T,i)) == 2)
+                {
+                    ElmtMatriks(*P,x,y) = 't';
+                }
+                else
+                {
+                    ElmtMatriks(*P,x,y) = 'q';
+                }
+                break;
+            case 'F':
+                if (kepemilikan(bangunan(T,i)) == 0)
+                {
+                    ElmtMatriks(*P,x,y) = b;
+                }
+                else if (kepemilikan(bangunan(T,i)) == 2)
+                {
+                    ElmtMatriks(*P,x,y) = 'f';
+                }
+                else
+                {
+                    ElmtMatriks(*P,x,y) = 'r';
+                }
+                break;
+            case 'V':
+                if (kepemilikan(bangunan(T,i)) == 0)
+                {
+                    ElmtMatriks(*P,x,y) = b;
+                }
+                else if (kepemilikan(bangunan(T,i)) == 2)
+                {
+                    ElmtMatriks(*P,x,y) = 'v';
+                }
+                else
+                {
+                    ElmtMatriks(*P,x,y) = 's';
+                }
+                break;
+            default:
+                break;
+        }
+    }
+}
 /* Fungsi Display */
 void DisplayPeta (Peta P)
 // Mencetak peta ke layar
@@ -95,7 +170,36 @@ void DisplayPeta (Peta P)
             }
             else // isi matriks
             {
-                 
+                switch (ElmtMatriks(P,i,j))
+                {
+                case 'c':
+                    print_red('C');
+                    break;
+                case 'p':
+                    print_green('C');
+                    break;
+                case 't':
+                    print_red('T');
+                    break;
+                case 'q':
+                    print_green('T');
+                    break;
+                case 'f':
+                    print_red('F');
+                    break;
+                case 'r':
+                    print_green('F');
+                    break;
+                case 'v':
+                    print_red('F');
+                    break;
+                case 's':
+                    print_green('F');
+                    break;
+                default:
+                    printf("%c", ElmtMatriks(P,i,j));
+                    break;
+                }
             }
         }
     }
