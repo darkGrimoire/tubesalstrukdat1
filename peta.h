@@ -29,6 +29,9 @@ boolean IsPetaValid(int NB, int NK);
 
 /* Fungsi Display */
 
+void IsiPeta(Peta *P, /*type array bangunan */);
+// Mengisi matriks peta dengan bangunan pada array bangunan sesuai dengan lokasinya
+
 void DisplayPeta (Peta P);
 // Mencetak peta ke layar
 

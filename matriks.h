@@ -6,6 +6,7 @@
 #define MATRIKS_H
 
 #include "boolean.h"
+#include "bangunan.h"
 
 /* Ukuran minimum dan maksimum baris dan kolom */
 #define BrsMin 1
@@ -14,12 +15,14 @@
 #define KolMax 100
 
 typedef int indeks; /* indeks baris, kolom */
-typedef char ElType;
+typedef struct BANGUNAN *building;
+typedef building ElType;
 typedef struct {
     ElType Mem[BrsMax+1][KolMax+1];
     int NBrsEff; /* banyaknya/ukuran baris yg terdefinisi */
     int NKolEff; /* banyaknya/ukuran kolom yg terdefinisi */
 } MATRIKS;
+
 /* NBrsEff <= 1 dan NKolEff <= 1 */
 /* Indeks matriks yang digunakan: [BrsMin..BrsMax][KolMin..KolMax] */
 /* Memori matriks yang dipakai selalu di "ujung kiri atas" */
