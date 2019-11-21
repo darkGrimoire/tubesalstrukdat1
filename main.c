@@ -3,10 +3,13 @@
 #include "mesinkatainput.c"
 #include "queue.h"
 #include "loadsave.h"
+#include "peta.h"
 
 Queue Qplayer, Qskill1, Qskill2;
 str check,mulai;
 Stack S;
+Peta P;
+int turn;
 
 void gameOn()
 {
@@ -43,6 +46,11 @@ void gameOn()
                 case 6:
                     EXIT();
             }
+        }while(check!=7);
+
+        if(check==7){
+            DelQ(*Qplayer,*X);
+            AddQ(*Qplayer,turn);
         }
 }
 
@@ -61,18 +69,18 @@ int main()
         CreateEmptyQ(Qplayer);
         AddQ(*Qplayer,1); // queue player
         AddQ(*Qplayer,2); // queue player
-        // bikin counter buat turn
+        turn = 1;
         // nambah jumlah pasukan tiap bangunan
         CreatePlayerQueue(*Qs1); // queue skill player 1
         CreatePlayerQueue(*Qs2); // queue skill player 2
         // show player
-        // show map
+        DisplayPeta(P);
         // show bangunan
         // show skill
         gameOn();
     }
     
-    else{
+    else if(mulai==2){
         LoadExistingConfig(...);
         ReadBangunan(...);
         ReadFlags(...);
