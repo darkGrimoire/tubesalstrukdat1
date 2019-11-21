@@ -2,6 +2,8 @@
 /* Implementasi Mesin Kata */
 
 #include "mesinload.h"
+#include "mesinkar.h"
+#include "boolean.h"
 #include <stdio.h>
 
 LoadDat CLData;
@@ -12,10 +14,9 @@ void IgnoreBlank()
    I.S. : CC sembarang
    F.S. : CC ≠ BLANK atau CC = MARK */
 {
-    while ((CC == BLANK) && (CC != MARK))
-    {
-        ADV();
-    }  
+	while (CC == BLANK) {
+		ADV();
+	}
 }
 
 void STARTDATA()
@@ -51,6 +52,7 @@ void ADVDATA()
     }
     else
     {
+		EndLData = false;
         SalinData();
         IgnoreBlank();
     }
@@ -70,23 +72,26 @@ void SalinData()
     // KAMUS LOKAL
     int sum, x;
     // ALGORITMA
-    if (CC == 'C' || CC == 'T' || CC == 'F' || CC == 'V'){
-		CLData.Index = CC;
-		CLData.Value = -999;
-	}
-	else {
-		while ((CC != MARK) && (CC != BLANK)) {
-			sum = 0;
-			x = CC - '0';
+    while ((CC != MARK) && (CC != BLANK)) {
+		if (CC == 'C' || CC == 'T' || CC == 'F' || CC == 'V'){
+			CLData.Index = CC;
+			CLData.Value = -999;
 			ADV();
-			if (CC == BLANK || CC == MARK) {
-				sum = sum + x;
-			}
-			else {
-				sum = (sum + x) * 10;
-			}
 		}
-		CLData.Index = 'N';
-		CLData.Value = sum;
+		else {
+			sum = 0;
+			while ((CC != MARK) && (CC != BLANK)) {
+				x = CC - '0';
+				ADV();
+				if (CC == BLANK || CC == MARK) {
+					sum = sum + x;
+				}
+				else {
+					sum = (sum + x) * 10;
+				}
+			}
+			CLData.Index = 'N';
+			CLData.Value = sum;
+		}
 	}
 }
