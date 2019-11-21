@@ -153,7 +153,7 @@ void inputStart()
 void inputCommand()
 {
     // KAMUS LOKAL
-        int i,check;
+        int i;
         Kata KataATTACK;
         KataATTACK.TabKata[1] = 'A';
         KataATTACK.TabKata[2] = 'T';
@@ -221,7 +221,7 @@ void inputCommand()
             printf("ATTACK - LEVEL_UP - SKILL - UNDO - SAVE - END_TURN - EXIT");
             printf("%s", NORMAL);
             printf("\n");
-            printf("Masukkan perintah: ");
+            printf("ENTER COMMAND: ");
             STARTKATA();
             if(matchString(CKata,KataATTACK)){
                 check=1;

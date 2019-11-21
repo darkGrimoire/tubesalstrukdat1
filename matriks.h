@@ -15,8 +15,7 @@
 #define KolMax 100
 
 typedef int indeks; /* indeks baris, kolom */
-typedef struct BANGUNAN *building;
-typedef building ElType;
+typedef char ElType;
 typedef struct {
     ElType Mem[BrsMax+1][KolMax+1];
     int NBrsEff; /* banyaknya/ukuran baris yg terdefinisi */
@@ -40,7 +39,7 @@ void MakeMATRIKS (int NB, int NK, MATRIKS * M);
 #define ElmtMatriks(M,i,j) (M).Mem[(i)][(j)]
 
 /* *** Selektor "DUNIA MATRIKS" *** */
-boolean IsIdxValid (int i, int j);
+boolean IsIdxMatriksValid (int i, int j);
 /* Mengirimkan true jika i, j adalah indeks yang valid untuk matriks apa pun */
 
 /* *** Selektor: Untuk sebuah matriks M yang terdefinisi: *** */
@@ -52,7 +51,7 @@ indeks GetLastIdxBrs (MATRIKS M);
 /* Mengirimkan indeks baris terbesar M */
 indeks GetLastIdxKol (MATRIKS M);
 /* Mengirimkan indeks kolom terbesar M */
-boolean IsIdxEff (MATRIKS M, indeks i, indeks j);
+boolean IsIdxMatriksEff (MATRIKS M, indeks i, indeks j);
 /* Mengirimkan true jika i, j adalah indeks efektif bagi M */
 ElType GetElmtDiagonal (MATRIKS M, indeks i);
 /* Mengirimkan elemen M(i,i) */

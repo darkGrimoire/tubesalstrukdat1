@@ -35,7 +35,7 @@ void SetFlag(FLAGS* F, boolean SF, int CD, boolean AU, boolean CH, boolean ET, b
 /* I.S F sembarang */
 /* F.S F terisi dengan values dari parameter */
 /*** Player ***/
-void CreatePlayerQueue(Queue* Q);
+void CreatePlayerQueue(Queue* Q, int Max);
 /* I.S Q sembarang */
 /* F.S Q terisi dengan "UI" */
 

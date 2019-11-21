@@ -18,6 +18,7 @@
 
 /* Definisi elemen dan koleksi objek */
 
+typedef int IdxType;
 typedef struct
 {
   BANGUNAN *TI; /* memori tempat penyimpan elemen (container) */
