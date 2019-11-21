@@ -92,7 +92,6 @@ void LevelUp(BANGUNAN *B){
             q = tambahpas(*B);
             q+=5;
             tambahpas(*B)+=q;
-            pasukan(*B)+=tambahpas(*B);
             level(*B)+=1;
             SetMaxPasukan(B);
         }
@@ -105,7 +104,6 @@ void LevelUp(BANGUNAN *B){
             else {
                 w+=10;
                 tambahpas(*B)+=w;}
-            pasukan(*B)+=tambahpas(*B);
             level(*B)+=1;
             SetMaxPasukan(B);
         }
@@ -114,7 +112,6 @@ void LevelUp(BANGUNAN *B){
             e = tambahpas(*B);
             e+=10;
             tambahpas(*B)+=e;
-            pasukan(*B)+=tambahpas(*B);
             level(*B)+=1;
             SetMaxPasukan(B);
         }
@@ -123,7 +120,6 @@ void LevelUp(BANGUNAN *B){
             r = tambahpas(*B);
             r+=5;
             tambahpas(*B)+=r;
-            pasukan(*B)+=tambahpas(*B);
             level(*B)+=1;
             SetMaxPasukan(B);
         }
@@ -137,8 +133,8 @@ boolean IsTherePertahanan (BANGUNAN B){
     else if (jenis(B) == 'T') return true;
     else return false;
 }
-boolean validTambahA(BANGUNAN *B){
-    if (pasukan(*B)>=maks(*B)) return false;
+boolean validTambahA(BANGUNAN B){
+    if (pasukan(B)>=maks(B)) return false;
     else return true;
 }
 
@@ -147,4 +143,30 @@ void DecreasePasukan(BANGUNAN *B, int kurang){
     jumlah = pasukan(*B)-kurang;
     if (jumlah>0) pasukan(*B)=jumlah;
     else pasukan(*B)=0;
+}
+
+void setpasukan(BANGUNAN *B,int pasukan){
+    if (pasukan<maks(*B)){
+        pasukan(*B) = pasukan;
+    }
+    else printf("jumlah pasukan terlalu besar");
+}
+
+void resetlevel(BANGUNAN *B){
+    level(*B)=1;
+    if (jenis(*B) == 'C') MakeCastle(*&B);
+    else if (jenis(*B) == 'T') MakeTower(*&B);
+    else if (jenis(*B) == 'F') MakeFort(*&B);
+    else if (jenis(*B) == 'V') MakeVillage(*&B);
+}
+
+void tambahpasukanauto(BANGUNAN *B){
+    int temp;
+    if (validTambahA(*B)){
+        pasukan(*B)+=tambahpas(*B);
+        if (pasukan(*B)>maks(*B)){
+            temp = pasukan(*B)-maks(*B);
+            pasukan(*B) -=temp;
+        }
+    }
 }
