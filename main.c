@@ -11,6 +11,25 @@ Stack S;
 Peta P;
 int curPlayer, enemyPlayer;
 
+boolean loseState (int player, arrayBANGUNAN LB){
+    // KAMUS LOKAL
+        int i, count;
+    // ALGORITMA
+        count = 0;
+        for(i=1; i<=Neff(B); i++){
+            if(kepemilikan(B)==player){
+                count+=1;
+            }
+        }
+
+        if(count==0){
+            return true;
+        }
+        else{
+            return false;
+        }
+}
+
 void availableSkill (Queue Q) {
     // KAMUS LOKAL
         int skill;
@@ -55,6 +74,9 @@ void printBuildings (int player, BANGUNAN B ){
                 else if(jenis(B)=='F'){
                     printf("Fort ");
                 }
+                else if(jenis(B)=='V'){
+                    printf("Vilage ");
+                }
                 printf(lok(B));
                 printf(pasukan(B));
                 printf("lv. ");
@@ -84,8 +106,8 @@ int main()
         int choiceBangunan, choicePasukan, choiceLevelUp;
         int haveAttack;
     // ALGORITMA
-    printf("Selamat datang di Avatar World War!");
-    printf("Mode game: ");
+    printf("Welcome to Avatar World War!");
+    printf("Select Mode: ");
     printf("1. New Game");
     printf("2. Load Game");
 
@@ -111,9 +133,10 @@ int main()
 
     haveAttack = 0;
 
-    while(!kalah){
+    while(!loseState){
         do
         {
+            IsiPeta(*P, arrayBangunan);
             DisplayPeta(P);
             // nambah jumlah pasukan tiap bangunan untuk curplayer
             printBuildings(curPlayer,B);
@@ -144,7 +167,7 @@ int main()
                 case 2:
                     printBuildings(enemyPlayer,B);
                     printf("Bangunan yang akan di-level up: ");
-                    scanf("%d",%choiceLevelUp);
+                    scanf("%d",&choiceLevelUp);
                     LEVEL_UP(...);
                     break;
                 case 3:
@@ -157,14 +180,25 @@ int main()
                     SaveConfig(...);
                     break;
                 case 6:
+                    MOVE(...);
+                case 7:
                     EXIT();
             }
-        }while(check!=7);
+        }while(check!=8);
 
-        if(check==7){
+        if(check==8){
             END_TURN(*F);
             // isExtraTurn aktif, maka gausah changeTurn
             changeTurn(*curPlayer);
+        }
+    }
+
+    if(loseState){
+        if(curPlayer==1){
+            printf("Player 1 loses! Try again next time!");
+        }
+        else{
+            printf("Player 2 loses! Try again next time!");
         }
     }
 

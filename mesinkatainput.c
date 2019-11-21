@@ -8,7 +8,7 @@
 
 Kata CKata;
 boolean EndKata;
-int check,mulai;
+extern int check,mulai;
 
 void IgnoreBlank()
 /* Mengabaikan satu atau beberapa BLANK
@@ -196,6 +196,12 @@ void inputCommand()
         KataSAVE.TabKata[4] = 'E';
         KataSAVE.Length = 4;
 
+        Kata KataMOVE;
+        KataMOVE.TabKata[1] = 'M';
+        KataMOVE.TabKata[2] = 'O';
+        KataMOVE.TabKata[3] = 'V';
+        KataMOVE.TabKata[4] = 'E';
+
         Kata KataEXIT;
         KataEXIT.TabKata[1] = 'E';
         KataEXIT.TabKata[2] = 'X';
@@ -238,11 +244,14 @@ void inputCommand()
             else if(matchString(CKata,KataSAVE)){
                 check=5;
             }
-            else if(matchString(CKata,KataEXIT)){
+            else if(matchString(CKata,KataMOVE)){
                 check=6;
             }
-            else if(matchString(CKata,KataENDTURN)){
+            else if(matchString(CKata,KataEXIT)){
                 check=7;
+            }
+            else if(matchString(CKata,KataENDTURN)){
+                check=8;
             }
         }while(check==0);
 }
