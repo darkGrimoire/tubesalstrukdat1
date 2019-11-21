@@ -5,6 +5,7 @@
 #include <stdio.h>
 #include "pcolor.h"
 #include "peta.h"
+#include "arraydin.h"
 
 /* ==== PROTOTIPE PRIMITIF ==== */
 
@@ -17,7 +18,8 @@ void CreatePeta (int NB, int NK, Peta *P)
 {
     if (IsPetaValid(NB, NK))
     {
-        MakeMATRIKS(NB, NK, P);\
+        MakeMATRIKS(NB, NK, P);
+        /*
         // mengisi border dengan *
         // atas bawah
         for (int j = 0; j <= GetLastIdxKol(*P)+1; j++)
@@ -31,7 +33,7 @@ void CreatePeta (int NB, int NK, Peta *P)
         {
             ElmtMatriks(*P, i , 0) = '*';
             ElmtMatriks(*P, i , GetLastIdxKol(*P)+1) = '*';
-        }
+        } */
     }
     else
     {
@@ -60,12 +62,47 @@ boolean IsPetaValid(int NB, int NK)
     
 }
 
-void IsiPeta(Peta *P, /*type array bangunan */);
+void IsiPeta(Peta *P, TabInt T);
 // Mengisi matriks peta dengan bangunan pada array bangunan sesuai dengan lokasinya
+// I.S. Peta Kosong
+// F.S. 
 
 /* Fungsi Display */
-
-void DisplayPeta (Peta P);
+void DisplayPeta (Peta P)
 // Mencetak peta ke layar
 // I.S. Peta tidak kosong
 // F.S. Peta dicetak ke layar dengan warna sesuai kepemilikan bangunan
+// Putih untuk bangunan tanpa kepemilikan, merah untuk player 1, kuning untuk player 2
+{
+    // mencetak border atas
+    for (int i = 0; i <= GetLastIdxKol(P)+1; i++)
+    {
+        printf("%c", '*');
+    }
+    printf("\n");
+    // mencetak isi peta dengan border * di kanan dan kiri
+    for (int i = GetFirstIdxBrs(P); i <= GetLastIdxBrs(P); i++)
+    {
+        for (int j = GetFirstIdxKol(P)-1; j <= GetLastIdxKol(P)+1; j++)
+        {
+            if (j == GetFirstIdxKol(P)-1) // border kiri
+            {
+                printf("%c", '*');
+            }
+            else if (j == GetLastIdxKol(P)+1) // border kanan
+            {
+                printf("%c\n", '*');
+            }
+            else // isi matriks
+            {
+                 
+            }
+        }
+    }
+    // mencetak border bawah
+    for (int i = 0; i <= GetLastIdxKol(P)+1; i++)
+    {
+        printf("%c", '*');
+    }
+    printf("\n");
+}

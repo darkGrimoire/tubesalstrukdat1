@@ -14,15 +14,16 @@ void MakeMATRIKS (int NB, int NK, MATRIKS * M)
     /* Algoritma */
     NBrsEff(*M) = NB;
     NKolEff(*M) = NK;
+
     for (i = BrsMin; i <= NB; i++) {
 		for (j = KolMin; j <= NK; j++) {
-			ElmtMatriks(*M, i, j) = NULL;
+			ElmtMatriks(*M, i, j) = ' ';
 		}
 	}
 }
 
 /* *** Selektor "DUNIA MATRIKS" *** */
-boolean IsIdxValid (int i, int j)
+boolean IsIdxMatriksValid (int i, int j)
 /* Mengirimkan true jika i, j adalah indeks yang valid untuk matriks apa pun */
 {	/* Kamus lokal */
 	/* Algoritma */
@@ -54,7 +55,7 @@ indeks GetLastIdxKol (MATRIKS M)
 	/* Algoritma */
 	return NKolEff(M);
 }
-boolean IsIdxEff (MATRIKS M, indeks i, indeks j)
+boolean IsIdxMatriksEff (MATRIKS M, indeks i, indeks j)
 /* Mengirimkan true jika i, j adalah indeks efektif bagi M */
 {	/* Kamus lokal */
 	/* Algoritma */
@@ -135,7 +136,7 @@ boolean EQMatriks (MATRIKS M1, MATRIKS M2)
 /* untuk setiap i,j yang merupakan indeks baris dan kolom M1(i,j) = M2(i,j) */
 /* Juga merupakan strong EQ karena GetFirstIdxBrs(M1) = GetFirstIdxBrs(M2)
    dan GetLastIdxKol(M1) = GetLastIdxKol(M2) */
-{	/* Kamus lokal */
+{	/* Kamus lokal */ 
 	indeks i, j;
 	boolean state;
 	/* Algoritma */
@@ -146,7 +147,7 @@ boolean EQMatriks (MATRIKS M1, MATRIKS M2)
 		while (state == true && i <= GetLastIdxBrs(M1)) {
 			j = GetFirstIdxKol(M1);
 			while (state == true && j <= GetLastIdxKol(M1)) {
-				state = ElmtMatriks(M1, i, j) == ElmtMatriks(M2, i, j);
+				state = (ElmtMatriks(M1, i, j) == ElmtMatriks(M2, i, j));
 				j = j + 1;
 			}
 			i = i + 1;
@@ -209,24 +210,6 @@ boolean IsSimetri (MATRIKS M)
 	else {
 		return false;
 	}
-}
-
-boolean IsSparse (MATRIKS M)
-/* Mengirimkan true jika M adalah matriks sparse: mariks “jarang” dengan definisi:
-   hanya maksimal 5% dari memori matriks yang efektif bukan bernilai spasi */
-{	/* Kamus lokal */
-	indeks i, j;
-	int count;
-	/* Algoritma */
-	count = 0;
-	for (i = GetFirstIdxBrs(M); i <= GetLastIdxBrs(M); i++) {
-		for (j = GetFirstIdxKol(M); j <= GetLastIdxKol(M); j++) {
-			if (ElmtMatriks(M, i, j) != NULL) {
-				count = count + 1;
-			}
-		}
-	}
-	return 20 * count <= NBElmtMatriks(M);
 }
 
 boolean IsMatriksValid (MATRIKS M)

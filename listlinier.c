@@ -6,6 +6,8 @@
 #include <stdio.h>
 #include <math.h>
 #include <stdlib.h>
+#include "bangunan.h"
+#include "boolean.h"
 
 /* PROTOTYPE */
 /****************** TEST LIST KOSONG ******************/
@@ -380,4 +382,15 @@ void Konkat1 (List *L1, List *L2, List *L3)
         First(*L2) = Nil;
     }
     
+}
+
+void ListBPemilik(List *L1,List *L2){
+    for (int i =1;i<=Neff(arrBan);i++){
+        if (kepemilikan(bangunan(arrBan,i))==1) InsVLast(L1,i);
+        else InsVLast(L2,i);
+    }
+}
+List GetLPemilik(int kepemilikan){
+    if (kepemilikan == 1) return L1;
+    else return L2;
 }

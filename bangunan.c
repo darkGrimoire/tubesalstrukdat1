@@ -137,10 +137,14 @@ boolean IsTherePertahanan (BANGUNAN B){
     else if (jenis(B) == 'T') return true;
     else return false;
 }
-void delPasukan(BANGUNAN *B){
-    int selisih;
-        if (pasukan(*B)>maks(*B)){
-            selisih = pasukan(*B)-maks(*B);
-            pasukan(*B) -=selisih;
-        }
+boolean validTambahA(BANGUNAN *B){
+    if (pasukan(*B)>=maks(*B)) return false;
+    else return true;
+}
+
+void DecreasePasukan(BANGUNAN *B, int kurang){
+    int jumlah;
+    jumlah = pasukan(*B)-kurang;
+    if (jumlah>0) pasukan(*B)=jumlah;
+    else pasukan(*B)=0;
 }
