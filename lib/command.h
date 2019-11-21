@@ -133,15 +133,15 @@ void ExtraTurn(FLAGS* F);
 void ATTACK(List L, int targetBchoice, int myBchoice, int myPas, int curP);
 /* I.S B dan F terdefinisi */
 /* F.S B sesuai perhitungan Attack, F berubah sesuai dengan skill yang sedang aktif */
-void LEVEL_UP(List L, int choice);
+void LEVEL_UP(int choice, int curP);
 /* I.S F terdefinisi */
 /* F.S B yang terpilih akan level up jika memenuhi kriteria level up */
-void SKILL(FLAGS* F, LISTBANGUNAN B);
+void SKILL(FLAGS* F, Queue* Q, int curP);
 /* I.S B dan F terdefinisi */
 /* F.S Del Skill yang ada di Queue, lalu gunakan skillnya */
 void UNDO(Stack* S);
 /* MASIH BELOM KEBAYANG ANJAY */
-void END_TURN(FLAGS* F);
+void END_TURN(FLAGS* F, Queue* Q1, Queue* Q2);
 /* I.S F terdefinisi */
 /* F.S Validasi kondisi game, mengubah turn dan shieldCD */
 void EXIT();

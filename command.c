@@ -38,12 +38,12 @@ void SetFlag(FLAGS* F, boolean SF, int CD, boolean AU, boolean CH, boolean ET, b
 }
 
 /*** Player ***/
-void CreatePlayerQueue(Queue* Q){
+void CreatePlayerQueue(Queue* Q, int Max){
 /* I.S Q sembarang */
 /* F.S Q terisi dengan "UI" */
     /* KAMUS */
     /* ALGORITMA */
-    CreateEmptyQ(Q,10);
+    CreateEmptyQ(Q,Max);
     AddQ(Q,1);
 }
 
@@ -364,6 +364,7 @@ void ATTACK(List L, int targetBchoice, int myBchoice, int myPas, int curP)
         checkPas = myPas*2;
         calcPas = checkPas;
         restPas = (calcPas-targetPas)/2;
+        SetCHFlag(&GFLAGS[P1-1],false);
     }else if (GetAUFlag(GFLAGS[P1-1])){
         // checkPas = myPas;
         // calcPas = checkPas;
@@ -379,33 +380,75 @@ void ATTACK(List L, int targetBchoice, int myBchoice, int myPas, int curP)
     if (checkPas < targetPas){
         DecreasePasukan(&targetB, calcPas);
         DecreasePasukan(&myB, myPas);
+        printf("Bangunan gagal direbut.");
     } else if (checkPas >= targetPas){
         SetKepemilikan(&targetB,P1);
         SetPasukan(&targetB, restPas);
         SetLevel(&targetB, 1);
         DecreasePasukan(&myB,myPas);
+        printf("Bangunan menjadi milikmu!");
     }
 
 }
-void LEVEL_UP(List L, int choice)
+void LEVEL_UP(int choice, int curP)
 /* I.S F terdefinisi */
 /* F.S B yang terpilih akan level up jika memenuhi kriteria level up */
 {
     /* KAMUS */
     address P;
-
+    List L;
     /* ALGORITMA */
-    P = First(L);
+    CreateList(&L);
+    P = First(GLIST[curP-1]);
     while (choice>1){P = Next(P); choice--;}
-    LevelUp(&bangunan(arrBan, Info(P)));
-    
+    if (CanLevelUp(bangunan(arrBan, Info(P)))){
+        LevelUp(&bangunan(arrBan, Info(P)));
+        printf("Level ");
+        if (jenis(bangunan(arrBan, Info(P)))=='C'){printf("Castle");}
+        else if (jenis(bangunan(arrBan, Info(P)))=='T'){printf("Tower");}
+        else if (jenis(bangunan(arrBan, Info(P)))=='F'){printf("Fort");}
+        else if (jenis(bangunan(arrBan, Info(P)))=='V'){printf("Village");}
+        printf("-mu meningkat menjadi %d!",level(bangunan(arrBan, Info(P))));
+    }else{
+        printf("Jumlah pasukan ");
+        if (jenis(bangunan(arrBan, Info(P)))=='C'){printf("Castle");}
+        else if (jenis(bangunan(arrBan, Info(P)))=='T'){printf("Tower");}
+        else if (jenis(bangunan(arrBan, Info(P)))=='F'){printf("Fort");}
+        else if (jenis(bangunan(arrBan, Info(P)))=='V'){printf("Village");}
+        printf(" kurang untuk level up");
+    }
 }
-void SKILL(FLAGS* F, LISTBANGUNAN B)
+void SKILL(FLAGS* F, Queue* Q, int curP)
 /* I.S B dan F terdefinisi */
 /* F.S Del Skill yang ada di Queue, lalu gunakan skillnya */
 {
     /* KAMUS */
+    infotype X;
     /* ALGORITMA */
+    DelQ(Q,&X);
+    switch(X){
+        case 1:
+            InstantUpgrade(curP);
+            break;
+        case 2:
+            Shield_ON(F);
+            break;
+        case 3:
+            ExtraTurn(F);
+            break;
+        case 4:
+            AttackUp(F);
+            break;
+        case 5:
+            CriticalHit(F);
+            break;
+        case 6:
+            InstantReinforcement(curP);
+            break;
+        case 7:
+            Barrage(curP);
+            break;
+    }
 }
 void UNDO(Stack* S)
 /* MASIH BELOM KEBAYANG ANJAY */
@@ -413,16 +456,30 @@ void UNDO(Stack* S)
     /* KAMUS */
     /* ALGORITMA */
 }
-void END_TURN(FLAGS* F)
+void END_TURN(FLAGS* F, Queue* Q1, Queue* Q2, int curP)
 /* I.S F terdefinisi */
 /* F.S Validasi kondisi game, mengubah turn dan shieldCD */
 {
     /* KAMUS */
+    // Q1 is the currentplayer, Q2 is the enemy
+    boolean isGetIR;
+    address P;
+
     /* ALGORITMA */
+    if (GetSFlag(*F)){
+        SetShieldCD(F,GetShieldCD(*F)-1);
+        if (GetShieldCD(*F)==0){
+            Shield_OFF(F);
+        }
+    }
+    if (GetAUFlag(*F)){FlipAUFlag(F);}
+    // Skill Generator: IR
+    
 }
 void EXIT()
 /* Memanggil System Exit Call */
 {
     /* KAMUS */
     /* ALGORITMA */
+    exit(0);
 }
