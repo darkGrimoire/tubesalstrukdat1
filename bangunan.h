@@ -4,7 +4,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "boolean.h"
-#include "array.h"
+#include "point.h"
 
 typedef struct
 {
@@ -28,8 +28,8 @@ typedef struct
 #define lok(B) (B).lok
 #define jenis(B) (B).jenis
 
-void MakeBangunan(BANGUNAN *B, int kepemilikan, int pasukan, int level, POINT lok, char jenis);
-BANGUNAN SetBangunan(jenis j, int kepemilikan, boolean flag);
+void MakeBangunan(BANGUNAN *B, int kepemilikan, int pasukan, int a, int m, int u, int level, int X, int Y, char jenis);
+BANGUNAN SetBangunan(int kepemilikan, char jenis, point lokasi, boolean flag);
 void MakeCastle (BANGUNAN *B, boolean flag);
 void MakeTower (BANGUNAN *B, boolean flag);
 void MakeFort (BANGUNAN *B, boolean flag);
@@ -37,8 +37,10 @@ void MakeVillage (BANGUNAN *B, boolean flag);
 void SetMaxPasukan (BANGUNAN *B, char jenis, boolean flag);
 void SetKepemilikan (BANGUNAN *B, int kepemilikan, boolean flag);
 boolean IsKepemilikan (BANGUNAN B, int kepemilikan, boolean flag);
-void IncreasePasukan(BANGUNAN *B, jenis j, int pasukan);
-void LevelUp(BANGUNAN *B);
+void IncreasePasukan(BANGUNAN *B, int pasukan,boolean flag);
+boolean CanLevelUp(BANGUNAN B);
+void LevelUp(BANGUNAN *B, boolean flag);
 boolean IsTherePertahanan (BANGUNAN B);
+void delPasukan(BANGUNAN *B, boolean flag);
 
 #endif
