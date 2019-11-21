@@ -135,3 +135,10 @@ void DelQ (Queue * Q, infotype * X)
         }   
     }
 }
+
+int headOfQueue (Queue Q)
+{
+    // KAMUS LOKAL
+    // ALGORITMA
+        return InfoHead(Q);
+}

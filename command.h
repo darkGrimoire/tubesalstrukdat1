@@ -31,7 +31,7 @@ void CreateFlags(FLAGS* F);
 /* I.S F sembarang */
 /* F.S F terisi dengan default values untuk Type Data FLAGS */
 /*** Player ***/
-void CreatePlayerQueue(Queue* Q);
+void CreatePlayerQueue(Queue* Q, int Max);
 /* I.S Q sembarang */
 /* F.S Q terisi dengan "UI" */
 

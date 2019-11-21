@@ -65,4 +65,8 @@ void DelQ (Queue * Q, infotype * X);
 /* F.S. X = nilai elemen HEAD pd I.S., HEAD "maju" dengan mekanisme circular buffer; 
         Q mungkin kosong */
 
+/* Primitif Display Queue */
+int headOfQueue (Queue Q);
+/* Mengembalikan nilai dari Head(Q) */
+
 #endif
