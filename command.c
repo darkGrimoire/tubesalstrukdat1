@@ -4,7 +4,9 @@
 #include "stackt.h"
 #include "mesinkata.h"
 #include "bangunan.h"
+#include "listlinier.h"
 #include "lib\command.h"
+#include <stdlib.h>
 
 /********** KONSTRUKTOR **********/
 /*** Flags ***/
@@ -14,7 +16,7 @@ void CreateFlag(FLAGS* F){
     /* KAMUS */
     /* ALGORITMA */
     (*F).shieldF = false;
-    (*F).shieldCD = 0;
+    (*F).shieldCD = -1;
     (*F).attackUpF = false;
     (*F).criticalHitF = false;
     (*F).extraTurnF = false;
@@ -225,42 +227,71 @@ void IntToSkilltype(int N, Kata* S)
     }
 }
 /********** SKILLS **********/
-void InstantUpgrade(int playerID, LISTBANGUNAN B)
+void InstantUpgrade(int curP)
 /* I.S B terdefinisi */
 /* F.S setiap LISTBANGUNAN dalam B naik 1 level */
 {
     /* KAMUS */
+    address P;
+
     /* ALGORITMA */
-    
+    P = First(GLIST[curP-1]);
+    while (P != Nil){
+        LevelUp(&(bangunan(arrBan, Info(P))));
+        P = Next(P);
+    }
 }
-void InstantReinforcement(LISTBANGUNAN B)
+void InstantReinforcement(int curP)
 /* I.S B terdefinisi */
 /* F.S setiap LISTBANGUNAN dalam B mendapatkan tambahan 5 pasukan */
 {
     /* KAMUS */
+    address P;
+
     /* ALGORITMA */
+    P = First(GLIST[curP-1]);
+    while (P != Nil){
+        IncreasePasukan(&(bangunan(arrBan, Info(P))), 5);
+        P = Next(P);
+    }
 }
-void Barrage(LISTBANGUNAN B)
+void Barrage(int curP)
 /* I.S B terdefinisi */
 /* F.S setiap LISTBANGUNAN dalam B berkurang sebanyak 10 pasukan */
 {
     /* KAMUS */
+    address P;
+
     /* ALGORITMA */
+    P = First(GLIST[curP-1]);
+    while (P != Nil){
+        DecreasePasukan(&(bangunan(arrBan, Info(P))), 10);
+        P = Next(P);
+    }
 }
-void Shield_ON(LISTBANGUNAN B, FLAGS* F)
+
+void Shield_ON(FLAGS* F)
 /* I.S B dan F terdefinisi, shieldCD != 0 */
 /* F.S jika Shield belum aktif: aktifkan pertahanan semua LISTBANGUNAN dan atur shieldCD = 2. */
 /*     jika Shield sudah aktif: atur shieldCD = 2 */
 {
     /* KAMUS */
     /* ALGORITMA */
+    if (GetSFlag(*F)){
+        SetShieldCD(F, 2);
+    }else{
+        SetSFlag(F, true);
+        SetShieldCD(F, 2);
+    }
 }
-void Shield_OFF(LISTBANGUNAN B, FLAGS* F)
+void Shield_OFF(FLAGS* F)
 /* I.S B dan F terdefinisi, shieldCD == 0 */
 /* F.S Flip shieldF, Matikan pertahanan B kecuali LISTBANGUNAN yang defaultnya sudah ada pertahanan */
 {
     /* KAMUS */
     /* ALGORITMA */
+    SetSFlag(F, false);
+    SetShieldCD(F, -1);
 }
 void AttackUp(FLAGS* F)
 /* I.S F terdefinisi */
@@ -268,6 +299,7 @@ void AttackUp(FLAGS* F)
 {
     /* KAMUS */
     /* ALGORITMA */
+    SetAUFlag(F, true);
 }
 void CriticalHit(FLAGS* F)
 /* I.S F terdefinisi */
@@ -275,6 +307,7 @@ void CriticalHit(FLAGS* F)
 {
     /* KAMUS */
     /* ALGORITMA */
+    SetCHFlag(F, true);
 }
 void ExtraTurn(FLAGS* F)
 /* I.S F terdefinisi */
@@ -282,22 +315,90 @@ void ExtraTurn(FLAGS* F)
 {
     /* KAMUS */
     /* ALGORITMA */
+    SetETFlag(F, true);
 }
 
 /********** COMMANDS **********/
-void ATTACK(LISTBANGUNAN B, FLAGS* F)
+
+void ATTACK(List L, int targetBchoice, int myBchoice, int myPas, int curP)
 /* I.S B dan F terdefinisi */
 /* F.S B sesuai perhitungan Attack, F berubah sesuai dengan skill yang sedang aktif */
 {
     /* KAMUS */
+    // P1 is the attacker, P2 is the target
+    int targetPas, calcPas, checkPas, restPas, P1, P2;
+    BANGUNAN targetB, myB;
+    address P;
     /* ALGORITMA */
+    /* PREPARATION */
+    // Checks who's the attacker and the target
+    P1 = curP;
+    P2 = (curP == 1) ? 2 : 1; //Asumsi P2/target adalah Player
+    P = First(L);
+    while (targetBchoice>1){P = Next(P); targetBchoice--;}
+    if (SearchList(GLIST[P2-1],Info(P))==Nil){
+        P2 = 0; //Target bukanlah Player
+    }
+    // Prepare targetPas and targetB
+    targetB = bangunan(arrBan, Info(P));
+    if (P2==0){
+        targetPas = pasawal(targetB);
+    }else{
+        targetPas = pasukan(targetB);
+    }
+    // Prepare myB
+    P = First(GLIST[P1-1]);
+    while (myBchoice>1){P = Next(P); myBchoice--;}
+    myB = bangunan(arrBan, Info(P));
+    /* MEKANISME ATTACK */
+    // checkPas = cuman berbeda dgn myPas di criticalhit
+    // calcPas = jumlah pasukan yg di decrease di musuh
+    // restPas = myPas - targetPas
+    // DEFAULT:
+    checkPas = myPas;
+    calcPas = checkPas;
+    restPas = calcPas-targetPas;
+    
+    // attacker punya attackup/criticalhit, shield/pertahanan diabaikan
+    if (GetCHFlag(GFLAGS[P1-1])){
+        checkPas = myPas*2;
+        calcPas = checkPas;
+        restPas = (calcPas-targetPas)/2;
+    }else if (GetAUFlag(GFLAGS[P1-1])){
+        // checkPas = myPas;
+        // calcPas = checkPas;
+        // restPas = calcPas-targetPas;
+    }
+    // Mekanisme bangunan memiliki defense atau shield musuh on
+    else if (IsTherePertahanan(targetB) || GetSFlag(GFLAGS[P2-1])){
+        // checkPas = myPas;
+        calcPas = (3*checkPas)/4;
+        restPas = calcPas-targetPas;
+    }
+    // Mekanisme ordinary attack 
+    if (checkPas < targetPas){
+        DecreasePasukan(&targetB, calcPas);
+        DecreasePasukan(&myB, myPas);
+    } else if (checkPas >= targetPas){
+        SetKepemilikan(&targetB,P1);
+        SetPasukan(&targetB, restPas);
+        SetLevel(&targetB, 1);
+        DecreasePasukan(&myB,myPas);
+    }
+
 }
-void LEVEL_UP(LISTBANGUNAN B)
+void LEVEL_UP(List L, int choice)
 /* I.S F terdefinisi */
 /* F.S B yang terpilih akan level up jika memenuhi kriteria level up */
 {
     /* KAMUS */
+    address P;
+
     /* ALGORITMA */
+    P = First(L);
+    while (choice>1){P = Next(P); choice--;}
+    LevelUp(&bangunan(arrBan, Info(P)));
+    
 }
 void SKILL(FLAGS* F, LISTBANGUNAN B)
 /* I.S B dan F terdefinisi */

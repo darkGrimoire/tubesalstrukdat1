@@ -21,7 +21,7 @@ typedef struct tElmtlist {
 typedef struct {
 	address First;
 } List;
-extern List L1,L2;
+extern List GLIST[2];
 /* Definisi list : */
 /* List kosong : First(L) = Nil */
 /* Setiap elemen dengan a1ddress P dapat diacu Info(P), Next(P) */

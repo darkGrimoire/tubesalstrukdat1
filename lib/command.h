@@ -25,7 +25,7 @@ typedef struct {
     boolean winF;
 } FLAGS;
 
-
+extern FLAGS GFLAGS[2];
 /********** KONSTRUKTOR **********/
 /*** Flags ***/
 void CreateFlags(FLAGS* F);
@@ -38,6 +38,8 @@ void SetFlag(FLAGS* F, boolean SF, int CD, boolean AU, boolean CH, boolean ET, b
 void CreatePlayerQueue(Queue* Q, int Max);
 /* I.S Q sembarang */
 /* F.S Q terisi dengan "UI" */
+
+extern FLAGS GFLAGS[2];
 
 /********** SELEKTOR **********/
 /*** Flags ***/
@@ -101,20 +103,20 @@ void IntToSkilltype(int N, Kata* S);
 /* F.S N di convert menjadi char skilltype S */
 
 /********** SKILLS **********/
-void InstantUpgrade(LISTBANGUNAN B);
+void InstantUpgrade(int curP);
 /* I.S B terdefinisi */
 /* F.S setiap LISTBANGUNAN dalam B naik 1 level */
-void InstantReinforcement(LISTBANGUNAN B);
+void InstantReinforcement(int curP);
 /* I.S B terdefinisi */
 /* F.S setiap LISTBANGUNAN dalam B mendapatkan tambahan 5 pasukan */
-void Barrage(LISTBANGUNAN B);
+void Barrage(int curP);
 /* I.S B terdefinisi */
 /* F.S setiap LISTBANGUNAN dalam B berkurang sebanyak 10 pasukan */
-void Shield_ON(LISTBANGUNAN B, FLAGS* F);
+void Shield_ON(FLAGS* F);
 /* I.S B dan F terdefinisi, shieldCD != 0 */
 /* F.S jika Shield belum aktif: aktifkan pertahanan semua LISTBANGUNAN dan atur shieldCD = 2. */
 /*     jika Shield sudah aktif: atur shieldCD = 2 */
-void Shield_OFF(LISTBANGUNAN B, FLAGS* F);
+void Shield_OFF(FLAGS* F);
 /* I.S B dan F terdefinisi, shieldCD == 0 */
 /* F.S Flip shieldF, Matikan pertahanan B kecuali LISTBANGUNAN yang defaultnya sudah ada pertahanan */
 void AttackUp(FLAGS* F);
@@ -128,10 +130,10 @@ void ExtraTurn(FLAGS* F);
 /* F.S extraTurnF == true */
 
 /********** COMMANDS **********/
-void ATTACK(LISTBANGUNAN B, FLAGS* F);
+void ATTACK(List L, int targetBchoice, int myBchoice, int myPas, int curP);
 /* I.S B dan F terdefinisi */
 /* F.S B sesuai perhitungan Attack, F berubah sesuai dengan skill yang sedang aktif */
-void LEVEL_UP(LISTBANGUNAN B);
+void LEVEL_UP(List L, int choice);
 /* I.S F terdefinisi */
 /* F.S B yang terpilih akan level up jika memenuhi kriteria level up */
 void SKILL(FLAGS* F, LISTBANGUNAN B);
