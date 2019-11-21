@@ -5,8 +5,7 @@
 #include "loadsave.h"
 #include "peta.h"
 
-Queue Qplayer, Qskill1, Qskill2;
-str check,mulai;
+Queue Qskill1, Qskill2;
 Stack S;
 Peta P;
 int turn;
@@ -16,9 +15,11 @@ void changeTurn(int * turn){
     // ALGORITMA
         if(turn%2==1){
             *turn=2;
+            // nambah jumlah pasukan tiap bangunan utk player 2
         }
         else if(turn%2==0){
             *turn=1;
+            // nambah jumlah pasukan tiap bangunan utk player 1
         }
 }
 
@@ -35,10 +36,10 @@ int main()
     inputStart();
     if(mulai==1){
         turn = 1;
-        // nambah jumlah pasukan tiap bangunan
+        // nambah jumlah pasukan tiap bangunan utk player 1
         CreatePlayerQueue(*Qs1); // queue skill player 1
         CreatePlayerQueue(*Qs2); // queue skill player 2
-        // show player
+        // show nomor player
         DisplayPeta(P);
         // show bangunan
         // show skill
