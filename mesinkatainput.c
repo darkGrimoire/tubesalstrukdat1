@@ -153,7 +153,7 @@ void inputStart()
 void inputCommand()
 {
     // KAMUS LOKAL
-        int i,check;
+        int i;
         Kata KataATTACK;
         KataATTACK.TabKata[1] = 'A';
         KataATTACK.TabKata[2] = 'T';
