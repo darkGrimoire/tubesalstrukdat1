@@ -4,7 +4,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "boolean.h"
-#include "array.h"
+#include "point.h"
 
 typedef struct
 {
@@ -14,7 +14,7 @@ typedef struct
   int A;//nilai penambahan pasukan
   int M;//Maksimum penambahan pasukan
   int U;//pasukan awal
-  POINT lok//lokasi bangunan
+  POINT lok;//lokasi bangunan
   char jenis;//jenis bangunan 'C'=CASTLE 'T'=TOWER 'F'=FORT 'V'=VILLAGE
 } BANGUNAN;
 
@@ -28,17 +28,19 @@ typedef struct
 #define lok(B) (B).lok
 #define jenis(B) (B).jenis
 
-void MakeBangunan(BANGUNAN *B, int kepemilikan, int pasukan, int level, POINT lok, char jenis);
-BANGUNAN SetBangunan(jenis j, int kepemilikan, boolean flag);
-void MakeCastle (BANGUNAN *B, boolean flag);
-void MakeTower (BANGUNAN *B, boolean flag);
-void MakeFort (BANGUNAN *B, boolean flag);
-void MakeVillage (BANGUNAN *B, boolean flag);
-void SetMaxPasukan (BANGUNAN *B, char jenis, boolean flag);
-void SetKepemilikan (BANGUNAN *B, int kepemilikan, boolean flag);
-boolean IsKepemilikan (BANGUNAN B, int kepemilikan, boolean flag);
-void IncreasePasukan(BANGUNAN *B, jenis j, int pasukan);
+void MakeBangunan(BANGUNAN *B, int kepemilikan, int pasukan, int a, int m, int u, int level, int X, int Y, char jenis);
+BANGUNAN SetBangunan(int kepemilikan, char jenis, POINT lokasi);
+void MakeCastle (BANGUNAN *B);
+void MakeTower (BANGUNAN *B);
+void MakeFort (BANGUNAN *B);
+void MakeVillage (BANGUNAN *B);
+void SetMaxPasukan (BANGUNAN *B);
+void SetKepemilikan (BANGUNAN *B, int kepemilikan);
+boolean IsKepemilikan (BANGUNAN B, int kepemilikan);
+void IncreasePasukan(BANGUNAN *B, int pasukan);
+boolean CanLevelUp(BANGUNAN B);
 void LevelUp(BANGUNAN *B);
 boolean IsTherePertahanan (BANGUNAN B);
+void delPasukan(BANGUNAN *B);
 
 #endif

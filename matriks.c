@@ -16,7 +16,7 @@ void MakeMATRIKS (int NB, int NK, MATRIKS * M)
     NKolEff(*M) = NK;
     for (i = BrsMin; i <= NB; i++) {
 		for (j = KolMin; j <= NK; j++) {
-			ElmtMatriks(*M, i, j) = 0;
+			ElmtMatriks(*M, i, j) = NULL;
 		}
 	}
 }
@@ -221,7 +221,7 @@ boolean IsSparse (MATRIKS M)
 	count = 0;
 	for (i = GetFirstIdxBrs(M); i <= GetLastIdxBrs(M); i++) {
 		for (j = GetFirstIdxKol(M); j <= GetLastIdxKol(M); j++) {
-			if (ElmtMatriks(M, i, j) != ' ') {
+			if (ElmtMatriks(M, i, j) != NULL) {
 				count = count + 1;
 			}
 		}
