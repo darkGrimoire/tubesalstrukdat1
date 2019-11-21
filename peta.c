@@ -35,10 +35,11 @@ void CreatePeta (int NB, int NK, Peta *P)
             ElmtMatriks(*P, i , 0) = '*';
             ElmtMatriks(*P, i , GetLastIdxKol(*P)+1) = '*';
         } */
+        printf("Anda berada di medan perang seluas %d x %d\n", NB, NK);
     }
     else
     {
-        printf("%s", "Baris dan kolom tidak sesuai spesifikasi");
+        printf("%s", "Baris dan kolom tidak sesuai spesifikasi\n");
     }
     
 }
@@ -63,7 +64,7 @@ boolean IsPetaValid(int NB, int NK)
     
 }
 
-void IsiPeta(Peta *P, TabInt T)
+void IsiPeta(Peta *P, TabInt arrBan)
 // Mengisi matriks peta dengan bangunan pada array bangunan sesuai dengan lokasinya
 // I.S. Peta Kosong
 // F.S. Peta diisi sesuai isi array bangunan
@@ -74,67 +75,69 @@ void IsiPeta(Peta *P, TabInt T)
 {
     int x,y;
     char b;
-    for (int i = 1; i <= Neff(T); i++)
+    for (int i = 1; i <= Neff(arrBan); i++)
     {
-        x = Absis(lok(bangunan(T,i))); // mengambil indeks baris bangunan
-        y = Ordinat(lok(bangunan(T,i)));
-        b = jenis(bangunan(T,i));
+        x = Absis(lok(bangunan(arrBan,i))); // mengambil indeks baris bangunan
+        y = Ordinat(lok(bangunan(arrBan,i)));
+        b = jenis(bangunan(arrBan,i));
+        TulisPOINT(lok(bangunan(arrBan,i))); // !!!
+        printf("%c\n", b); // !!!
         switch (b)
         {
             case 'C':
-                if (kepemilikan(bangunan(T,i)) == 0)
+                if (kepemilikan(bangunan(arrBan,i)) == 0)
                 {
-                    ElmtMatriks(*P,x,y) = b;
+                    ElmtMatriks(*P,y,x) = b;
                 }
-                else if (kepemilikan(bangunan(T,i)) == 2)
+                else if (kepemilikan(bangunan(arrBan,i)) == 2)
                 {
-                    ElmtMatriks(*P,x,y) = 'c';
+                    ElmtMatriks(*P,y,x) = 'c';
                 }
                 else
                 {
-                    ElmtMatriks(*P,x,y) = 'p';
+                    ElmtMatriks(*P,y,x) = 'p';
                 }
                 break;
             case 'T':
-                if (kepemilikan(bangunan(T,i)) == 0)
+                if (kepemilikan(bangunan(arrBan,i)) == 0)
                 {
-                    ElmtMatriks(*P,x,y) = b;
+                    ElmtMatriks(*P,y,x) = b;
                 }
-                else if (kepemilikan(bangunan(T,i)) == 2)
+                else if (kepemilikan(bangunan(arrBan,i)) == 2)
                 {
-                    ElmtMatriks(*P,x,y) = 't';
+                    ElmtMatriks(*P,y,x) = 't';
                 }
                 else
                 {
-                    ElmtMatriks(*P,x,y) = 'q';
+                    ElmtMatriks(*P,y,x) = 'q';
                 }
                 break;
             case 'F':
-                if (kepemilikan(bangunan(T,i)) == 0)
+                if (kepemilikan(bangunan(arrBan,i)) == 0)
                 {
-                    ElmtMatriks(*P,x,y) = b;
+                    ElmtMatriks(*P,y,x) = b;
                 }
-                else if (kepemilikan(bangunan(T,i)) == 2)
+                else if (kepemilikan(bangunan(arrBan,i)) == 2)
                 {
-                    ElmtMatriks(*P,x,y) = 'f';
+                    ElmtMatriks(*P,y,x) = 'f';
                 }
                 else
                 {
-                    ElmtMatriks(*P,x,y) = 'r';
+                    ElmtMatriks(*P,y,x) = 'r';
                 }
                 break;
             case 'V':
-                if (kepemilikan(bangunan(T,i)) == 0)
+                if (kepemilikan(bangunan(arrBan,i)) == 0)
                 {
-                    ElmtMatriks(*P,x,y) = b;
+                    ElmtMatriks(*P,y,x) = b;
                 }
-                else if (kepemilikan(bangunan(T,i)) == 2)
+                else if (kepemilikan(bangunan(arrBan,i)) == 2)
                 {
-                    ElmtMatriks(*P,x,y) = 'v';
+                    ElmtMatriks(*P,y,x) = 'v';
                 }
                 else
                 {
-                    ElmtMatriks(*P,x,y) = 's';
+                    ElmtMatriks(*P,y,x) = 's';
                 }
                 break;
             default:
