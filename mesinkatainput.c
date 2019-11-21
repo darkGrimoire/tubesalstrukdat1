@@ -4,6 +4,7 @@
 #include "mesinkatainput.h"
 #include <stdio.h>
 #include <ctype.h>
+#include "pcolor.c"
 
 Kata CKata;
 boolean EndKata;
@@ -216,9 +217,11 @@ void inputCommand()
         check = 0;
         do{
             printf("Command yang tersedia: ");
-            printf("%s%c", RED);
-            printf("Masukkan input: ");
+            printf("%s", MAGENTA);
+            printf("ATTACK - LEVEL_UP - SKILL - UNDO - SAVE - END_TURN - EXIT");
             printf("%s", NORMAL);
+            printf("\n");
+            printf("Masukkan perintah: ");
             STARTKATA();
             if(matchString(CKata,KataATTACK)){
                 check=1;
