@@ -141,7 +141,6 @@ void Konkat1 (List *L1, List *L2, List *L3);
 /* dan L1 serta L2 menjadi list kosong.*/
 /* Tidak ada alokasi/dealokasi pada prosedur ini */
 
-void ListBPemilik(List *L1,List *L2);
+void ListBPemilik();
 List GetLPemilik(int kepemilikan);
-
 #endif

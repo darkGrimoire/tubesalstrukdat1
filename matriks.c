@@ -119,7 +119,7 @@ void TulisMATRIKS (MATRIKS M)
 	/* Algoritma */
 	for (i = GetFirstIdxBrs(M); i <= GetLastIdxBrs(M); i++) {
 		for (j = GetFirstIdxKol(M); j <= GetLastIdxKol(M); j++) {
-			printf("%d", ElmtMatriks(M, i, j));
+			printf("%c", ElmtMatriks(M, i, j));
 			if (j == GetLastIdxKol(M) && i < GetLastIdxBrs(M)) {
 				printf("\n");
 			}
@@ -162,7 +162,7 @@ boolean NEQMatriks (MATRIKS M1, MATRIKS M2)
 /* Mengirimkan true jika M1 tidak sama dengan M2 */
 {	/* Kamus lokal */
 	/* Algoritma */
-	return (!EQ(M1, M2));
+	return (!EQMatriks(M1, M2));
 }
 boolean EQSizeMatriks (MATRIKS M1, MATRIKS M2)
 /* Mengirimkan true jika ukuran efektif matriks M1 sama dengan ukuran efektif M2 */
