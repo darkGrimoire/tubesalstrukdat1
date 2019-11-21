@@ -1,39 +1,8 @@
-/* File : graph.h */
-/* ADT graph */
+/* File : graph.c */
+/* Implementasi dari graph.h */
 
-#ifndef graph_H
-#define graph_H
-
-#include "boolean.h"
-#include "listlinier.c"
-
-#define Nil NULL
-
-typedef struct taddrNode *addrNode;
-typedef struct tadrSuccNode *addrSuccNode;
-typedef struct taddrNode{
-    int Id;
-    int NPred;
-    addrSuccNode Trail;
-    addrNode Next;  
-} Node;
-typedef struct tadrSuccNode{
-    addrNode Succ;
-    addrSuccNode Next;
-} SuccNode;
-typedef struct 
-{
-    addrNode First;
-} Graph;
-
-/* Selektor */
-#define FirstG(G) ((G).First) // first dari graph
-#define Id(Pn) (Pn)->Id
-#define NPred(Pn) Pn->NPred
-#define Trail(Pn) Pn->Trail
-#define NextN(Pn) Pn->Next
-#define Succ(Pt) Pt->Succ
-#define NextT(Pt) Pt->Next // next dari trail
+#include <stdio.h>
+#include "graph.h"
 
 /* Konstruktor */
 void CreateGraph (int X, Graph G);
@@ -77,5 +46,3 @@ void InsertEdge (Graph G, int prec, int succ);
 /* I.S. G, prec, succ terdefinisi. */
 /* F.S. Jika belum ada edge di G, maka menambahkan edge ke G. Jika simpul prec/succ belum ada pada G, tambahkan simpul tersebut dahulu.
 Jika sudah ada busur (prec,succ) di G, maka G tetap. */
-
-#endif

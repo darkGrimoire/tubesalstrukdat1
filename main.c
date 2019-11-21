@@ -131,7 +131,7 @@ int main()
         ReadGraf(...);
     }
 
-    haveAttack = 0;
+    haveAttack = 0; //jadi array
 
     while(!loseState){
         do
