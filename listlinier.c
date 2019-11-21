@@ -28,7 +28,7 @@ void CreateList (List *L)
 /* I.S. sembarang             */
 /* F.S. Terbentuk list kosong */
 {
-    First(*L) == Nil;
+    First(*L) = Nil;
 }
 
 /****************** Manajemen Memori ******************/
@@ -124,7 +124,7 @@ void InsVLast (List *L, infotype X)
     address P;
 
     // ALGORITMA
-    P = AlokasiList(X);
+    P = AlokasiList(X); 
     if (P != Nil)
     {
         InsertLast(L, P);
@@ -383,7 +383,7 @@ void Konkat1 (List *L1, List *L2, List *L3)
     }
     
 }
-
+/*
 void ListBPemilik(List *L1,List *L2){
     for (int i =1;i<=Neff(arrBan);i++){
         if (kepemilikan(bangunan(arrBan,i))==1) InsVLast(L1,i);
@@ -393,4 +393,4 @@ void ListBPemilik(List *L1,List *L2){
 List GetLPemilik(int kepemilikan){
     if (kepemilikan == 1) return L1;
     else return L2;
-}
+}*/
