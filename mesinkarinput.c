@@ -32,8 +32,8 @@ void ADV() {
 
     /* Algoritma */
     retval = fscanf(pita,"%c",&CC);
-    EOP = (CC == MARK);
-    if (EOP) {
-       fclose(pita);
+    if(retval=='\n'){
+        EOP = true;
+        fclose(pita);
     }
 }
