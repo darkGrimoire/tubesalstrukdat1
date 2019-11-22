@@ -1,12 +1,14 @@
 #include <stdio.h>
-#include "command.c"
-#include "mesinkatainput.c"
-#include "queue.c"
-#include "loadsave.c"
-#include "peta.h"
-#include "arraydin.c"
-#include "listlinier.c"
-#include "graph.c"
+#include "lib\command.h"
+#include "lib\mesinkatainput.h"
+#include "lib\queue.h"
+#include "lib\saveload.h"
+#include "lib\peta.h"
+#include "lib\arraydin.h"
+#include "lib\listlinier.h"
+#include "lib\graph.h"
+#include "lib\bangunan.h"
+#include "lib\stackt.h"
 
 extern Queue GQUEUE[2];
 Stack S;

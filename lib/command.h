@@ -6,7 +6,7 @@
 /* include files */
 #include "boolean.h"
 #include "queue.h"
-#include "lib\stackt.h"
+#include "stackt.h"
 #include "bangunan.h"
 #include "mesinkata.h"
 
