@@ -1,10 +1,15 @@
 #include <stdio.h>
-#include "mesinkatainput.c"
+#include "mesinkatainput.h"
+
+// int check, CAngka;
 
 int main(){
     STARTKATA();
     printf("%d",convertToInteger(CKata));
     inputCommand();
-    printf("%d",check);
+    printf("%d\n",check);
+
+    STARTANGKA();
+    printf("%d",CAngka);
     return 0;
 }

@@ -4,11 +4,12 @@
 #include "mesinkatainput.h"
 #include <stdio.h>
 #include <ctype.h>
-#include "pcolor.c"
+#include "pcolor.h"
 
 Kata CKata;
-boolean EndKata;
-extern int check,mulai;
+int CAngka, mulai, check;
+boolean EndKata, EndAngka;
+
 
 void IgnoreBlank()
 /* Mengabaikan satu atau beberapa BLANK
@@ -40,6 +41,20 @@ void STARTKATA()
     } 
 }
 
+void STARTANGKA(){
+    // KAMUS LOKAL
+    // ALGORITMA
+        START();
+        IgnoreBlank();
+        if(CC==MARK){
+            EndAngka = true;
+        }
+        else{
+            EndAngka = false;
+            SalinAngka();
+        }
+}
+
 void ADVKATA()
 /* I.S. : CC adalah karakter pertama kata yang akan diakuisisi
    F.S. : CKata adalah kata terakhir yang sudah diakuisisi,
@@ -57,6 +72,19 @@ void ADVKATA()
         SalinKata();
         IgnoreBlank();
     }
+}
+
+void ADVANGKA(){
+    // KAMUS LOKAL
+    // ALGORITMA
+        IgnoreBlank();
+        if(CC==MARK){
+            EndAngka = true;
+        }
+        else{
+            SalinAngka();
+            IgnoreBlank();
+        }
 }
 
 void SalinKata()
@@ -83,6 +111,17 @@ void SalinKata()
     CKata.Length = i;
 }
 
+void SalinAngka(){
+    // KAMUS LOKAL
+        int CCconv;
+    // ALGORITMA
+        while((CC!=BLANK) && (CC!=MARK)){
+            CCconv = (int) CC - 48;
+            CAngka = CAngka*10;
+            CAngka = CAngka + CCconv;
+            ADV();
+        }
+}
 
 int convertToInteger(Kata K)
 {
