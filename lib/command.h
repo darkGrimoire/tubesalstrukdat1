@@ -6,7 +6,7 @@
 /* include files */
 #include "boolean.h"
 #include "queue.h"
-#include "stackt.h"
+#include "lib\stackt.h"
 #include "bangunan.h"
 #include "mesinkata.h"
 
@@ -26,6 +26,7 @@ typedef struct {
 } FLAGS;
 
 extern FLAGS GFLAGS[2];
+
 /********** KONSTRUKTOR **********/
 /*** Flags ***/
 void CreateFlags(FLAGS* F);
@@ -129,6 +130,14 @@ void ExtraTurn(FLAGS* F);
 /* I.S F terdefinisi */
 /* F.S extraTurnF == true */
 
+/********** SKILL GENERATOR **********/
+void GenerateS(int curP);
+void GenerateET(int curP);
+void GenerateAU(int curP);
+void GenerateCH(int curP);
+void GenerateIR(int curP);
+void GenerateB(int curP);
+
 /********** COMMANDS **********/
 void ATTACK(List L, int targetBchoice, int myBchoice, int myPas, int curP);
 /* I.S B dan F terdefinisi */
@@ -140,10 +149,14 @@ void SKILL(FLAGS* F, Queue* Q, int curP);
 /* I.S B dan F terdefinisi */
 /* F.S Del Skill yang ada di Queue, lalu gunakan skillnya */
 void UNDO(Stack* S);
-/* MASIH BELOM KEBAYANG ANJAY */
-void END_TURN(FLAGS* F, Queue* Q1, Queue* Q2);
+/* Yang bisa di-undo: ATTACK, LEVEL_UP, MOVE */
+/* Stack bakal di-reset tiap: END_TURN, SKILL */
+void END_TURN(FLAGS* F, int curP);
 /* I.S F terdefinisi */
 /* F.S Validasi kondisi game, mengubah turn dan shieldCD */
+void MOVE(int curBchoice, int targetBchoice, int jumPas, int curP);
+/* I.S curP terdefinisi 1/2 */
+/* F.S Memindahkan pasukan dari curB ke targetB */
 void EXIT();
 /* Memanggil System Exit Call */
 

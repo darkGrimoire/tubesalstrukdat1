@@ -1,12 +1,14 @@
 /* include files */
 #include "boolean.h"
 #include "queue.h"
-#include "stackt.h"
+#include "lib\stackt.h"
 #include "mesinkata.h"
 #include "bangunan.h"
 #include "listlinier.h"
 #include "lib\command.h"
 #include <stdlib.h>
+
+Queue GQUEUE[2];
 
 /********** KONSTRUKTOR **********/
 /*** Flags ***/
@@ -318,6 +320,108 @@ void ExtraTurn(FLAGS* F)
     SetETFlag(F, true);
 }
 
+/********** SKILL GENERATOR **********/
+void GenerateS(int curP)
+// Prekondisi: abis ATTACK berhasil
+{
+    /* KAMUS */
+    boolean condPass;
+    address P;
+    int enemyP;
+    /* ALGORITMA */
+    enemyP = (curP == 1) ? 2 : 1;
+    // Validasi
+    if (!IsFullQ(GQUEUE[enemyP-1])){
+        condPass = NbElmtList(GLIST[enemyP-1])==2;
+        if (condPass) {AddQ(&GQUEUE[enemyP-1], 2);}; 
+    }
+}
+void GenerateET(int curP)
+// Prekondisi: berhasil rebut Fort enemyP
+{
+    /* KAMUS */
+    boolean condPass;
+    int enemyP;
+    /* ALGORITMA */
+    enemyP = (curP == 1) ? 2 : 1;
+    // Validasi
+    if (!IsFullQ(GQUEUE[enemyP-1])){
+        condPass = true;
+        if (condPass) {AddQ(&GQUEUE[enemyP-1], 3);}; 
+    }
+}
+void GenerateAU(int curP)
+// Prekondisi: baru saja menyerang tower
+{
+    /* KAMUS */
+    boolean condPass;
+    address P;
+    int enemyP, count;
+    /* ALGORITMA */
+    enemyP = (curP == 1) ? 2 : 1;
+    // Validasi
+    if (!IsFullQ(GQUEUE[curP-1])){
+        count = 0;
+        P = First(GLIST[enemyP-1]);
+        while (P!=Nil){
+            if (jenis(bangunan(arrBan, Info(P))) == 'T'){
+                count++;
+            }
+        }
+        condPass = count==3;
+        if (condPass) {AddQ(&GQUEUE[curP-1], 4);}; 
+    }
+}
+void GenerateCH(int curP)
+// Prekondisi: abis ExtraTurn
+{
+    /* KAMUS */
+    boolean condPass;
+    address P;
+    int enemyP;
+    /* ALGORITMA */
+    enemyP = (curP == 1) ? 2 : 1;
+    // Validasi
+    if (!IsFullQ(GQUEUE[enemyP-1])){
+        condPass = GetCHFlag(GFLAGS[curP-1]);
+        if (condPass) {AddQ(&GQUEUE[enemyP-1], 5);}; 
+    }
+}
+void GenerateIR(int curP)
+// Prekondisi: END_TURN
+{
+    /* KAMUS */
+    boolean condPass;
+    address P;
+    /* ALGORITMA */
+    // Validasi
+    if (!IsFullQ(GQUEUE[curP-1])){
+        condPass = true;
+        P = First(GLIST[curP-1]);
+        while (P!=Nil && condPass){
+            if (level(bangunan(arrBan, Info(P))) < 4){
+                condPass = false;
+            }
+        }
+        if (condPass) {AddQ(&GQUEUE[curP-1], 6);}; 
+    }
+}
+void GenerateB(int curP)
+// Prekondisi: Abis ATTACK.
+{
+    /* KAMUS */
+    boolean condPass;
+    address P;
+    int enemyP;
+    /* ALGORITMA */
+    enemyP = (curP == 1) ? 2 : 1;
+    // Validasi
+    if (!IsFullQ(GQUEUE[enemyP-1])){
+        condPass = NbElmtList(GLIST[curP-1])==10;
+        if (condPass) {AddQ(&GQUEUE[enemyP-1], 7);}; 
+    }
+}
+
 /********** COMMANDS **********/
 
 void ATTACK(List L, int targetBchoice, int myBchoice, int myPas, int curP)
@@ -378,17 +482,28 @@ void ATTACK(List L, int targetBchoice, int myBchoice, int myPas, int curP)
     }
     // Mekanisme ordinary attack 
     if (checkPas < targetPas){
-        DecreasePasukan(&targetB, calcPas);
-        DecreasePasukan(&myB, myPas);
-        printf("Bangunan gagal direbut.");
+        if (P2!=0){
+            DecreasePasukan(&targetB, calcPas);
+            DecreasePasukan(&myB, myPas);
+        }
+        printf("Bangunan gagal direbut.\n");
     } else if (checkPas >= targetPas){
         SetKepemilikan(&targetB,P1);
         SetPasukan(&targetB, restPas);
         SetLevel(&targetB, 1);
         DecreasePasukan(&myB,myPas);
-        printf("Bangunan menjadi milikmu!");
+        printf("Bangunan menjadi milikmu!\n");
+        // Skill Generator: S, ET
+        GenerateS(curP);
+        if (jenis(targetB) == 'F' && P2 != 0){
+            GenerateET(curP);
+        }
     }
-
+    // Skill Generator: B, AU
+    GenerateB(curP);
+    if (jenis(targetB) == 'T' && P2!=0){
+        GenerateAU(curP);
+    }
 }
 void LEVEL_UP(int choice, int curP)
 /* I.S F terdefinisi */
@@ -408,14 +523,14 @@ void LEVEL_UP(int choice, int curP)
         else if (jenis(bangunan(arrBan, Info(P)))=='T'){printf("Tower");}
         else if (jenis(bangunan(arrBan, Info(P)))=='F'){printf("Fort");}
         else if (jenis(bangunan(arrBan, Info(P)))=='V'){printf("Village");}
-        printf("-mu meningkat menjadi %d!",level(bangunan(arrBan, Info(P))));
+        printf("-mu meningkat menjadi %d!\n",level(bangunan(arrBan, Info(P))));
     }else{
         printf("Jumlah pasukan ");
         if (jenis(bangunan(arrBan, Info(P)))=='C'){printf("Castle");}
         else if (jenis(bangunan(arrBan, Info(P)))=='T'){printf("Tower");}
         else if (jenis(bangunan(arrBan, Info(P)))=='F'){printf("Fort");}
         else if (jenis(bangunan(arrBan, Info(P)))=='V'){printf("Village");}
-        printf(" kurang untuk level up");
+        printf(" kurang untuk level up\n");
     }
 }
 void SKILL(FLAGS* F, Queue* Q, int curP)
@@ -435,6 +550,8 @@ void SKILL(FLAGS* F, Queue* Q, int curP)
             break;
         case 3:
             ExtraTurn(F);
+            // Skill Generator: CH
+            GenerateCH(curP);
             break;
         case 4:
             AttackUp(F);
@@ -451,12 +568,27 @@ void SKILL(FLAGS* F, Queue* Q, int curP)
     }
 }
 void UNDO(Stack* S)
-/* MASIH BELOM KEBAYANG ANJAY */
+/* Yang bisa di-undo: ATTACK, LEVEL_UP, MOVE */
+/* Stack bakal di-reset tiap: END_TURN, SKILL */
 {
     /* KAMUS */
+    stackinfotype X;
     /* ALGORITMA */
+    if (!IsEmptyStack(*S)){
+        Pop(&S, &X);
+        GQUEUE[0] = X.Q1;
+        GQUEUE[1] = X.Q2;
+        GFLAGS[0] = X.F1;
+        GFLAGS[1] = X.F2;
+        GLIST[0] = X.L1;
+        GLIST[1] = X.L2;
+        arrBan = X.arrBan;
+    }
+    else {
+        printf("Tidak dapat undo\n");
+    }
 }
-void END_TURN(FLAGS* F, Queue* Q1, Queue* Q2, int curP)
+void END_TURN(FLAGS* F, int curP)
 /* I.S F terdefinisi */
 /* F.S Validasi kondisi game, mengubah turn dan shieldCD */
 {
@@ -473,9 +605,34 @@ void END_TURN(FLAGS* F, Queue* Q1, Queue* Q2, int curP)
         }
     }
     if (GetAUFlag(*F)){FlipAUFlag(F);}
+    if (GetCHFlag(*F)){FlipCHFlag(F);}
     // Skill Generator: IR
-    
+    GenerateIR(curP);
+    // tambahpasukan();
 }
+
+void MOVE(int curBchoice, int targetBchoice, int jumPas, int curP)
+/* I.S curP terdefinisi 1/2, curB dan targetB terdefinisi bagian dari GLIST[curP-1] */
+/* F.S Memindahkan pasukan dari curB ke targetB */
+{
+    /* KAMUS */
+    BANGUNAN curB, targetB;
+    address P;
+    /* ALGORITMA */
+    // Find bangunan
+    P = First(GLIST[curP-1]);
+    while (targetBchoice>1){P = Next(P); targetBchoice--;}
+    targetB = bangunan(arrBan, Info(P));
+    P = First(GLIST[curP-1]);
+    while (curBchoice>1){P = Next(P); curBchoice--;}
+    curB = bangunan(arrBan, Info(P));
+
+    // Move Pasukan
+    jumPas = (jumPas+pasukan(curB)+abs(jumPas-pasukan(curB)))/2;
+    IncreasePasukan(&targetB, jumPas);
+    DecreasePasukan(&curB, jumPas);
+}
+
 void EXIT()
 /* Memanggil System Exit Call */
 {
