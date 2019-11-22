@@ -8,28 +8,16 @@
 #include "listlinier.c"
 #include "graph.c"
 
-extern Queue GQueue[2];
+extern Queue GQUEUE[2];
 Stack S;
 Peta P;
 int curPlayer, enemyPlayer;
 
-boolean loseState (int player, arrBan AB){
+boolean loseState (int player){
     // KAMUS LOKAL
         int i, count;
     // ALGORITMA
-        count = 0;
-        for(i=1; i<=Neff(AB); i++){
-            if(kepemilikan(B)==player){
-                count+=1;
-            }
-        }
-
-        if(count==0){
-            return true;
-        }
-        else{
-            return false;
-        }
+        return (NbElmtList(GLIST[curPlayer-1])==0);
 }
 
 void availableSkill (Queue Q) {
@@ -60,47 +48,47 @@ void availableSkill (Queue Q) {
         }
 }
 
-void printBuildings(int player){
+void printBuildings(List L){ // pake list L parameternya
     // KAMUS LOKAL
         address P;
     // ALGORITMA
-        P = First(GLIST[player-1]);
+        P = First(L);
         while(P!=Nil){
-            if(jenis(B)=='C'){
+            if(jenis(bangunan(arrBan,Info(P))) == 'C'){
                 printf("Castle ");
-                printf(lok(B));
+                printf(lok(bangunan(arrBan,Info(P))));
                 printf(" ");
-                printf(pasukan(B));
+                printf(pasukan(bangunan(arrBan,Info(P))));
                 printf(" ");
                 printf("lv. ");
-                printf(level(B));
+                printf(level(bangunan(arrBan,Info(P))));
             }
-            else if(jenis(B)=='T'){
+            else if(jenis(bangunan(arrBan,Info(P))) == 'T'){
                 printf("Tower ");
-                printf(lok(B));
+                printf(lok(bangunan(arrBan,Info(P))));
                 printf(" ");
-                printf(pasukan(B));
+                printf(pasukan(bangunan(arrBan,Info(P))));
                 printf(" ");
                 printf("lv. ");
-                printf(level(B));
+                printf(level(bangunan(arrBan,Info(P))));
             }
-            if(jenis(B)=='F'){
+            else if(jenis(bangunan(arrBan,Info(P))) == 'F'){
                 printf("Fort ");
-                printf(lok(B));
+                printf(lok(bangunan(arrBan,Info(P))));
                 printf(" ");
-                printf(pasukan(B));
+                printf(pasukan(bangunan(arrBan,Info(P))));
                 printf(" ");
                 printf("lv. ");
-                printf(level(B));
+                printf(level(bangunan(arrBan,Info(P))));
             }
-            if(jenis(B)=='V'){
+            else if(jenis(bangunan(arrBan,Info(P))) == 'V'){
                 printf("Village ");
-                printf(lok(B));
+                printf(lok(bangunan(arrBan,Info(P))));
                 printf(" ");
-                printf(pasukan(B));
+                printf(pasukan(bangunan(arrBan,Info(P))));
                 printf(" ");
                 printf("lv. ");
-                printf(level(B));
+                printf(level(bangunan(arrBan,Info(P))));
             }
         }
 }
@@ -123,7 +111,7 @@ void changeTurn(int *curPlayer, int *enemyPlayer){
 int main()
 {
     // KAMUS
-        int choicePenyerang, choiceDiserang, choicePasukan, choiceLevelUp;
+        int choicePenyerang, choiceDiserang, choicePasukan, choiceLevelUp, choiceMove, choiceMoveTo;
     // ALGORITMA
     printf("Welcome to Avatar World War!");
     printf("Select Mode: ");
@@ -139,8 +127,8 @@ int main()
         else{
             printf("Player 2");
         }
-        CreatePlayerQueue(*Qs1,10); // queue skill player 1
-        CreatePlayerQueue(*Qs2,10); // queue skill player 2
+        CreatePlayerQueue(*GQUEUE[0],10); // queue skill player 1
+        CreatePlayerQueue(*GQUEUE[1],10); // queue skill player 2
     }
     
     else if(mulai==2){
@@ -150,58 +138,57 @@ int main()
         ReadGraf(...);
     }
 
-    while(!loseState(curPlayer,AB)){
+    while(!loseState(curPlayer)){
+        List LAttackFlag;
+        //copy list kepemilikan ke list baru
+        CopyList(GLIST[curPlayer-1],LAttackFlag);
+
+        List Lattack; // list bangunan yang bisa di-attack
+        Lattack = MakeListEdge(G,choicePenyerang);
         do
         {
+            F = GFLAGS[curPlayer-1];
             IsiPeta(*P, arrayBangunan);
             DisplayPeta(P);
-            // nambah jumlah pasukan tiap bangunan untuk curplayer
+            // nambah jumlah pasukan tiap bangunan untuk curplayer -> tambahpasukan
             printBuildings(curPlayer,B);
             printf("Skill Available: ");
-            if(curPlayer%2!=0){
-                availableSkill(Qskill1);
-            }
-            else{
-                availableSkill(Qskill2);
-            }
+            availableSkill(GQUEUE[curPlayer-1]);
             inputCommand();
             switch(check){
                 case 1:
-                    List Lattack; // list bangunan yang bisa di-attack
-                    Lattack = MakeListEdge(G,choicePenyerang);
                     address P = First(GLIST[curPlayer-1]); // list kepemilikan player
                     while(P!=Nil){
-                        if(SearchList(Lattack,Info(P))){
+                        if(SearchList(Lattack,Info(P))!=Nil){
                             DelP(&Lattack,Info(P));
                         }
                         P = Next(P);
                     }
 
                     printf("Daftar bangunan: \n");
-                    printBuildings(curPlayer-1);
+                    printBuildings(GLIST[curPlayer-1]);
                     printf("Bangunan yang digunakan untuk menyerang: ");
-                    scanf("%d",&choicePenyerang);
-                    printBuildings(enemyPlayer-1);
-                    printf("Bangunan yang diserang: ");
-                    scanf("%d",&choiceDiserang);
+                    STARTANGKA();
+                    choicePenyerang = CAngka;
+                    printBuildings(GLIST[enemyPlayer-1]);
+                    printf("Bangunan yang diserang: "); 
+                    STARTANGKA();
+                    choiceDiserang = CAngka;
                     printf("Jumlah pasukan: ");
-                    scanf("%d",&choicePasukan);
+                    STARTANGKA();
+                    choicePasukan = CAngka;
                     ATTACK(Lattack, choiceDiserang, choicePenyerang, choicePasukan, curPlayer);
-                    //apa perlu dicopy?
+                    DelP(&LAttackFlag,choicePenyerang);
                     break; 
                 case 2:
-                    printBuildings(curPlayer-1);
+                    printBuildings(GLIST[curPlayer-1]);
                     printf("Bangunan yang akan di-level up: ");
-                    scanf("%d",&choiceLevelUp);
+                    STARTANGKA();
+                    choiceLevelUp = CAngka;
                     LEVEL_UP(choiceLevelUp, curPlayer);
                     break;
                 case 3:
-                    if(curPlayer==1){
-                        SKILL(*F,*GQueue[curPlayer-1],curPlayer);
-                    }
-                    else if(curPlayer==2){
-                        SKILL(*F,*GQueue[curPlayer-1],curPlayer);
-                    }
+                    SKILL(&F,*GQUEUE[curPlayer-1],curPlayer);
                     break;
                 case 4:
                     UNDO(*S);
@@ -210,20 +197,37 @@ int main()
                     SaveConfig(...);
                     break;
                 case 6:
-                    MOVE(...);
+                    printf("Daftar bangunan: \n");
+                    printBuildings(GLIST[curPlayer-1]);
+                    printf("Pilih bangunan: ");
+                    STARTANGKA();
+                    choiceMove = CAngka;
+                    printf("Daftar bangunan terdekat: ");
+                    printBuildings(LAttack);
+                    printf("Bangunan yang akan menerima: ");
+                    STARTANGKA();
+                    choiceMoveTo = CAngka;
+                    printf("Jumlah pasukan: ");
+                    STARTANGKA();
+                    choicePasukan = CAngka;
+                    MOVE(choiceMove,choiceMoveTo,choicePasukan,curPlayer);
                 case 7:
                     EXIT();
             }
         }while(check!=8);
 
         if(check==8){
-            END_TURN(*F, *GQueue[1], *GQueue[2], curPlayer);
-            // isExtraTurn aktif, maka gausah changeTurn
-            changeTurn(*curPlayer);
+            END_TURN(&F, curPlayer);
+            if(!GetETFlag(F)){
+                changeTurn(*curPlayer);
+            }
+            else{
+                FlipETFlag(&F);
+            }
         }
     }
 
-    if(loseState(curPlayer,AB)){
+    if(loseState(curPlayer)){
         if(curPlayer==1){
             printf("Player 1 loses! Try again next time!");
         }

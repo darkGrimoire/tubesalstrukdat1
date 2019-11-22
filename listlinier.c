@@ -384,6 +384,23 @@ void Konkat1 (List *L1, List *L2, List *L3)
     
 }
 
+
+void CopyList (List L1, List L2){
+/* I.S. L1 terdefinisi 
+   F.S. L2 berisi salinan semua elemen L1 */
+    // KAMUS LOKAL
+        address P,L,temp;
+    // ALGORITMA
+        P = First(L1);
+        L = First(L2);
+        while(P!=Nil){
+            temp=AlokasiList(Info(P));
+            L=temp;
+            L=Next(L);
+            P=Next(P);
+        }
+}
+
 void ListBPemilik(){
     for (int i =1;i<=Neff(arrBan);i++){
         if (kepemilikan(bangunan(arrBan,i))==1) InsVLast(&GLIST[0],i);
