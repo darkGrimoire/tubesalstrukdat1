@@ -132,10 +132,7 @@ int main()
     }
     
     else if(mulai==2){
-        LoadExistingConfig(...);
-        ReadBangunan(...);
-        ReadFlags(...);
-        ReadGraf(...);
+        LoadExistingConfig(*arrBan, *G, *P, &GFLAGS[1], &GFLAGS[2]);
     }
 
     while(!loseState(curPlayer)){
@@ -194,7 +191,7 @@ int main()
                     UNDO(*S);
                     break;
                 case 5:
-                    SaveConfig(...);
+                    SaveConfig(arrBan, G, P, GFLAGS[1], GFLAGS[2]);
                     break;
                 case 6:
                     printf("Daftar bangunan: \n");
