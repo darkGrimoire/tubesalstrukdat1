@@ -1,23 +1,24 @@
 /* File : saveload.c */
 /* Implementasi dari modul saveload.h */
 
-#include "lib\peta.h"       
-#include "lib\bangunan.h"
-#include "lib\arraydin.h"    
-#include "lib\graph.h"       
-#include "lib\point.h"      
-#include "lib\boolean.h"    
-#include "lib\command.h"
-#include "lib\mesinkar.h"
-#include "lib\mesinload.h"
+#include "peta.h"       
+#include "bangunan.h"
+#include "arraydin.h"    
+#include "graph.h"       
+#include "point.h"      
+#include "boolean.h"    
+#include "command.h"
+#include "mesinkar.h"
+#include "mesinload.h"
 #include <stdio.h>
+#include <stdlib.h>
 
 static FILE * src;
 static FILE * src2;
 
 /* ********** PERINTAH-PERINTAH UTAMA ********** */
 
-void LoadNewConfig(TabInt *T, Graph *G, Peta *P)
+void LoadNewConfig(TabInt *T, Graph *G, Peta *P, const char *FileName)
 /* I.S. : A, G, P kosong */
 /* F.S. : A, G, dan P terisi sesuai konfigurasi dari file eksternal */
 {   /* Kamus lokal */
@@ -25,7 +26,7 @@ void LoadNewConfig(TabInt *T, Graph *G, Peta *P)
     int jmlhbang;
     /* Algoritma */
     /* Ambil nilai X */
-    src = fopen("newconfig.txt", "rt");
+    src = fopen(FileName, "rt");
     fgets(line, 100, src);
     src2 = fopen("pitakar.txt", "wt");
     fprintf(src2, "%s", line);
@@ -45,13 +46,13 @@ void LoadNewConfig(TabInt *T, Graph *G, Peta *P)
     fclose(src);
 }
 
-void SaveConfig(TabInt T, Graph G, Peta P, FLAGS F1, FLAGS F2)
+void SaveConfig(TabInt T, Graph G, Peta P, FLAGS F1, FLAGS F2, const char *FileName)
 /* I.S. : A, G, P, F terdefinisi, tidak kosong */
 /* F.S. : File eksternal diisi dengan konfigurasi berdasarkan A, G, F, P */
 /* Format penulisan : Ukuran peta, Jumlah Bangunan, Daftar Bangunan (meliputi Huruf (Simbol), Lokasi (X Y), Kepemilikan, Level, Kelengkapan Bangunan (A, M, P, U)), Flags, dan Graf */
 {   /* Kamus lokal */
     /* Algoritma */
-    src = fopen("savedata.txt", "wt");
+    src = fopen(FileName, "wt");
     fprintf(src, "%d %d\n", NBrsEff(P), NKolEff(P));
     fprintf(src, "%d\n", Neff(T));
     WriteBangunan(T);
@@ -61,14 +62,14 @@ void SaveConfig(TabInt T, Graph G, Peta P, FLAGS F1, FLAGS F2)
     fclose(src);
 }
 
-void LoadExistingConfig(TabInt *T, Graph *G, Peta *P, FLAGS *F1, FLAGS *F2)
+void LoadExistingConfig(TabInt *T, Graph *G, Peta *P, FLAGS *F1, FLAGS *F2, const char *FileName)
 /* I.S. : A, G, P, F bebas, bisa kosong */
 /* F.S. : A, G, P, F diisi sesuai dengan konfigurrrasi dari file eksternal */
 {   /* Kamus lokal */
     char line[100];
     int jmlhbang;
     /* Algoritma */
-    src = fopen("savedata.txt", "rt");
+    src = fopen(FileName, "rt");
     fgets(line, 100, src);
     src2 = fopen("pitakar.txt", "wt");
     fprintf(src2, "%s", line);
@@ -179,6 +180,7 @@ void ReadGraf(Graph *G, int JmlhBang)
     /* Algoritma */
     CreateGraph(1, G);
     for (i = 2; i <= JmlhBang; i++) {
+        P = AllocNode(i);
         InsertNode(G, i, P);
     }
     for (i = 1; i <= JmlhBang; i++) {
