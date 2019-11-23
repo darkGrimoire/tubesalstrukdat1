@@ -10,6 +10,7 @@
 #include "graph.h"        
 #include "boolean.h"  
 #include "command.h"  
+#include "queue.h"
 
 /* ********** PERINTAH-PERINTAH UTAMA ********** */
 
@@ -17,12 +18,12 @@ void LoadNewConfig(TabInt *T, Graph* G, Peta *P, const char *FileName);
 /* I.S. : A, G, P kosong */
 /* F.S. : A, G, dan P terisi sesuai konfigurasi dari file eksternal */
 
-void SaveConfig(TabInt T, Graph G, Peta P, FLAGS F1, FLAGS F2, const char *FileName);
+void SaveConfig(TabInt T, Graph G, Peta P, FLAGS F1, FLAGS F2, Queue Q, const char *FileName);
 /* I.S. : A, G, P, F terdefinisi, tidak kosong */
 /* F.S. : File eksternal diisi dengan konfigurasi berdasarkan A, G, F, P */
 /* Format penulisan : Ukuran peta, Jumlah Bangunan, Daftar Bangunan (meliputi Huruf (Simbol), Lokasi (X Y), Kepemilikan, Level, Kelengkapan Bangunan (A, M, P, U)), Flags, dan Graf */
 
-void LoadExistingConfig(TabInt *T, Graph* G, Peta *P, FLAGS *F1, FLAGS *F2, const char *FileName);
+void LoadExistingConfig(TabInt *T, Graph* G, Peta *P, FLAGS *F1, FLAGS *F2, Queue *Q, const char *FileName);
 /* I.S. : A, G, P, F bebas, bisa kosong */
 /* F.S. : A, G, P, F diisi sesuai dengan konfigurrrasi dari file eksternal */
 
@@ -45,6 +46,10 @@ void ReadFLAGS(FLAGS *F);
 /* I.S. : F kosong */
 /* F.S. : F diisi dengan kondisi "pertarungan" saat program di-save */
 
+void ReadQueue(Stack *Q);
+/* I.S. : S kosong */
+/* F.S. : S diisi dengan kondisi "pertarungan" saat program di-save */
+
 /* ***** MENULIS KE DALAM FILE ***** */
 
 void WriteBangunan(TabInt T);
@@ -58,5 +63,9 @@ void WriteFLAGS(FLAGS F);
 void WriteGraf(Graph G, int JmlhBang);
 /* I.S. : G tidak kosong */
 /* F.S. : Isi G ditulis ke dalam file */
+
+void WriteQueue(Queue Q);
+/* I.S. : F tidak kosong */
+/* F.S. : Kondisi dalam F ditulis ke dalam file */
 
 #endif
