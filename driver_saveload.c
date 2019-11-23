@@ -4,7 +4,6 @@
 #include "lib\saveload.h"
 #include "lib\listlinier.h"
 #include "lib\command.h"
-#include "lib\command.c"
 #include <string.h>
 #include <stdlib.h>
 
@@ -15,6 +14,7 @@ int main() {
     List L;
     FLAGS F1, F2;
     FILE * src;
+    Queue Q;
     char line[100];
     int i;
     const char* FileName;
@@ -30,22 +30,22 @@ int main() {
     PrintInfo(L);
     /* Untuk SaveConfig */
     FileName = "savedat.txt";
-    SaveConfig(T, G, P, F1, F2, FileName);
+    SaveConfig(T, G, P, F1, F2, Q, FileName);
     src = fopen(FileName, "rt");
     fgets(line, 100, src);
     printf("%s", line);
-    while (!feof) {
+    while (!feof(src)) {
         fgets(line, 100, src);
         printf("%s", line);
     }
     fclose(src);
     /* Untuk LoadExistingConfig */
     FileName = "savedat.txt";
-    LoadExistingConfig(&T, &G, &P, &F1, &F2, FileName);
+    LoadExistingConfig(&T, &G, &P, &F1, &F2, &Q, FileName);
     printf("%d %d\n", NBrsEff(P), NKolEff(P));
     printf("%d\n", Neff(T));
     for (i = 1; i <= Neff(T); i++) {
-        printf("%c %d %d %d %d %d %d %d %d\n", jenis(bangunan(T, i)), Absis(lok(bangunan(T, i))), Ordinat(lok(bangunan(T, i))), kepemilikan(bangunan(T, i)), level(bangunan(T, i)), tambahpas(bangunan(T, i)), maks(bangunan(T, i)), pasawal(bangunan(T, i)), pasukan(bangunan(T, i)));
+        printf("%c %d %d %d %d %d %d %d %d\n", jenis(bangunan(T, i)), (int) Absis(lok(bangunan(T, i))), (int) Ordinat(lok(bangunan(T, i))), kepemilikan(bangunan(T, i)), level(bangunan(T, i)), tambahpas(bangunan(T, i)), maks(bangunan(T, i)), pasawal(bangunan(T, i)), pasukan(bangunan(T, i)));
     }
     L = MakeListEdge(G, 9);
     PrintInfo(L);
