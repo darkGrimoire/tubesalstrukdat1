@@ -13,7 +13,7 @@
 
 /* ********** PERINTAH-PERINTAH UTAMA ********** */
 
-void LoadNewConfig(TabInt *T, Graph *G, Peta *P, const char *FileName);
+void LoadNewConfig(TabInt *T, Graph* G, Peta *P, const char *FileName);
 /* I.S. : A, G, P kosong */
 /* F.S. : A, G, dan P terisi sesuai konfigurasi dari file eksternal */
 
@@ -22,7 +22,7 @@ void SaveConfig(TabInt T, Graph G, Peta P, FLAGS F1, FLAGS F2, const char *FileN
 /* F.S. : File eksternal diisi dengan konfigurasi berdasarkan A, G, F, P */
 /* Format penulisan : Ukuran peta, Jumlah Bangunan, Daftar Bangunan (meliputi Huruf (Simbol), Lokasi (X Y), Kepemilikan, Level, Kelengkapan Bangunan (A, M, P, U)), Flags, dan Graf */
 
-void LoadExistingConfig(TabInt *T, Graph *G, Peta *P, FLAGS *F1, FLAGS *F2, const char *FileName);
+void LoadExistingConfig(TabInt *T, Graph* G, Peta *P, FLAGS *F1, FLAGS *F2, const char *FileName);
 /* I.S. : A, G, P, F bebas, bisa kosong */
 /* F.S. : A, G, P, F diisi sesuai dengan konfigurrrasi dari file eksternal */
 
@@ -37,7 +37,7 @@ void ReadBangunanNew(TabInt *T, int JmlhBang);
 /* I.S. : A kosong */
 /* F.S. : A diisi dengan bangunan yang terdapat di dalam file sejumlah JmlhBang */
 
-void ReadGraf(Graph *G, int JmlhBang);
+void ReadGraf(Graph* G, int JmlhBang);
 /* I.S. : G kosong */
 /* F.S. : G diisi dengan graf yang merepresentasikan hubungan antar bangunan */
 
