@@ -1,7 +1,7 @@
 /* File: mesinkata.c */
 /* Implementasi Mesin Kata */
 
-#include "mesinkata.h"
+#include "lib\mesinkata.h"
 #include <stdio.h>
 
 Kata CKata;

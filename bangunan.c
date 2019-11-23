@@ -1,8 +1,8 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include "boolean.h"
-#include "bangunan.h"
-#include "point.h"
+#include "lib/boolean.h"
+#include "lib/bangunan.h"
+#include "lib/point.h"
 
 // /*Selektor */
 // #define kepemilikan(B) (B).kepemilikan

@@ -1,10 +1,10 @@
 /* File: mesinkata.c */
 /* Implementasi Mesin Kata */
 
-#include "mesinkatainput.h"
+#include "lib\mesinkatainput.h"
 #include <stdio.h>
 #include <ctype.h>
-#include "pcolor.h"
+#include "lib\pcolor.h"
 
 Kata CKata;
 int CAngka, mulai, check;

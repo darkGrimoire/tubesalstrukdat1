@@ -2,8 +2,8 @@
 /* Implementasi dari graph.h */
 
 #include <stdio.h>
-#include "stdlib.h"
-#include "graph.h"
+#include <stdlib.h>
+#include "lib\graph.h"
 
 /* Konstruktor */
 void CreateGraph (int X, Graph* G){

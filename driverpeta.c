@@ -1,8 +1,8 @@
 // Driver peta
 
-#include "peta.h"
-#include "bangunan.h"
-#include "arraydin.h"
+#include "lib\peta.h"
+#include "lib\bangunan.h"
+#include "lib\arraydin.h"
 
 int main(){
     // KAMUS

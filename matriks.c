@@ -1,7 +1,7 @@
 /* Deskripsi : inplementasi fungsi prosedur header ADT Matriks */
 
 #include <stdio.h>
-#include "matriks.h"
+#include "lib\matriks.h"
 
 /* ********** DEFINISI PROTOTIPE PRIMITIF ********** */
 /* *** Konstruktor membentuk MATRIKS *** */

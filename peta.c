@@ -1,12 +1,12 @@
 // Implementasi peta.h
 
-#include "matriks.h"
-#include "boolean.h"
+#include "lib/matriks.h"
+#include "lib/boolean.h"
 #include <stdio.h>
-#include "pcolor.h"
-#include "peta.h"
-#include "arraydin.h"
-#include "point.h"
+#include "lib/pcolor.h"
+#include "lib/peta.h"
+#include "lib/arraydin.h"
+#include "lib/point.h"
 
 /* ==== PROTOTIPE PRIMITIF ==== */
 

@@ -5,7 +5,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <math.h>
-#include "queue.h"
+#include "lib\queue.h"
 
 /* ********* Prototype ********* */
 boolean IsEmptyQ (Queue Q)

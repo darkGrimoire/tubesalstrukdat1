@@ -1,15 +1,15 @@
 /* File : saveload.c */
 /* Implementasi dari modul saveload.h */
 
-#include "peta.h"       
-#include "bangunan.h"
-#include "arraydin.h"    
-#include "graph.h"       
-#include "point.h"      
-#include "boolean.h"    
-#include "command.h"
-#include "mesinkar.h"
-#include "mesinload.h"
+#include "lib\peta.h"       
+#include "lib\bangunan.h"
+#include "lib\arraydin.h"    
+#include "lib\graph.h"       
+#include "lib\point.h"      
+#include "lib\boolean.h"    
+#include "lib\command.h"
+#include "lib\mesinkar.h"
+#include "lib\mesinload.h"
 #include <stdio.h>
 
 static FILE * src;
@@ -177,9 +177,9 @@ void ReadGraf(Graph *G, int JmlhBang)
     char line[100];
     addrNode P;
     /* Algoritma */
-    CreateGraph(1, *G);
+    CreateGraph(1, G);
     for (i = 2; i <= JmlhBang; i++) {
-        InsertNode(*G, i);
+        InsertNode(G, i, P);
     }
     for (i = 1; i <= JmlhBang; i++) {
         fgets(line, 100, src);
@@ -189,7 +189,7 @@ void ReadGraf(Graph *G, int JmlhBang)
         STARTDATA();
         for (j = 1; j <= JmlhBang; j++) {
             if (CLData.Value == 1) {
-                InsertEdge(*G, i, j);
+                InsertEdge(G, i, j);
             }
             ADVDATA();
         }
