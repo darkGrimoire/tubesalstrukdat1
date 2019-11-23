@@ -18,7 +18,7 @@ static FILE * src2;
 
 /* ********** PERINTAH-PERINTAH UTAMA ********** */
 
-void LoadNewConfig(TabInt *T, Graph *G, Peta *P, const char *FileName)
+void LoadNewConfig(TabInt *T, Graph* G, Peta *P, const char *FileName)
 /* I.S. : A, G, P kosong */
 /* F.S. : A, G, dan P terisi sesuai konfigurasi dari file eksternal */
 {   /* Kamus lokal */
@@ -42,7 +42,7 @@ void LoadNewConfig(TabInt *T, Graph *G, Peta *P, const char *FileName)
     STARTDATA();
     jmlhbang = CLData.Value;
     ReadBangunanOld(T, jmlhbang);
-    ReadGraf(G, jmlhbang);
+    ReadGraf(&G, jmlhbang);
     fclose(src);
 }
 
@@ -62,7 +62,7 @@ void SaveConfig(TabInt T, Graph G, Peta P, FLAGS F1, FLAGS F2, const char *FileN
     fclose(src);
 }
 
-void LoadExistingConfig(TabInt *T, Graph *G, Peta *P, FLAGS *F1, FLAGS *F2, const char *FileName)
+void LoadExistingConfig(TabInt *T, Graph* G, Peta *P, FLAGS *F1, FLAGS *F2, const char *FileName)
 /* I.S. : A, G, P, F bebas, bisa kosong */
 /* F.S. : A, G, P, F diisi sesuai dengan konfigurrrasi dari file eksternal */
 {   /* Kamus lokal */
@@ -86,7 +86,7 @@ void LoadExistingConfig(TabInt *T, Graph *G, Peta *P, FLAGS *F1, FLAGS *F2, cons
     jmlhbang = CLData.Value;
     Neff(*T) = jmlhbang;
     ReadBangunanNew(T, jmlhbang);
-    ReadGraf(G, jmlhbang);
+    ReadGraf(&G, jmlhbang);
     ReadFLAGS(F1);
     ReadFLAGS(F2);
     fclose(src);
@@ -170,7 +170,7 @@ void ReadBangunanNew(TabInt *T, int JmlhBang)
     }
 }
 
-void ReadGraf(Graph *G, int JmlhBang)
+void ReadGraf(Graph* G, int JmlhBang)
 /* I.S. : G kosong */
 /* F.S. : G diisi dengan graf yang merepresentasikan hubungan antar bangunan */
 {   /* Kamus lokal */
@@ -178,10 +178,10 @@ void ReadGraf(Graph *G, int JmlhBang)
     char line[100];
     addrNode P;
     /* Algoritma */
-    CreateGraph(1, G);
+    CreateGraph(1, &G);
     for (i = 2; i <= JmlhBang; i++) {
         P = AllocNode(i);
-        InsertNode(G, i, P);
+        InsertNode(&G, i, P);
     }
     for (i = 1; i <= JmlhBang; i++) {
         fgets(line, 100, src);
