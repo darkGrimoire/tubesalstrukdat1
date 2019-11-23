@@ -1,15 +1,15 @@
 /* File : saveload.c */
 /* Implementasi dari modul saveload.h */
 
-#include "peta.h"       
-#include "bangunan.h"
-#include "arraydin.h"    
-#include "graph.h"       
-#include "point.h"      
-#include "boolean.h"    
-#include "command.h"
-#include "mesinkar.h"
-#include "mesinload.h"
+#include "lib\peta.h"       
+#include "lib\bangunan.h"
+#include "lib\arraydin.h"    
+#include "lib\graph.h"       
+#include "lib\point.h"      
+#include "lib\boolean.h"    
+#include "lib\command.h"
+#include "lib\mesinkar.h"
+#include "lib\mesinload.h"
 #include <stdio.h>
 #include <stdlib.h>
 

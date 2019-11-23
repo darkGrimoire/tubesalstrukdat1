@@ -1,10 +1,10 @@
 /* File : driver_saveload.c */
 /* Driver untuk modul save dan load */
 
-#include "saveload.h"
-#include "listlinier.h"
-#include "command.h"
-#include "command.c"
+#include "lib\saveload.h"
+#include "lib\listlinier.h"
+#include "lib\command.h"
+#include "lib\command.c"
 #include <string.h>
 #include <stdlib.h>
 
