@@ -42,11 +42,11 @@ void LoadNewConfig(TabInt *T, Graph* G, Peta *P, const char *FileName)
     STARTDATA();
     jmlhbang = CLData.Value;
     ReadBangunanOld(T, jmlhbang);
-    ReadGraf(&G, jmlhbang);
+    ReadGraf(G, jmlhbang);
     fclose(src);
 }
 
-void SaveConfig(TabInt T, Graph G, Peta P, FLAGS F1, FLAGS F2, const char *FileName)
+void SaveConfig(TabInt T, Graph G, Peta P, FLAGS F1, FLAGS F2, Queue Q, const char *FileName)
 /* I.S. : A, G, P, F terdefinisi, tidak kosong */
 /* F.S. : File eksternal diisi dengan konfigurasi berdasarkan A, G, F, P */
 /* Format penulisan : Ukuran peta, Jumlah Bangunan, Daftar Bangunan (meliputi Huruf (Simbol), Lokasi (X Y), Kepemilikan, Level, Kelengkapan Bangunan (A, M, P, U)), Flags, dan Graf */
@@ -59,10 +59,11 @@ void SaveConfig(TabInt T, Graph G, Peta P, FLAGS F1, FLAGS F2, const char *FileN
     WriteGraf(G, Neff(T));
     WriteFLAGS(F1);
     WriteFLAGS(F2);
+    WriteQueue(Q);
     fclose(src);
 }
 
-void LoadExistingConfig(TabInt *T, Graph* G, Peta *P, FLAGS *F1, FLAGS *F2, const char *FileName)
+void LoadExistingConfig(TabInt *T, Graph* G, Peta *P, FLAGS *F1, FLAGS *F2, Queue *Q, const char *FileName)
 /* I.S. : A, G, P, F bebas, bisa kosong */
 /* F.S. : A, G, P, F diisi sesuai dengan konfigurrrasi dari file eksternal */
 {   /* Kamus lokal */
@@ -86,9 +87,10 @@ void LoadExistingConfig(TabInt *T, Graph* G, Peta *P, FLAGS *F1, FLAGS *F2, cons
     jmlhbang = CLData.Value;
     Neff(*T) = jmlhbang;
     ReadBangunanNew(T, jmlhbang);
-    ReadGraf(&G, jmlhbang);
+    ReadGraf(G, jmlhbang);
     ReadFLAGS(F1);
     ReadFLAGS(F2);
+    ReadQueue(Q);
     fclose(src);
 }
 
@@ -178,10 +180,10 @@ void ReadGraf(Graph* G, int JmlhBang)
     char line[100];
     addrNode P;
     /* Algoritma */
-    CreateGraph(1, &G);
+    CreateGraph(1, G);
     for (i = 2; i <= JmlhBang; i++) {
         P = AllocNode(i);
-        InsertNode(&G, i, P);
+        InsertNode(G, i, P);
     }
     for (i = 1; i <= JmlhBang; i++) {
         fgets(line, 100, src);
@@ -249,6 +251,19 @@ void ReadFLAGS(FLAGS *F)
         wF = true;
     }
     SetFlag(F, sF, sCD, aUF, cHF, eTF, wF);
+}
+
+void ReadQueue(Queue *Q)
+/* I.S. : Q kosong */
+/* F.S. : Q diisi dengan antrian skill saat program di-save */
+{   /* Kamus lokal */
+char line[100];
+    /* Algoritma */
+    CreateEmptyQ(Q, 10);
+    fgets(line, 100, src);
+    src2 = fopen("pitakar.txt", "wt");
+    fprintf(src2, "%s", line);
+    fclose(src2);
 }
 
 /* ***** MENULIS KE DALAM FILE ***** */
@@ -331,3 +346,7 @@ void WriteGraf(Graph G, int JmlhBang)
         }
     }
 }
+
+void WriteQueue(Queue Q);
+/* I.S. : Q tidak kosong */
+/* F.S. : Isi dari Q ditulis ke dalam file */
