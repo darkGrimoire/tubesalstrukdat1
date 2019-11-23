@@ -102,13 +102,20 @@ void ReadQueue(Queue *Q)
 /* I.S. : Q kosong */
 /* F.S. : Q diisi dengan antrian skill saat program di-save */
 {   /* Kamus lokal */
-char line[100];
+	char line[100];
     /* Algoritma */
     CreateEmptyQ(Q, 10);
     fgets(line, 100, src);
     src2 = fopen("pitakar.txt", "wt");
     fprintf(src2, "%s", line);
     fclose(src2);
+    STARTDATA();
+    AddQ(Q, CLData.Value);
+    ADVDATA();
+    while (!EndLData) {
+		AddQ(Q, CLData.Value);
+		ADVDATA();
+	}
 }
 
 /* ***** MENULIS KE DALAM FILE ***** */
@@ -192,9 +199,12 @@ void WriteGraf(Graph G, int JmlhBang)
     }
 }
 
-void WriteQueue(Queue Q);
+void WriteQueue(Queue Q)
 /* I.S. : Q tidak kosong */
 /* F.S. : Isi dari Q ditulis ke dalam file */
+{	/* Kamus lokal */
+	/* Algoritma */
+}
 
 /* ********** PERINTAH-PERINTAH UTAMA ********** */
 
