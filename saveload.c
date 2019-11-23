@@ -1,20 +1,200 @@
 /* File : saveload.c */
 /* Implementasi dari modul saveload.h */
 
-#include "lib\peta.h"       
-#include "lib\bangunan.h"
-#include "lib\arraydin.h"    
-#include "lib\graph.h"       
-#include "lib\point.h"      
-#include "lib\boolean.h"    
-#include "lib\command.h"
-#include "lib\mesinkar.h"
-#include "lib\mesinload.h"
+#include "lib/peta.h"       
+#include "lib/bangunan.h"
+#include "lib/arraydin.h"    
+#include "lib/graph.h"       
+#include "lib/point.h"      
+#include "lib/boolean.h"    
+#include "lib/command.h"
+#include "lib/mesinkar.h"
+#include "lib/mesinload.h"
+#include "lib/saveload.h"
 #include <stdio.h>
 #include <stdlib.h>
 
 static FILE * src;
 static FILE * src2;
+
+void ReadGraf(Graph* G, int JmlhBang)
+/* I.S. : G kosong */
+/* F.S. : G diisi dengan graf yang merepresentasikan hubungan antar bangunan */
+{   /* Kamus lokal */
+    int i, j;
+    char line[100];
+    addrNode P;
+    /* Algoritma */
+    CreateGraph(1, G);
+    for (i = 2; i <= JmlhBang; i++) {
+        P = AllocNode(i);
+        InsertNode(G, i, P);
+    }
+    for (i = 1; i <= JmlhBang; i++) {
+        fgets(line, 100, src);
+        src2 = fopen("pitakar.txt", "wt");
+        fprintf(src2, "%s", line);
+        fclose(src2);
+        STARTDATA();
+        for (j = 1; j <= JmlhBang; j++) {
+            if (CLData.Value == 1) {
+                InsertEdge(G, i, j);
+            }
+            ADVDATA();
+        }
+    }
+    
+}
+
+void ReadFLAGS(FLAGS *F)
+/* I.S. : F kosong */
+/* F.S. : F diisi dengan kondisi "pertarungan" saat program di-save */
+{   /* Kamus lokal */
+    char line[100];
+    boolean sF, aUF, cHF, eTF, wF;
+    int sCD;
+    /* Algoritma */
+    fgets(line, 100, src);
+    src2 = fopen("pitakar.txt", "wt");
+    fprintf(src2, "%s", line);
+    fclose(src2);
+    STARTDATA();
+    if (CLData.Value == 0) {
+        sF = false;
+    }
+    else {
+        sF = true;
+    }
+    ADVDATA();
+    sCD = CLData.Value;
+    ADVDATA();
+    if (CLData.Value == 0) {
+        aUF = false;
+    }
+    else {
+        aUF = true;
+    }
+    ADVDATA();
+    if (CLData.Value == 0) {
+        cHF = false;
+    }
+    else {
+        cHF = true;
+    }
+    ADVDATA();
+    if (CLData.Value == 0) {
+        eTF = false;
+    }
+    else {
+        eTF = true;
+    }
+    ADVDATA();
+    if (CLData.Value == 0) {
+        wF = false;
+    }
+    else {
+        wF = true;
+    }
+    SetFlag(F, sF, sCD, aUF, cHF, eTF, wF);
+}
+
+void ReadQueue(Queue *Q)
+/* I.S. : Q kosong */
+/* F.S. : Q diisi dengan antrian skill saat program di-save */
+{   /* Kamus lokal */
+char line[100];
+    /* Algoritma */
+    CreateEmptyQ(Q, 10);
+    fgets(line, 100, src);
+    src2 = fopen("pitakar.txt", "wt");
+    fprintf(src2, "%s", line);
+    fclose(src2);
+}
+
+/* ***** MENULIS KE DALAM FILE ***** */
+
+void WriteBangunan(TabInt T)
+/* I.S. : A tidak kosong */
+/* F.S. : Bangunan-bangunan dalam A dituliskan ke dalam file */
+{   /* Kamus lokal */
+    int jmlhbang, i;
+    /* Algoritma */
+    jmlhbang = Neff(T);
+    for (i = 1; i <= jmlhbang; i++) {
+        fprintf(src, "%c %d %d %d %d %d %d %d %d\n", jenis(bangunan(T, i)), (int) Absis(lok(bangunan(T, i))), (int) Ordinat(lok(bangunan(T, i))), kepemilikan(bangunan(T, i)), level(bangunan(T, i)), tambahpas(bangunan(T, i)), maks(bangunan(T, i)), pasawal(bangunan(T, i)), pasukan(bangunan(T, i)));
+    }
+}
+
+void WriteFLAGS(FLAGS F)
+/* I.S. : F tidak kosong */
+/* F.S. : Kondisi dalam F ditulis ke dalam file */
+{   /* Kamus lokal */
+    int sF, aUF, cHF, eTF, wF;
+    /* Algoritma */
+    if (GetSFlag(F)) {
+        sF = 1;
+    }
+    else {
+        sF = 0;
+    }
+    if (GetAUFlag(F)) {
+        aUF = 1;
+    }
+    else {
+        aUF = 0;
+    }
+    if (GetCHFlag(F)) {
+        cHF = 1;
+    }
+    else {
+        cHF = 0;
+    }
+    if (GetETFlag(F)) {
+        eTF = 1;
+    }
+    else {
+        eTF = 0;
+    }
+    if (GetWFlag(F)) {
+        wF = 1;
+    }
+    else {
+        wF = 0;
+    }
+    fprintf(src, "%d %d %d %d %d %d\n", sF, GetShieldCD(F), aUF, cHF, eTF, wF);
+}
+
+void WriteGraf(Graph G, int JmlhBang)
+/* I.S. : G tidak kosong */
+/* F.S. : Isi G ditulis ke dalam file */
+{   /* Kamus lokal */
+    int i, j;
+    /* Algoritma */
+    for (i = 1; i <= JmlhBang; i++) {
+        for (j = 1; j <= JmlhBang; j++) {
+            if (i != JmlhBang) {
+                if (SearchEdge(G, i, j) == Nil) {
+                    fprintf(src, "%d ", 0);
+                }
+                else {
+                    fprintf(src, "%d ", 1);
+                }
+            }
+            else {
+                if (SearchEdge(G, i, j) == Nil) {
+                    fprintf(src, "%d\n", 0);
+                }
+                else {
+                    fprintf(src, "%d\n", 1);
+                }
+            }
+        }
+    }
+}
+
+void WriteQueue(Queue Q);
+/* I.S. : Q tidak kosong */
+/* F.S. : Isi dari Q ditulis ke dalam file */
 
 /* ********** PERINTAH-PERINTAH UTAMA ********** */
 
@@ -171,182 +351,3 @@ void ReadBangunanNew(TabInt *T, int JmlhBang)
         AddAsLastEl(T, &B);
     }
 }
-
-void ReadGraf(Graph* G, int JmlhBang)
-/* I.S. : G kosong */
-/* F.S. : G diisi dengan graf yang merepresentasikan hubungan antar bangunan */
-{   /* Kamus lokal */
-    int i, j;
-    char line[100];
-    addrNode P;
-    /* Algoritma */
-    CreateGraph(1, G);
-    for (i = 2; i <= JmlhBang; i++) {
-        P = AllocNode(i);
-        InsertNode(G, i, P);
-    }
-    for (i = 1; i <= JmlhBang; i++) {
-        fgets(line, 100, src);
-        src2 = fopen("pitakar.txt", "wt");
-        fprintf(src2, "%s", line);
-        fclose(src2);
-        STARTDATA();
-        for (j = 1; j <= JmlhBang; j++) {
-            if (CLData.Value == 1) {
-                InsertEdge(G, i, j);
-            }
-            ADVDATA();
-        }
-    }
-    
-}
-
-void ReadFLAGS(FLAGS *F)
-/* I.S. : F kosong */
-/* F.S. : F diisi dengan kondisi "pertarungan" saat program di-save */
-{   /* Kamus lokal */
-    char line[100];
-    boolean sF, aUF, cHF, eTF, wF;
-    int sCD;
-    /* Algoritma */
-    fgets(line, 100, src);
-    src2 = fopen("pitakar.txt", "wt");
-    fprintf(src2, "%s", line);
-    fclose(src2);
-    STARTDATA();
-    if (CLData.Value == 0) {
-        sF = false;
-    }
-    else {
-        sF = true;
-    }
-    ADVDATA();
-    sCD = CLData.Value;
-    ADVDATA();
-    if (CLData.Value == 0) {
-        aUF = false;
-    }
-    else {
-        aUF = true;
-    }
-    ADVDATA();
-    if (CLData.Value == 0) {
-        cHF = false;
-    }
-    else {
-        cHF = true;
-    }
-    ADVDATA();
-    if (CLData.Value == 0) {
-        eTF = false;
-    }
-    else {
-        eTF = true;
-    }
-    ADVDATA();
-    if (CLData.Value == 0) {
-        wF = false;
-    }
-    else {
-        wF = true;
-    }
-    SetFlag(F, sF, sCD, aUF, cHF, eTF, wF);
-}
-
-void ReadQueue(Queue *Q)
-/* I.S. : Q kosong */
-/* F.S. : Q diisi dengan antrian skill saat program di-save */
-{   /* Kamus lokal */
-char line[100];
-    /* Algoritma */
-    CreateEmptyQ(Q, 10);
-    fgets(line, 100, src);
-    src2 = fopen("pitakar.txt", "wt");
-    fprintf(src2, "%s", line);
-    fclose(src2);
-}
-
-/* ***** MENULIS KE DALAM FILE ***** */
-
-void WriteBangunan(TabInt T)
-/* I.S. : A tidak kosong */
-/* F.S. : Bangunan-bangunan dalam A dituliskan ke dalam file */
-{   /* Kamus lokal */
-    int jmlhbang, i;
-    /* Algoritma */
-    jmlhbang = Neff(T);
-    for (i = 1; i <= jmlhbang; i++) {
-        fprintf(src, "%c %d %d %d %d %d %d %d %d\n", jenis(bangunan(T, i)), Absis(lok(bangunan(T, i))), Ordinat(lok(bangunan(T, i))), kepemilikan(bangunan(T, i)), level(bangunan(T, i)), tambahpas(bangunan(T, i)), maks(bangunan(T, i)), pasawal(bangunan(T, i)), pasukan(bangunan(T, i)));
-    }
-}
-
-void WriteFLAGS(FLAGS F)
-/* I.S. : F tidak kosong */
-/* F.S. : Kondisi dalam F ditulis ke dalam file */
-{   /* Kamus lokal */
-    int sF, aUF, cHF, eTF, wF;
-    /* Algoritma */
-    if (GetSFlag(F)) {
-        sF = 1;
-    }
-    else {
-        sF = 0;
-    }
-    if (GetAUFlag(F)) {
-        aUF = 1;
-    }
-    else {
-        aUF = 0;
-    }
-    if (GetCHFlag(F)) {
-        cHF = 1;
-    }
-    else {
-        cHF = 0;
-    }
-    if (GetETFlag(F)) {
-        eTF = 1;
-    }
-    else {
-        eTF = 0;
-    }
-    if (GetWFlag(F)) {
-        wF = 1;
-    }
-    else {
-        wF = 0;
-    }
-    fprintf(src, "%d %d %d %d %d %d\n", sF, GetShieldCD(F), aUF, cHF, eTF, wF);
-}
-
-void WriteGraf(Graph G, int JmlhBang)
-/* I.S. : G tidak kosong */
-/* F.S. : Isi G ditulis ke dalam file */
-{   /* Kamus lokal */
-    int i, j;
-    /* Algoritma */
-    for (i = 1; i <= JmlhBang; i++) {
-        for (j = 1; j <= JmlhBang; j++) {
-            if (i != JmlhBang) {
-                if (SearchEdge(G, i, j) == Nil) {
-                    fprintf(src, "%d ", 0);
-                }
-                else {
-                    fprintf(src, "%d ", 1);
-                }
-            }
-            else {
-                if (SearchEdge(G, i, j) == Nil) {
-                    fprintf(src, "%d\n", 0);
-                }
-                else {
-                    fprintf(src, "%d\n", 1);
-                }
-            }
-        }
-    }
-}
-
-void WriteQueue(Queue Q);
-/* I.S. : Q tidak kosong */
-/* F.S. : Isi dari Q ditulis ke dalam file */
