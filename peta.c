@@ -20,21 +20,6 @@ void CreatePeta (int NB, int NK, Peta *P)
     if (IsPetaValid(NB, NK))
     {
         MakeMATRIKS(NB, NK, P);
-        /*
-        // mengisi border dengan *
-        // atas bawah
-        for (int j = 0; j <= GetLastIdxKol(*P)+1; j++)
-        {
-            ElmtMatriks(*P, 0, j) = '*';
-            ElmtMatriks(*P, GetLastIdxBrs(*P)+1 , j) = '*';
-        }
-
-        // kiri kanan
-        for (int i = GetFirstIdxBrs(*P); i <= GetLastIdxBrs(*P)+1; i++)
-        {
-            ElmtMatriks(*P, i , 0) = '*';
-            ElmtMatriks(*P, i , GetLastIdxKol(*P)+1) = '*';
-        } */
         printf("Anda berada di medan perang seluas %d x %d\n", NB, NK);
     }
     else
