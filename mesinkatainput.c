@@ -6,7 +6,7 @@
 #include <ctype.h>
 #include "lib\pcolor.h"
 
-Kata CKata;
+// Kata CKata;
 int CAngka, mulai, check;
 boolean EndKata, EndAngka;
 
@@ -102,7 +102,7 @@ void SalinKata()
     int i = 0;
 
     // ALGORITMA
-    while((CC != BLANK) && (CC != MARK) && (i < NMax))
+    while((CC != MARK) && (i < NMax))
     {
         i = i+1;
         CKata.TabKata[i] = CC;
@@ -170,7 +170,7 @@ void inputStart()
         KataLOADGAME.TabKata[7] = 'A';
         KataLOADGAME.TabKata[8] = 'M';
         KataLOADGAME.TabKata[9] = 'E';
-        KataNEWGAME.Length = 9;
+        KataLOADGAME.Length = 9;
 
     // ALGORITMA
         found = false;

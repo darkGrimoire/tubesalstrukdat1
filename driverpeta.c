@@ -3,7 +3,8 @@
 #include "lib\peta.h"
 #include "lib\bangunan.h"
 #include "lib\arraydin.h"
-
+TabInt arrBan;
+List GLIST[2];
 int main(){
     // KAMUS
     BANGUNAN C0, C1, C2, T0, T1, T2, F0, F1, F2, V0, V1, V2;

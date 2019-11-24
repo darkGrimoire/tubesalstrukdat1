@@ -20,8 +20,7 @@ typedef struct FLAGS FLAGS;
 typedef struct {
   Queue Q1;
   Queue Q2;
-  FLAGS *F1;
-  FLAGS *F2;
+  FLAGS *GF[2];
   List L1;
   List L2;
   TabInt arrBan;

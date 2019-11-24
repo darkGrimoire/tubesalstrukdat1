@@ -1,10 +1,10 @@
-// Driver Bangunan
 
 #include "lib/boolean.h"
 #include "lib/bangunan.h"
 #include "lib/point.h"
 #include <stdio.h>
-
+#include "lib/arraydin.h"
+#include "lib/listlinier.h"
 TabInt arrBan;
 List GLIST[2];
 
@@ -21,7 +21,8 @@ void PrintBangunan(BANGUNAN B){
 }
 
 int main(){
-    // KAMUS
+    TabInt t1,t2;
+    int maxel;
     BANGUNAN B, C0, C1, C2, T0, T1, T2, F0, F1, F2, V0, V1, V2;
     POINT P1, P2, P3, P4, P5, P6, P7, P8, P9, P10, P11, P12;
 
@@ -107,50 +108,27 @@ int main(){
     PrintBangunan(V2);
     printf("\n");
 
-    // Level Up
-    DecreasePasukan(&C1, 15);
-    printf("Pasukan di C1 menjadi %d\n", pasukan(C1));
-    if (!CanLevelUp(C1))
-    {
-        printf("C1 tidak bisa level up\n");
-    }
-    
-    IncreasePasukan(&C1, 25);
-    printf("Pasukan di C1 menjadi %d\n", pasukan(C1));
-    if (CanLevelUp(C1))
-    {
-        printf("C1 level up!\n");
-        LevelUp(&C1);
-    }
-    else
-    {
-        printf("C1 tidak bisa level up\n");
-    }
-    PrintBangunan(C1);
-    printf("\n");
+    scanf ("maxel %d", &maxel);
+    MakeEmpty(&t1,maxel);
+    MakeEmpty(&t2,maxel);
 
-    printf("Jumlah pasukan C2: %d\n", pasukan(C2));
-    setpasukan(&C2, 30);
-    printf("Pasukan di C2 menjadi %d\n", pasukan(C2));
-    printf("C2 milik player %d\n", kepemilikan(C2));
-    if (IsKepemilikan(C2,2))
-    {
-        SetKepemilikan(&C2, 1);
-    }
-    printf("C2 menjadi milik player %d\n", kepemilikan(C2));
+    bangunan(t1,1) = C0;
+    bangunan(t1,2) = T0;
+    bangunan(t1,3) = V0;
+    bangunan(t1,4) = C1;
+    bangunan(t1,5) = T1;
+    bangunan(t1,6) = V1;
+    AddAsLastEl(&t1,&C2);
+    AddAsLastEl(&t1,&T2);
+    AddAsLastEl(&t1,&V2);
 
-    if (validTambahA(C2))
-    {
-        printf("C2 dapat melakukan penambahan pasukan\n");
+    CopyTab(t1,&t2);
+
+    for (int i=GetFirstIdx(t1); i<=GetLastIdx(t1); i++){
+        PrintBangunan(bangunan(t1,i));
     }
-    else
-    {
-        printf("C2 tidak dapat melakukan penambahna pasukan\n");
+    for (int j=GetFirstIdx(t1); j<=GetLastIdx(t1); j++){
+        PrintBangunan(bangunan(t2,j));
     }
 
-    printf("C1 level: %d\n", level(C1));
-    resetlevel(&C1);
-    printf("C1 menjadi level: %d\n", level(C1));
-
-    return 0;
 }

@@ -8,12 +8,6 @@
 #include "queue.h"
 #include "stackt.h"
 #include "bangunan.h"
-// #include "mesinkata.h"
-
-/* definitions */
-#define maxQueue 1000
-#define maxSkillName 5
-#define skillUndef "None"
 
 /* types */
 typedef struct FLAGS {
@@ -30,7 +24,7 @@ extern Stack S;
 
 /********** KONSTRUKTOR **********/
 /*** Flags ***/
-void CreateFlags(FLAGS* F);
+void CreateFlag(FLAGS* F);
 /* I.S F sembarang */
 /* F.S F terisi dengan default values untuk Type Data FLAGS */
 void SetFlag(FLAGS* F, boolean SF, int CD, boolean AU, boolean CH, boolean ET, boolean WF);

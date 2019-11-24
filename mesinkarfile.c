@@ -31,7 +31,7 @@ void ADVFILE() {
           Jika  CC = MARK maka EOP akan menyala (true) */
 
     /* Algoritma */
-    retval = fscanf(pita,"%c",&CCf);
+    retval = fscanf(pita,"%c",&CCf); 
     EOPf = (CCf == MARK);
     if (EOPf) {
        EOPf = !EOPf;

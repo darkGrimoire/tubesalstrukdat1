@@ -67,9 +67,9 @@ void BacaMATRIKS (MATRIKS * M, int NB, int NK);
 /* Proses: Melakukan MakeMATRIKS(M,NB,NK) dan mengisi nilai efektifnya */
 /* Selanjutnya membaca nilai elemen per baris dan kolom */
 /* Contoh: Jika NB = 3 dan NK = 3, maka contoh cara membaca isi matriks :
-1 2 3
-4 5 6
-8 9 10
+a b c
+d e f
+g h i
 */
 void TulisMATRIKS (MATRIKS M);
 /* I.S. M terdefinisi */
@@ -77,9 +77,9 @@ void TulisMATRIKS (MATRIKS M);
    dipisahkan sebuah spasi */
 /* Proses: Menulis nilai setiap elemen M ke layar dengan traversal per baris dan per kolom */
 /* Contoh: menulis matriks 3x3 (ingat di akhir tiap baris, tidak ada spasi)
-1 2 3
-4 5 6
-8 9 10
+a b c
+d e f
+g h i
 */
 
 
@@ -106,10 +106,6 @@ boolean IsBujurSangkar (MATRIKS M);
 boolean IsSimetri (MATRIKS M);
 /* Mengirimkan true jika M adalah matriks simetri : IsBujurSangkar(M)
    dan untuk setiap elemen M, M(i,j)=M(j,i) */
-
-boolean IsSparse (MATRIKS M);
-/* Mengirimkan true jika M adalah matriks sparse: mariks “jarang” dengan definisi:
-   hanya maksimal 5% dari memori matriks yang efektif bukan bernilai 0 */
 
 boolean IsMatriksValid (MATRIKS M);
 /* Mengirimkan true jika banyak masing-masing baris dan kolom lebih dari sama dengan 10 dan

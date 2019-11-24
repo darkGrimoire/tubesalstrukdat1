@@ -310,7 +310,7 @@ void LoadNewConfig(TabInt *T, Graph* G, Peta *P, const char *FileName)
     /* Algoritma */
     /* Ambil nilai X */
     src = fopen(FileName, "rt");
-    fgets(line, 100, src);
+    fgets(line, 100, src); 
     src2 = fopen("pitakar.txt", "wt");
     fprintf(src2, "%s", line);
     fclose(src2);
