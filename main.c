@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <unistd.h>
 #include "lib\mesinkatainput.h"
 #include "lib\command.h"
 #include "lib\queue.h"
@@ -17,8 +18,7 @@ Peta P;
 Graph G;
 FLAGS F;
 TabInt arrBan;
-BANGUNAN B;
-char a;
+char* a,b;
 int curPlayer, enemyPlayer, check, mulai, CAngka;
 
 boolean loseState (int player){
@@ -62,41 +62,41 @@ void printBuildings(List L){ // pake list L parameternya
     // ALGORITMA
         P = First(L);
         while(P!=NilL){
-            if(jenis(B(arrBan,Info(P))) == 'C'){
+            if(jenis(bangunan(arrBan,Info(P))) == 'C'){
                 printf("Castle ");
-                TulisPOINT(lok(B(arrBan,Info(P))));
+                TulisPOINT(lok(bangunan(arrBan,Info(P))));
                 printf(" ");
-                printf("%d",pasukan(B(arrBan,Info(P))));
+                printf("%d",pasukan(bangunan(arrBan,Info(P))));
                 printf(" ");
                 printf("lv. ");
-                printf("%d",level(B(arrBan,Info(P))));
+                printf("%d",level(bangunan(arrBan,Info(P))));
             }
-            else if(jenis(B(arrBan,Info(P))) == 'T'){
+            else if(jenis(bangunan(arrBan,Info(P))) == 'T'){
                 printf("Tower ");
-                TulisPOINT(lok(B(arrBan,Info(P))));
+                TulisPOINT(lok(bangunan(arrBan,Info(P))));
                 printf(" ");
-                printf("%d",pasukan(B(arrBan,Info(P))));
+                printf("%d",pasukan(bangunan(arrBan,Info(P))));
                 printf(" ");
                 printf("lv. ");
-                printf("%d",level(B(arrBan,Info(P))));
+                printf("%d",level(bangunan(arrBan,Info(P))));
             }
-            else if(jenis(B(arrBan,Info(P))) == 'F'){
+            else if(jenis(bangunan(arrBan,Info(P))) == 'F'){
                 printf("Fort ");
-                TulisPOINT(lok(B(arrBan,Info(P))));
+                TulisPOINT(lok(bangunan(arrBan,Info(P))));
                 printf(" ");
-                printf("%d",pasukan(B(arrBan,Info(P))));
+                printf("%d",pasukan(bangunan(arrBan,Info(P))));
                 printf(" ");
                 printf("lv. ");
-                printf("%d",level(B(arrBan,Info(P))));
+                printf("%d",level(bangunan(arrBan,Info(P))));
             }
-            else if(jenis(B(arrBan,Info(P))) == 'V'){
+            else if(jenis(bangunan(arrBan,Info(P))) == 'V'){
                 printf("Village ");
-                TulisPOINT(lok(B(arrBan,Info(P))));
+                TulisPOINT(lok(bangunan(arrBan,Info(P))));
                 printf(" ");
-                printf("%d",pasukan(B(arrBan,Info(P))));
+                printf("%d",pasukan(bangunan(arrBan,Info(P))));
                 printf(" ");
                 printf("lv. ");
-                printf("%d",level(B(arrBan,Info(P))));
+                printf("%d",level(bangunan(arrBan,Info(P))));
             }
         }
 }
@@ -140,7 +140,14 @@ int main()
     }
     
     else if(mulai==2){
-        LoadExistingConfig(&arrBan, &G, &P, &GFLAGS[1], &GFLAGS[2], &GQUEUE[2], &a);
+        do{
+            printf("Masukkan nama file yang ingin di-load: ");
+            STARTKATA();
+            b = CKata;
+            if(access(b, F_OK)!=-1){
+                LoadExistingConfig(&arrBan, &G, &P, &GFLAGS[0], &GFLAGS[1], &GQUEUE[0], &GQUEUE[1], &b);
+            }
+        }while(access(b, F_OK)==-1);
     }
 
     while(!loseState(curPlayer)){
@@ -155,19 +162,19 @@ int main()
             F = GFLAGS[curPlayer-1];
             IsiPeta(&P, arrBan);
             DisplayPeta(P);
-            // nambah jumlah pasukan tiap bangunan untuk curplayer -> tambahpasukan
+            tambahpasukan(); // parameter jangan bangunan B, tapi list L kepemilikan player
             printBuildings(GLIST[curPlayer-1]);
             printf("Skill Available: ");
             availableSkill(GQUEUE[curPlayer-1]);
             inputCommand();
             switch(check){
-                case 1:
-                    address P = First(GLIST[curPlayer-1]); // list kepemilikan player
-                    while(P!=Nil){
-                        if(SearchList(Lattack,Info(P))!=Nil){
-                            DelP(&Lattack,Info(P));
+                case 1: {
+                    addrlist Q = First(GLIST[curPlayer-1]); // list kepemilikan player
+                    while(Q!=NilL){
+                        if(SearchList(Lattack,Info(Q))!=NilL){
+                            DelP(&Lattack,Info(Q));
                         }
-                        P = Next(P);
+                        Q = Next(Q);
                     }
 
                     printf("Daftar bangunan: \n");
@@ -184,24 +191,36 @@ int main()
                     choicePasukan = CAngka;
                     ATTACK(Lattack, choiceDiserang, choicePenyerang, choicePasukan, curPlayer);
                     DelP(&LAttackFlag,choicePenyerang);
+                }
                     break; 
-                case 2:
+                case 2: {
                     printBuildings(GLIST[curPlayer-1]);
                     printf("Bangunan yang akan di-level up: ");
                     STARTANGKA();
                     choiceLevelUp = CAngka;
                     LEVEL_UP(choiceLevelUp, curPlayer);
+                }
                     break;
-                case 3:
+                case 3: {
                     SKILL(&F,&GQUEUE[curPlayer-1],curPlayer);
+                }
                     break;
-                case 4:
+                case 4: {
                     UNDO(&S);
+                }
                     break;
-                case 5:
-                    SaveConfig(arrBan, G, P, GFLAGS[1], GFLAGS[2], &GQUEUE[2], &a);
+                case 5: {
+                    do{
+                        printf("Masukkan nama file: ");
+                        STARTKATA();
+                        a = CKata;
+                        if(access(a, F_OK)!=-1){
+                            SaveConfig(arrBan, G, P, GFLAGS[0], GFLAGS[1], GQUEUE[0], GQUEUE[1], &a);
+                        }
+                    }while(access(a, F_OK)==-1);
+                }
                     break;
-                case 6:
+                case 6: {
                     printf("Daftar bangunan: \n");
                     printBuildings(GLIST[curPlayer-1]);
                     printf("Pilih bangunan: ");
@@ -216,8 +235,12 @@ int main()
                     STARTANGKA();
                     choicePasukan = CAngka;
                     MOVE(choiceMove,choiceMoveTo,choicePasukan,curPlayer);
-                case 7:
+                }
+                    break;
+                case 7: {
                     EXIT();
+                }
+                    break;
             }
         }while(check!=8);
 
