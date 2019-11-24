@@ -8,7 +8,7 @@
 #include "queue.h"
 #include "stackt.h"
 #include "bangunan.h"
-#include "mesinkata.h"
+// #include "mesinkata.h"
 
 /* definitions */
 #define maxQueue 1000
@@ -96,11 +96,11 @@ boolean GetWFlag(FLAGS F);
 int GetShieldCD(FLAGS F);
 /* Mengambil value dari F.shieldCD */
 /*** Player ***/
-void GetSkill(Queue Q, Kata* S);
+// void GetSkill(Queue Q, Kata* S);
 /* I.S Q terdefinisi, S sembarang */
 /* F.S Q masih sama, S terisi dengan skill di queue terdepan */
 
-void IntToSkilltype(int N, Kata* S);
+// void IntToSkilltype(int N, Kata* S);
 /* I.S N terdefinisi, S sembarang */
 /* F.S N di convert menjadi char skilltype S */
 

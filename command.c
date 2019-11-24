@@ -187,47 +187,59 @@ int GetShieldCD(FLAGS F)
     return F.winF;
 }
 /*** Player ***/
-void GetSkill(Queue Q, Kata* S)
-/* I.S Q terdefinisi, S sembarang */
-/* F.S Q masih sama, S terisi dengan skill di queue terdepan */
-{
-    // /* KAMUS */
-    // int N;
-    // /* ALGORITMA */
-    // N = InfoHead(Q);
-    // IntToSkill(N,S);
-}
+// void GetSkill(Queue Q, Kata* S)
+// /* I.S Q terdefinisi, S sembarang */
+// /* F.S Q masih sama, S terisi dengan skill di queue terdepan */
+// {
+//     // /* KAMUS */
+//     // int N;
+//     // /* ALGORITMA */
+//     // N = InfoHead(Q);
+//     // IntToSkill(N,S);
+// }
 
-void IntToSkilltype(int N, Kata* S)
-/* I.S N terdefinisi, S sembarang */
-/* F.S N di convert menjadi char skilltype S */
-{
-    /* KAMUS */
-    /* ALGORITMA */
-    // switch(N){
-    //     case 1:
-    //         (*S).TabKata[0] = "I"; (*S).TabKata[1] = "U"; (*S).Length = 2;
-    //         break;
-    //     case 2:
-    //         (*S).TabKata[0] = "S"; (*S).Length = 1;
-    //         break;
-    //     case 3:
-    //         (*S).TabKata[0] = "E"; (*S).TabKata[1] = "T"; (*S).Length = 2;
-    //         break;
-    //     case 4:
-    //         (*S).TabKata[0] = "A"; (*S).TabKata[1] = "U"; (*S).Length = 2;
-    //         break;
-    //     case 5:
-    //         (*S).TabKata[0] = "C"; (*S).TabKata[1] = "H"; (*S).Length = 2;
-    //         break;
-    //     case 6:
-    //         (*S).TabKata[0] = "I"; (*S).TabKata[1] = "R"; (*S).Length = 2;
-    //         break;
-    //     case 7:
-    //         (*S).TabKata[0] = "B"; (*S).Length = 1;
-    //         break;
-    // }
-}
+// void IntToSkilltype(int N, Kata* S)
+// /* I.S N terdefinisi, S sembarang */
+// /* F.S N di convert menjadi char skilltype S */
+// {
+//     /* KAMUS */
+//     /* ALGORITMA */
+//     // switch(N){
+//     //     case 1:
+//     //         (*S).TabKata[0] = "I"; (*S).TabKata[1] = "U"; (*S).Length = 2;
+//     //         break;
+//     //     case 2:
+//     //         (*S).TabKata[0] = "S"; (*S).Length = 1;
+//     //         break;
+//     //     case 3:
+//     //         (*S).TabKata[0] = "E"; (*S).TabKata[1] = "T"; (*S).Length = 2;
+//     //         break;
+//     //     case 4:
+//     //         (*S).TabKata[0] = "A"; (*S).TabKata[1] = "U"; (*S).Length = 2;
+//     //         break;
+//     //     case 5:
+//     //         (*S).TabKata[0] = "C"; (*S).TabKata[1] = "H"; (*S).Length = 2;
+//     //         break;
+//     //     case 6:
+//     //         (*S).TabKata[0] = "I"; (*S).TabKata[1] = "R"; (*S).Length = 2;
+//     //         break;
+//     //     case 7:
+//     //         (*S).TabKata[0] = "B"; (*S).Length = 1;
+//     //         break;
+//     // }
+// }
+
+// void GetSkill(Queue Q, Kata* S)
+// /* I.S Q terdefinisi, S sembarang */
+// /* F.S Q masih sama, S terisi dengan skill di queue terdepan */
+// {
+//     /* KAMUS */
+//     int N;
+//     /* ALGORITMA */
+//     N = InfoHead(Q);
+//     IntToSkill(N,S);
+// }
+
 /********** SKILLS **********/
 void InstantUpgrade(int curP)
 /* I.S B terdefinisi */

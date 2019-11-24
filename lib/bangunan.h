@@ -5,8 +5,9 @@
 #include <stdlib.h>
 #include "boolean.h"
 #include "point.h"
+#include "listlinier.h"
 
-typedef struct
+typedef struct BANGUNAN
 {
   int kepemilikan;//'1' untuk player 1, '2' untuk player 2, '0' untuk sistem
   int pasukan;//jumlah pasukan
@@ -78,9 +79,8 @@ void setpasukan(BANGUNAN *B,int pasukan);
 // I.S. B terdefinisi
 // F.S. Jumlah pasukan B menjadi sebanyak pasukan
 void resetlevel(BANGUNAN *B);
-// I.S. B terdefinisi
-// F.S. Level B menjadi level 1 dengan spesifikasi sesuai jenis bangunan
-
-void tambahpasukan (BANGUNAN *B);//auto tiap turn nambah pasukannya
+void tambahpasukanauto (List *L);//auto tiap turn nambah pasukannya
+void ListBPemilik();
+List GetLPemilik(int kepemilikan);
 
 #endif
