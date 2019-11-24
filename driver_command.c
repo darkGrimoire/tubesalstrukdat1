@@ -141,11 +141,16 @@ int main(){
 
     /* Testing: SKILL */
     infotype X;
+    // Shield
+    // DelQ(&GQUEUE[1],&X);
+    // ATTACK(GLIST[1], 2, 3, 50, 1);
+    // SKILL(&GFLAGS[1], &GQUEUE[1],2);
+    // printStat();
+    // END_TURN(&GFLAGS[1],2); 
+    // printStat();
+    // END_TURN(&GFLAGS[1],2); Shield_ON(&GFLAGS[1]);
+    // printStat();
     // 
-    DelQ(&GQUEUE[0],&X);
-    AddQ(&GQUEUE[0], 2);
-    SKILL(&GFLAGS[0], &GQUEUE[0],1);
-    printStat();
 
     return 0;
 }
