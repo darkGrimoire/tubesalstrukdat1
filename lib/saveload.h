@@ -11,6 +11,7 @@
 #include "boolean.h"  
 #include "command.h"  
 #include "queue.h"
+#include "listlinier.h"
 
 /* ********** PRIMITIF SAMPINGAN  ********** */
 /* ***** MEMBACA DARI FILE ***** */
@@ -64,7 +65,7 @@ void SaveConfig(TabInt T, Graph G, Peta P, FLAGS F1, FLAGS F2, Queue Q1, Queue Q
 /* F.S. : File eksternal diisi dengan konfigurasi berdasarkan A, G, F, P */
 /* Format penulisan : Ukuran peta, Jumlah Bangunan, Daftar Bangunan (meliputi Huruf (Simbol), Lokasi (X Y), Kepemilikan, Level, Kelengkapan Bangunan (A, M, P, U)), Flags, dan Graf */
 
-void LoadExistingConfig(TabInt *T, Graph* G, Peta *P, FLAGS *F1, FLAGS *F2, Queue *Q1, Queue *Q2, const char *FileName);
+void LoadExistingConfig(TabInt *T, Graph* G, Peta *P, FLAGS *F1, FLAGS *F2, Queue *Q1, Queue *Q2, List *L1, List *L2, const char *FileName);
 /* I.S. : A, G, P, F bebas, bisa kosong */
 /* F.S. : A, G, P, F diisi sesuai dengan konfigurrrasi dari file eksternal */
 

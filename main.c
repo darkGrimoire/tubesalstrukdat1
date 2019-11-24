@@ -21,6 +21,9 @@ List GLIST[2];
 TabInt arrBan;
 const char* a;
 const char* b;
+char* c;
+char tabkata[10];
+Kata CKata;
 int curPlayer, enemyPlayer;
 
 boolean loseState (int player){
@@ -100,6 +103,7 @@ void printBuildings(List L){ // pake list L parameternya
                 printf("lv. ");
                 printf("%d",level(bangunan(arrBan,Info(A))));
             }
+            Next(A);
         }
 }
 
@@ -130,6 +134,13 @@ int main()
 
     inputStart();
     if(mulai==1){
+        printf("Masukkan file konfigurasi: ");
+        STARTKATA();
+        for(int i=1;i<=CKata.Length;i++){tabkata[i-1]=CKata.TabKata[i];}
+        c = tabkata;
+        LoadNewConfig(&arrBan,&G,&P,c);
+        IsiPeta(&P,arrBan);
+        DisplayPeta(P);
         curPlayer = 1;
         if(curPlayer%2!=0){
             printf("Player 1");
@@ -147,7 +158,7 @@ int main()
             STARTKATA();
             b = CKata.TabKata;
             if(access(b, F_OK)!=-1){
-                LoadExistingConfig(&arrBan, &G, &P, &GFLAGS[0], &GFLAGS[1], &GQUEUE[0], &GQUEUE[1], b);
+                LoadExistingConfig(&arrBan, &G, &P, &GFLAGS[0], &GFLAGS[1], &GQUEUE[0], &GQUEUE[1], &GLIST[0], &GLIST[1], b);
             }
         }while(access(b, F_OK)==-1);
     }
