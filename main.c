@@ -64,9 +64,12 @@ void availableSkill (Queue Q) {
 void printBuildings(List L){ // pake list L parameternya
     // KAMUS LOKAL
         address A;
+        int i;
     // ALGORITMA
         A = First(L);
+        i=1;
         while(A!=NilL){
+            printf("%d. ",i);
             if(jenis(bangunan(arrBan,Info(A))) == 'C'){
                 printf("Castle ");
                 TulisPOINT(lok(bangunan(arrBan,Info(A))));
@@ -103,7 +106,9 @@ void printBuildings(List L){ // pake list L parameternya
                 printf("lv. ");
                 printf("%d",level(bangunan(arrBan,Info(A))));
             }
-            Next(A);
+            printf("\n");
+            i+=1;
+            A = Next(A);
         }
 }
 
@@ -138,15 +143,15 @@ int main()
         STARTKATA();
         for(int i=1;i<=CKata.Length;i++){tabkata[i-1]=CKata.TabKata[i];}
         c = tabkata;
-        LoadNewConfig(&arrBan,&G,&P,c);
+        LoadNewConfig(&arrBan,&G,&P,&GLIST[0],&GLIST[1],c);
         IsiPeta(&P,arrBan);
         DisplayPeta(P);
         curPlayer = 1;
         if(curPlayer%2!=0){
-            printf("Player 1");
+            printf("Player 1's turn\n");
         }
         else{
-            printf("Player 2");
+            printf("Player 2's turn\n");
         }
         CreatePlayerQueue(&GQUEUE[0],10); // queue skill player 1
         CreatePlayerQueue(&GQUEUE[1],10); // queue skill player 2
@@ -168,8 +173,6 @@ int main()
         //copy list kepemilikan ke list baru
         CopyList(GLIST[curPlayer-1],LAttackFlag);
 
-        List Lattack; // list bangunan yang bisa di-attack
-        Lattack = MakeListEdge(G,choicePenyerang);
         do
         {
             F = GFLAGS[curPlayer-1];
@@ -182,6 +185,12 @@ int main()
             inputCommand();
             switch(check){
                 case 1: {
+                    printf("Daftar bangunan: \n");
+                    printBuildings(GLIST[curPlayer-1]);
+                    printf("Bangunan yang digunakan untuk menyerang: ");
+                    STARTANGKA();
+                    choicePenyerang = CAngka;
+                    List Lattack = MakeListEdge(G,choicePenyerang);
                     address Q = First(GLIST[curPlayer-1]); // list kepemilikan player
                     while(Q!=NilL){
                         if(SearchList(Lattack,Info(Q))!=NilL){
@@ -189,13 +198,7 @@ int main()
                         }
                         Q = Next(Q);
                     }
-
-                    printf("Daftar bangunan: \n");
-                    printBuildings(GLIST[curPlayer-1]);
-                    printf("Bangunan yang digunakan untuk menyerang: ");
-                    STARTANGKA();
-                    choicePenyerang = CAngka;
-                    printBuildings(GLIST[enemyPlayer-1]);
+                    printBuildings(Lattack);
                     printf("Bangunan yang diserang: "); 
                     STARTANGKA();
                     choiceDiserang = CAngka;
@@ -240,7 +243,15 @@ int main()
                     STARTANGKA();
                     choiceMove = CAngka;
                     printf("Daftar bangunan terdekat: ");
-                    printBuildings(Lattack);
+                    List Lmove = MakeListEdge(G,choiceMove);
+                    address Q = First(GLIST[enemyPlayer-1]); // list kepemilikan player
+                    while(Q!=NilL){
+                        if(SearchList(Lmove,Info(Q))!=NilL){
+                            DelP(&Lmove,Info(Q));
+                        }
+                        Q = Next(Q);
+                    }
+                    printBuildings(Lmove);
                     printf("Bangunan yang akan menerima: ");
                     STARTANGKA();
                     choiceMoveTo = CAngka;
