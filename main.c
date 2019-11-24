@@ -172,8 +172,6 @@ int main()
         //copy list kepemilikan ke list baru
         // Update Stack for Undo
         UpdateSTACK();
-        pasukan(bangunan(arrBan, 1)) = 200;
-        pasukan(bangunan(arrBan, 2)) = 100;
         CopyList(GLIST[curPlayer-1], &LAttackFlag); //PrintInfo(GLIST[0]);
 
         do
