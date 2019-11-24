@@ -157,7 +157,7 @@ int main()
             STARTKATA();
             b = CKata.TabKata;
             if(access(b, F_OK)!=-1){
-                LoadExistingConfig(&arrBan, &G, &P, &GFLAGS[0], &GFLAGS[1], &GQUEUE[0], &GQUEUE[1], b);
+                LoadExistingConfig(&arrBan, &G, &P, &GFLAGS[0], &GFLAGS[1], &GQUEUE[0], &GQUEUE[1], &GLIST[0], &GLIST[1], b);
             }
         }while(access(b, F_OK)==-1);
     }
