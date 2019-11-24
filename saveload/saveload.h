@@ -5,13 +5,13 @@
 
 /* File yang (mungkin) dipake utk bagian ini */
 
-#include "peta.h"       
-#include "arraydin.h"
-#include "graph.h"        
-#include "boolean.h"  
-#include "command.h"  
-#include "queue.h"
-#include "listlinier.h"
+#include "../peta/peta.h"       
+#include "../arraydin/arraydin.h"
+#include "../graph/graph.h"        
+#include "../boolean.h"  
+#include "../command/command.h"  
+#include "../queue/queue.h"
+#include "../listlinier/listlinier.h"
 
 /* ********** PRIMITIF SAMPINGAN  ********** */
 /* ***** MEMBACA DARI FILE ***** */

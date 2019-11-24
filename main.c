@@ -1,16 +1,16 @@
 #include <stdio.h>
 #include <unistd.h>
-#include "../mesinkatainput/mesinkatainput.h"
-#include "../command/command.h"
-#include "../queue/queue.h"
-#include "../bangunan/bangunan.h"
-#include "../saveload/saveload.h"
-#include "../peta/peta.h"
-#include "../arraydin/arraydin.h"
-#include "../listlinier/listlinier.h"
-#include "../graph/graph.h"
-#include "../stackt/stackt.h"
-#include "../point/point.h"
+#include "mesinkatainput/mesinkatainput.h"
+#include "command/command.h"
+#include "queue/queue.h"
+#include "bangunan/bangunan.h"
+#include "saveload/saveload.h"
+#include "peta/peta.h"
+#include "arraydin/arraydin.h"
+#include "listlinier/listlinier.h"
+#include "graph/graph.h"
+#include "stackt/stackt.h"
+#include "point/point.h"
 
 extern Queue GQUEUE[2];
 Stack S;
