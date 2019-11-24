@@ -21,7 +21,8 @@ List GLIST[2];
 TabInt arrBan;
 const char* a;
 const char* b;
-const char* c;
+char* c;
+char tabkata[10];
 Kata CKata;
 int curPlayer, enemyPlayer;
 
@@ -134,7 +135,8 @@ int main()
     if(mulai==1){
         printf("Masukkan file konfigurasi: ");
         STARTKATA();
-        c = CKata.TabKata;
+        for(int i=1;i<=CKata.Length;i++){tabkata[i-1]=CKata.TabKata[i];}
+        c = tabkata;
         LoadNewConfig(&arrBan,&G,&P,c);
         IsiPeta(&P,arrBan);
         DisplayPeta(P);
