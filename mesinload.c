@@ -9,7 +9,7 @@
 LoadDat CLData;
 boolean EndLData;
 
-void IgnoreBlank()
+void IgnoreBlankData()
 /* Mengabaikan satu atau beberapa BLANK
    I.S. : CC sembarang
    F.S. : CC ≠ BLANK atau CC = MARK */
@@ -26,7 +26,7 @@ void STARTDATA()
           CC karakter pertama sesudah karakter terakhir kata */
 {
     STARTFILE();
-    IgnoreBlank();
+    IgnoreBlankData();
     if (CCf == MARK)
     {
         EndLData = true;
@@ -45,7 +45,7 @@ void ADVDATA()
           Jika CC = MARK, EndKata = true.
    Proses : Akuisisi kata menggunakan procedure SalinKata */
 {
-    IgnoreBlank();
+    IgnoreBlankData();
     if (CCf == MARK)
     {
         EndLData = true;
@@ -54,7 +54,7 @@ void ADVDATA()
     {
 		EndLData = false;
         SalinData();
-        IgnoreBlank();
+        IgnoreBlankData();
     }
 }
 

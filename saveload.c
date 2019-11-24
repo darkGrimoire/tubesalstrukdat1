@@ -128,7 +128,7 @@ void WriteBangunan(TabInt T)
     /* Algoritma */
     jmlhbang = Neff(T);
     for (i = 1; i <= jmlhbang; i++) {
-        fprintf(src, "%c %d %d %d %d %d %d %d %d\n", jenis(bangunan(T, i)), (int) Absis(lok(bangunan(T, i))), (int) Ordinat(lok(bangunan(T, i))), kepemilikan(bangunan(T, i)), level(bangunan(T, i)), tambahpas(bangunan(T, i)), maks(bangunan(T, i)), pasawal(bangunan(T, i)), pasukan(bangunan(T, i)));
+        fprintf(src, "%c %d %d %d %d %d %d %d %d.\n", jenis(bangunan(T, i)), (int) Absis(lok(bangunan(T, i))), (int) Ordinat(lok(bangunan(T, i))), kepemilikan(bangunan(T, i)), level(bangunan(T, i)), tambahpas(bangunan(T, i)), maks(bangunan(T, i)), pasawal(bangunan(T, i)), pasukan(bangunan(T, i)));
     }
 }
 
@@ -168,7 +168,7 @@ void WriteFLAGS(FLAGS F)
     else {
         wF = 0;
     }
-    fprintf(src, "%d %d %d %d %d %d\n", sF, GetShieldCD(F), aUF, cHF, eTF, wF);
+    fprintf(src, "%d %d %d %d %d %d.\n", sF, GetShieldCD(F), aUF, cHF, eTF, wF);
 }
 
 void WriteGraf(Graph G, int JmlhBang)
@@ -189,10 +189,10 @@ void WriteGraf(Graph G, int JmlhBang)
             }
             else {
                 if (SearchEdge(G, i, j) == Nil) {
-                    fprintf(src, "%d\n", 0);
+                    fprintf(src, "%d.\n", 0);
                 }
                 else {
-                    fprintf(src, "%d\n", 1);
+                    fprintf(src, "%d.\n", 1);
                 }
             }
         }
@@ -214,7 +214,7 @@ void WriteQueue(Queue Q)
 		}
 		fprintf(src, "%d ", (Q).T[j]);
 		if (j == NBElmtQ(Q) + Head(Q) - 1) {
-			fprintf(src, "\n");
+			fprintf(src, ".\n");
 		}
 	}
 }
