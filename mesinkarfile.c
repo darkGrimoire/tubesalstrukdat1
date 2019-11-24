@@ -18,7 +18,7 @@ void STARTFILE() {
           Jika CC = MARK maka EOP akan menyala (true) */
 
     /* Algoritma */
-    pita = fopen("pitakar.txt","r");
+    pita = fopen("pitakar.txt","rt");
     ADVFILE();
 }
 

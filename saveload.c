@@ -11,11 +11,91 @@
 #include "lib/mesinkarfile.h"
 #include "lib/mesinload.h"
 #include "lib/saveload.h"
+#include "lib/listlinier.h"
 #include <stdio.h>
 #include <stdlib.h>
 
 static FILE * src;
 static FILE * src2;
+
+
+/* ********** PRIMITIF SAMPINGAN  ********** */
+/* ***** MEMBACA DARI FILE ***** */
+
+void ReadBangunanOld(TabInt *T, int JmlhBang)
+/* I.S. : A kosong */
+/* F.S. : A diisi dengan bangunan yang terdapat di dalam file sejumlah JmlhBang */
+{   /* Kamus lokal */
+    int i, x, y, kep;
+    char line[100];
+    char jns;
+    BANGUNAN B;
+    POINT P;
+    /* Algoritma */
+    MakeEmpty(T, JmlhBang);
+    for (i = 1; i <= JmlhBang; i++) {
+        fgets(line, 100, src);
+        src2 = fopen("pitakar.txt", "wt");
+        fprintf(src2, "%s", line);
+        fclose(src2);
+        STARTDATA();
+        jns = CLData.Index;
+        ADVDATA();
+        x = CLData.Value;
+        ADVDATA();
+        y = CLData.Value;
+        P = MakePOINT(x, y);
+        if (i == 1) {
+            kep = 1;
+        }
+        else if (i == 2) {
+            kep = 2;
+        }
+        else {
+            kep = 0;
+        }
+        B = SetBangunan(kep, jns, P);
+        AddAsLastEl(T, &B);
+    }
+}
+
+void ReadBangunanNew(TabInt *T, int JmlhBang)
+/* I.S. : A kosong */
+/* F.S. : A diisi dengan bangunan yang terdapat di dalam file sejumlah JmlhBang */
+{   /* Algoritma */
+    int i, x, y, kep, lvl, psk, a, m, u;
+    char line[100];
+    char jns;
+    BANGUNAN B;
+    /* Kamus lokal */
+    MakeEmpty(T, JmlhBang);
+    for (i = 1; i <= JmlhBang; i++) {
+        fgets(line, 100, src);
+        src2 = fopen("pitakar.txt", "wt");
+        fprintf(src2, "%s", line);
+        fclose(src2);
+        STARTDATA();
+        jns = CLData.Index;
+        ADVDATA();
+        x = CLData.Value;
+        ADVDATA();
+        y = CLData.Value;
+        ADVDATA();
+        kep = CLData.Value;
+        ADVDATA();
+        lvl = CLData.Value;
+        ADVDATA();
+        a = CLData.Value;
+        ADVDATA();
+        m = CLData.Value;
+        ADVDATA();
+        u = CLData.Value;
+        ADVDATA();
+        psk = CLData.Value;
+        MakeBangunan(&B, kep, psk, a, m, u, lvl, x, y, jns);
+        AddAsLastEl(T, &B);
+    }
+}
 
 void ReadGraf(Graph* G, int JmlhBang)
 /* I.S. : G kosong */
@@ -128,7 +208,7 @@ void WriteBangunan(TabInt T)
     /* Algoritma */
     jmlhbang = Neff(T);
     for (i = 1; i <= jmlhbang; i++) {
-        fprintf(src, "%c %d %d %d %d %d %d %d %d\n", jenis(bangunan(T, i)), (int) Absis(lok(bangunan(T, i))), (int) Ordinat(lok(bangunan(T, i))), kepemilikan(bangunan(T, i)), level(bangunan(T, i)), tambahpas(bangunan(T, i)), maks(bangunan(T, i)), pasawal(bangunan(T, i)), pasukan(bangunan(T, i)));
+        fprintf(src, "%c %d %d %d %d %d %d %d %d.\n", jenis(bangunan(T, i)), (int) Absis(lok(bangunan(T, i))), (int) Ordinat(lok(bangunan(T, i))), kepemilikan(bangunan(T, i)), level(bangunan(T, i)), tambahpas(bangunan(T, i)), maks(bangunan(T, i)), pasawal(bangunan(T, i)), pasukan(bangunan(T, i)));
     }
 }
 
@@ -168,7 +248,7 @@ void WriteFLAGS(FLAGS F)
     else {
         wF = 0;
     }
-    fprintf(src, "%d %d %d %d %d %d\n", sF, GetShieldCD(F), aUF, cHF, eTF, wF);
+    fprintf(src, "%d %d %d %d %d %d.\n", sF, GetShieldCD(F), aUF, cHF, eTF, wF);
 }
 
 void WriteGraf(Graph G, int JmlhBang)
@@ -189,10 +269,10 @@ void WriteGraf(Graph G, int JmlhBang)
             }
             else {
                 if (SearchEdge(G, i, j) == Nil) {
-                    fprintf(src, "%d\n", 0);
+                    fprintf(src, "%d.\n", 0);
                 }
                 else {
-                    fprintf(src, "%d\n", 1);
+                    fprintf(src, "%d.\n", 1);
                 }
             }
         }
@@ -214,7 +294,7 @@ void WriteQueue(Queue Q)
 		}
 		fprintf(src, "%d ", (Q).T[j]);
 		if (j == NBElmtQ(Q) + Head(Q) - 1) {
-			fprintf(src, "\n");
+			fprintf(src, ".\n");
 		}
 	}
 }
@@ -267,7 +347,7 @@ void SaveConfig(TabInt T, Graph G, Peta P, FLAGS F1, FLAGS F2, Queue Q1, Queue Q
     fclose(src);
 }
 
-void LoadExistingConfig(TabInt *T, Graph* G, Peta *P, FLAGS *F1, FLAGS *F2, Queue *Q1, Queue *Q2, const char *FileName)
+void LoadExistingConfig(TabInt *T, Graph* G, Peta *P, FLAGS *F1, FLAGS *F2, Queue *Q1, Queue *Q2, List *L1, List *L2, const char *FileName)
 /* I.S. : A, G, P, F bebas, bisa kosong */
 /* F.S. : A, G, P, F diisi sesuai dengan konfigurrrasi dari file eksternal */
 {   /* Kamus lokal */
@@ -296,83 +376,8 @@ void LoadExistingConfig(TabInt *T, Graph* G, Peta *P, FLAGS *F1, FLAGS *F2, Queu
     ReadFLAGS(F2);
     ReadQueue(Q1);
     ReadQueue(Q2);
+    CreateList(L1);
+    CreateList(L2);
+    ListBPemilik();
     fclose(src);
-}
-
-/* ********** PRIMITIF SAMPINGAN  ********** */
-/* ***** MEMBACA DARI FILE ***** */
-
-void ReadBangunanOld(TabInt *T, int JmlhBang)
-/* I.S. : A kosong */
-/* F.S. : A diisi dengan bangunan yang terdapat di dalam file sejumlah JmlhBang */
-{   /* Kamus lokal */
-    int i, x, y, kep;
-    char line[100];
-    char jns;
-    BANGUNAN B;
-    POINT P;
-    /* Algoritma */
-    MakeEmpty(T, JmlhBang);
-    for (i = 1; i <= JmlhBang; i++) {
-        fgets(line, 100, src);
-        src2 = fopen("pitakar.txt", "wt");
-        fprintf(src2, "%s", line);
-        fclose(src2);
-        STARTDATA();
-        jns = CLData.Index;
-        ADVDATA();
-        x = CLData.Value;
-        ADVDATA();
-        y = CLData.Value;
-        P = MakePOINT(x, y);
-        if (i == 1) {
-            kep = 1;
-        }
-        else if (i == 2) {
-            kep = 2;
-        }
-        else {
-            kep = 0;
-        }
-        B = SetBangunan(kep, jns, P);
-        AddAsLastEl(T, &B);
-    }
-}
-
-void ReadBangunanNew(TabInt *T, int JmlhBang)
-/* I.S. : A kosong */
-/* F.S. : A diisi dengan bangunan yang terdapat di dalam file sejumlah JmlhBang */
-{   /* Algoritma */
-    int i, x, y, kep, lvl, psk, a, m, u;
-    char line[100];
-    char jns;
-    BANGUNAN B;
-    /* Kamus lokal */
-    MakeEmpty(T, JmlhBang);
-    for (i = 1; i <= JmlhBang; i++) {
-        fgets(line, 100, src);
-        src2 = fopen("pitakar.txt", "wt");
-        fprintf(src2, "%s", line);
-        fclose(src2);
-        STARTDATA();
-        jns = CLData.Index;
-        ADVDATA();
-        x = CLData.Value;
-        ADVDATA();
-        y = CLData.Value;
-        ADVDATA();
-        kep = CLData.Value;
-        ADVDATA();
-        lvl = CLData.Value;
-        ADVDATA();
-        a = CLData.Value;
-        ADVDATA();
-        m = CLData.Value;
-        ADVDATA();
-        u = CLData.Value;
-        ADVDATA();
-        psk = CLData.Value;
-        MakeBangunan(&B, kep, psk, a, m, u, lvl, x, y, jns);
-        AddAsLastEl(T, &B);
-    }
 }
