@@ -10,7 +10,7 @@
 #include "bangunan.h"
 #include"arraydin.h"
 
-#define Nil NULL
+#define NilL NULL
 
 typedef int infotype;
 typedef struct tElmtlist *address;

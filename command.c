@@ -1,10 +1,10 @@
 /* include files */
-#include "boolean.h"
-#include "queue.h"
+#include "lib\boolean.h"
+#include "lib\queue.h"
 #include "lib\stackt.h"
-#include "mesinkata.h"
-#include "bangunan.h"
-#include "listlinier.h"
+#include "lib\mesinkata.h"
+#include "lib\bangunan.h"
+#include "lib\listlinier.h"
 #include "lib\command.h"
 #include <stdlib.h>
 

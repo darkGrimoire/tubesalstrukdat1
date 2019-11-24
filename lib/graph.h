@@ -7,7 +7,7 @@
 #include "boolean.h"
 #include "listlinier.h"
 
-#define Nil NULL
+#define NilG NULL
 
 typedef struct taddrNode *addrNode;
 typedef struct tadrSuccNode *addrSuccNode;

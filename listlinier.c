@@ -14,7 +14,7 @@
 boolean IsEmptyList (List L)
 /* Mengirim true jika list kosong */
 {
-    if (First(L) == Nil)
+    if (First(L) == NilL)
     {
         return true;
     }
@@ -28,30 +28,30 @@ void CreateList (List *L)
 /* I.S. sembarang             */
 /* F.S. Terbentuk list kosong */
 {
-    First(*L) = Nil;
+    First(*L) = NilL;
 }
 
 /****************** Manajemen Memori ******************/
 address AlokasiList (infotype X)
 /* Mengirimkan address hasil alokasi sebuah elemen */
 /* Jika alokasi berhasil, maka address tidak nil, dan misalnya */
-/* menghasilkan P, maka Info(P)=X, Next(P)=Nil */
-/* Jika alokasi gagal, mengirimkan Nil */
+/* menghasilkan P, maka Info(P)=X, Next(P)=NilL */
+/* Jika alokasi gagal, mengirimkan NilL */
 {
     // KAMUS LOKAL
     address P;
 
     // ALGORITMA
     P = (address) malloc (sizeof(ElmtList));
-    if (P!=Nil)
+    if (P!=NilL)
     {
         Info(P) = X;
-        Next(P) = Nil;
+        Next(P) = NilL;
         return P;
     }
     else
     {
-        return Nil;
+        return NilL;
     }
 }
 
@@ -67,19 +67,19 @@ void DealokasiList (address *P)
 address SearchList (List L, infotype X)
 /* Mencari apakah ada elemen list dengan Info(P)= X */
 /* Jika ada, mengirimkan address elemen tersebut. */
-/* Jika tidak ada, mengirimkan Nil */
+/* Jika tidak ada, mengirimkan NilL */
 {
     // KAMUS LOKAL    
     address P;
 
     // ALGORITMA
     P = First(L);
-    while ((Next(P) != Nil) && (Info(P) != X))
+    while ((Next(P) != NilL) && (Info(P) != X))
     {
         P = Next(P);
     }
 
-    if (Next(P) == Nil)
+    if (Next(P) == NilL)
     {
         if (Info(P) == X)
         {
@@ -87,7 +87,7 @@ address SearchList (List L, infotype X)
         }
         else
         {
-            return Nil;
+            return NilL;
         }  
     }
     else
@@ -108,7 +108,7 @@ void InsVFirst (List *L, infotype X)
 
     // ALGORITMA
     P = AlokasiList(X);
-    if (P != Nil)
+    if (P != NilL)
     {
         InsertFirst(L, P);
     }
@@ -125,7 +125,7 @@ void InsVLast (List *L, infotype X)
 
     // ALGORITMA
     P = AlokasiList(X); 
-    if (P != Nil)
+    if (P != NilL)
     {
         InsertLast(L, P);
     }
@@ -144,7 +144,7 @@ void DelVFirst (List *L, infotype *X)
     P = First(*L);
     *X = Info(P);
     First(*L) = Next(First(*L));
-    Next(P) = Nil;
+    Next(P) = NilL;
     DealokasiList(&P);
 }
 
@@ -190,13 +190,13 @@ void InsertLast (List *L, address P)
 
     // ALGORITMA
     temp = First(*L);
-    if (temp == Nil)
+    if (temp == NilL)
     {
         InsertFirst(L, P);
     }
     else
     {
-        while (Next(temp) != Nil)
+        while (Next(temp) != NilL)
         {
             temp = Next(temp);
         }
@@ -231,7 +231,7 @@ void DelP (List *L, infotype X)
     temp = SearchList(*L, X);
     prec = First(*L);
 
-    if (temp != Nil)
+    if (temp != NilL)
     {
         if (prec == temp)
         {
@@ -244,7 +244,7 @@ void DelP (List *L, infotype X)
                 prec = Next(prec);
             }
             Next(prec) = Next(temp);
-            Next(temp) = Nil;
+            Next(temp) = NilL;
             DealokasiList(&temp);
         }  
     }
@@ -262,13 +262,13 @@ void DelLast (List *L, address *P)
 
     // ALGORITMA
     prec = First(*L);
-    if (Next(prec) == Nil)
+    if (Next(prec) == NilL)
     {
         DelFirst(L, P);
     }
     else
     {
-        while (Next(Next(prec)) !=  Nil)
+        while (Next(Next(prec)) !=  NilL)
         {
             prec = Next(prec);
         }
@@ -283,7 +283,7 @@ void DelAfter (List *L, address *Pdel, address Prec)
 {
     *Pdel = Next(Prec);
     Next(Prec) = Next(*Pdel);
-    Next(*Pdel) = Nil;
+    Next(*Pdel) = NilL;
 }
 
 /****************** PROSES SEMUA ELEMEN LIST ******************/
@@ -305,7 +305,7 @@ void PrintInfo (List L)
     else
     {
         printf("%s","[");
-        while(Next(P) != Nil)
+        while(Next(P) != NilL)
         {
             printf("%d%s", Info(P),",");
             P = Next(P);
@@ -323,7 +323,7 @@ int NbElmtList (List L)
     
     // ALGORITMA
     P = First(L);
-    while (P != Nil)
+    while (P != NilL)
     {
         count += 1;
         P = Next(P);
@@ -341,7 +341,7 @@ infotype MaxList (List L)
     
     //ALGORITMA
     a = Info(P);
-    while(Next(P)!=Nil)
+    while(Next(P)!=NilL)
     {
         if (a < Info(Next(P)))
         {
@@ -367,19 +367,19 @@ void Konkat1 (List *L1, List *L2, List *L3)
     // ALGORITMA
     if(IsEmptyList(*L1)){
         First(*L3) = First(*L2);
-        First(*L2) = Nil;
+        First(*L2) = NilL;
     }
     else
     {
         First(*L3) = First(*L1);
         last = First(*L3);
-        while (Next(last) != Nil)
+        while (Next(last) != NilL)
         {
             last = Next(last);
         }
         Next(last) = First(*L2);
-        First(*L1) = Nil;
-        First(*L2) = Nil;
+        First(*L1) = NilL;
+        First(*L2) = NilL;
     }
     
 }
@@ -393,7 +393,7 @@ void CopyList (List L1, List L2){
     // ALGORITMA
         P = First(L1);
         L = First(L2);
-        while(P!=Nil){
+        while(P!=NilL){
             temp=AlokasiList(Info(P));
             L=temp;
             L=Next(L);

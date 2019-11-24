@@ -9,11 +9,17 @@
 #include "lib\graph.h"
 #include "lib\bangunan.h"
 #include "lib\stackt.h"
+#include "lib\point.h"
 
 extern Queue GQUEUE[2];
 Stack S;
 Peta P;
-int curPlayer, enemyPlayer;
+Graph G;
+FLAGS F;
+TabInt arrBan;
+BANGUNAN B;
+char a;
+int curPlayer, enemyPlayer, check, mulai, CAngka;
 
 boolean loseState (int player){
     // KAMUS LOKAL
@@ -55,42 +61,42 @@ void printBuildings(List L){ // pake list L parameternya
         address P;
     // ALGORITMA
         P = First(L);
-        while(P!=Nil){
-            if(jenis(bangunan(arrBan,Info(P))) == 'C'){
+        while(P!=NilL){
+            if(jenis(B(arrBan,Info(P))) == 'C'){
                 printf("Castle ");
-                printf(lok(bangunan(arrBan,Info(P))));
+                TulisPOINT(lok(B(arrBan,Info(P))));
                 printf(" ");
-                printf(pasukan(bangunan(arrBan,Info(P))));
+                printf("%d",pasukan(B(arrBan,Info(P))));
                 printf(" ");
                 printf("lv. ");
-                printf(level(bangunan(arrBan,Info(P))));
+                printf("%d",level(B(arrBan,Info(P))));
             }
-            else if(jenis(bangunan(arrBan,Info(P))) == 'T'){
+            else if(jenis(B(arrBan,Info(P))) == 'T'){
                 printf("Tower ");
-                printf(lok(bangunan(arrBan,Info(P))));
+                TulisPOINT(lok(B(arrBan,Info(P))));
                 printf(" ");
-                printf(pasukan(bangunan(arrBan,Info(P))));
+                printf("%d",pasukan(B(arrBan,Info(P))));
                 printf(" ");
                 printf("lv. ");
-                printf(level(bangunan(arrBan,Info(P))));
+                printf("%d",level(B(arrBan,Info(P))));
             }
-            else if(jenis(bangunan(arrBan,Info(P))) == 'F'){
+            else if(jenis(B(arrBan,Info(P))) == 'F'){
                 printf("Fort ");
-                printf(lok(bangunan(arrBan,Info(P))));
+                TulisPOINT(lok(B(arrBan,Info(P))));
                 printf(" ");
-                printf(pasukan(bangunan(arrBan,Info(P))));
+                printf("%d",pasukan(B(arrBan,Info(P))));
                 printf(" ");
                 printf("lv. ");
-                printf(level(bangunan(arrBan,Info(P))));
+                printf("%d",level(B(arrBan,Info(P))));
             }
-            else if(jenis(bangunan(arrBan,Info(P))) == 'V'){
+            else if(jenis(B(arrBan,Info(P))) == 'V'){
                 printf("Village ");
-                printf(lok(bangunan(arrBan,Info(P))));
+                TulisPOINT(lok(B(arrBan,Info(P))));
                 printf(" ");
-                printf(pasukan(bangunan(arrBan,Info(P))));
+                printf("%d",pasukan(B(arrBan,Info(P))));
                 printf(" ");
                 printf("lv. ");
-                printf(level(bangunan(arrBan,Info(P))));
+                printf("%d",level(B(arrBan,Info(P))));
             }
         }
 }
@@ -98,12 +104,12 @@ void printBuildings(List L){ // pake list L parameternya
 void changeTurn(int *curPlayer, int *enemyPlayer){
     // KAMUS LOKAL
     // ALGORITMA
-        if(curPlayer%2==1){
+        if(*curPlayer%2==1){
             *curPlayer=2;
             *enemyPlayer=1;
             printf("Player 2\n");
         }
-        else if(curPlayer%2==0){
+        else if(*curPlayer%2==0){
             *curPlayer=1;
             *enemyPlayer=2;
             printf("Player 1\n");
@@ -129,12 +135,12 @@ int main()
         else{
             printf("Player 2");
         }
-        CreatePlayerQueue(*GQUEUE[0],10); // queue skill player 1
-        CreatePlayerQueue(*GQUEUE[1],10); // queue skill player 2
+        CreatePlayerQueue(&GQUEUE[0],10); // queue skill player 1
+        CreatePlayerQueue(&GQUEUE[1],10); // queue skill player 2
     }
     
     else if(mulai==2){
-        LoadExistingConfig(*arrBan, *G, *P, &GFLAGS[1], &GFLAGS[2]);
+        LoadExistingConfig(&arrBan, &G, &P, &GFLAGS[1], &GFLAGS[2], &GQUEUE[2], &a);
     }
 
     while(!loseState(curPlayer)){
@@ -147,10 +153,10 @@ int main()
         do
         {
             F = GFLAGS[curPlayer-1];
-            IsiPeta(*P, arrayBangunan);
+            IsiPeta(&P, arrayBan);
             DisplayPeta(P);
             // nambah jumlah pasukan tiap bangunan untuk curplayer -> tambahpasukan
-            printBuildings(curPlayer,B);
+            printBuildings(GLIST[curPlayer-1]);
             printf("Skill Available: ");
             availableSkill(GQUEUE[curPlayer-1]);
             inputCommand();
@@ -187,13 +193,13 @@ int main()
                     LEVEL_UP(choiceLevelUp, curPlayer);
                     break;
                 case 3:
-                    SKILL(&F,*GQUEUE[curPlayer-1],curPlayer);
+                    SKILL(&F,&GQUEUE[curPlayer-1],curPlayer);
                     break;
                 case 4:
-                    UNDO(*S);
+                    UNDO(&S);
                     break;
                 case 5:
-                    SaveConfig(arrBan, G, P, GFLAGS[1], GFLAGS[2]);
+                    SaveConfig(arrBan, G, P, GFLAGS[1], GFLAGS[2], &GQUEUE[2], &a);
                     break;
                 case 6:
                     printf("Daftar bangunan: \n");
@@ -202,7 +208,7 @@ int main()
                     STARTANGKA();
                     choiceMove = CAngka;
                     printf("Daftar bangunan terdekat: ");
-                    printBuildings(LAttack);
+                    printBuildings(Lattack);
                     printf("Bangunan yang akan menerima: ");
                     STARTANGKA();
                     choiceMoveTo = CAngka;
@@ -218,7 +224,7 @@ int main()
         if(check==8){
             END_TURN(&F, curPlayer);
             if(!GetETFlag(F)){
-                changeTurn(*curPlayer);
+                changeTurn(&curPlayer, &enemyPlayer);
             }
             else{
                 FlipETFlag(&F);

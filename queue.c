@@ -40,7 +40,7 @@ boolean IsFullQ (Queue Q)
 int NBElmtQ (Queue Q)
 /* Mengirimkan banyaknya elemen queue. Mengirimkan 0 jika Q kosong. */
 {
-    if (IsEmpty(Q) == true)
+    if (IsEmptyQ(Q) == true)
     {
         return 0;
     }
@@ -92,7 +92,7 @@ void AddQ (Queue * Q, infotype X)
 /* I.S. Q mungkin kosong, tabel penampung elemen Q TIDAK penuh */
 /* F.S. X menjadi TAIL yang baru, TAIL "maju" dengan mekanisme circular buffer */
 {
-    if (IsEmpty(*Q) == true)
+    if (IsEmptyQ(*Q) == true)
     {
         Head(*Q) = 1;
         Tail(*Q) = 1;

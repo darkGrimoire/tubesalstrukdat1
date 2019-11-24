@@ -17,78 +17,78 @@ void CreateGraph (int X, Graph* G){
 /* Manajemen memori */
 addrNode AllocNode (int X){
 /* Mengembalikan address hasil alokasi simpul X */
-/* Jika alokasi berhasil, maka address tidak Nil. */ 
-/* Menghasilkan P, maka Id(P)=X, Npred(P)=0, Trail(P)=Nil,dan Next(P)=Nil.*/
+/* Jika alokasi berhasil, maka address tidak NilG. */ 
+/* Menghasilkan P, maka Id(P)=X, Npred(P)=0, Trail(P)=NilG,dan Next(P)=NilG.*/
     // KAMUS LOKAL
         addrNode P;
     // ALGORITMA
         P = (addrNode) malloc (sizeof(Node));
-        if(P!=Nil){
+        if(P!=NilG){
             Id(P) = X;
             NPred(P) = 0;
-            Trail(P) = Nil;
-            NextN(P) = Nil;
+            Trail(P) = NilG;
+            NextN(P) = NilG;
             return P;
         }
         else{
-            return Nil;
+            return NilG;
         }
 }
 
 addrSuccNode AllocSuccNode (addrNode Pn){
 /* Mengembalikan address hasil alokasi Pn */
-/* Jika alokasi berhasil, maka address tidak Nil. */
-/* Menghasilkan Pt, maka Succ(Pt) = Pn, dan Next(Pt)=Nil */
+/* Jika alokasi berhasil, maka address tidak NilG. */
+/* Menghasilkan Pt, maka Succ(Pt) = Pn, dan Next(Pt)=NilG */
     // KAMUS LOKAL
         addrSuccNode Pt;
     // ALGORITMA
         Pt = (addrSuccNode) malloc (sizeof(SuccNode));
-        if(Pt!=Nil){
+        if(Pt!=NilG){
             Succ(Pt) = Pn;
-            NextT(Pt) = Nil;
+            NextT(Pt) = NilG;
             return Pt;
         }
         else{
-            return Nil;
+            return NilG;
         }
 }
 
 /* Fungsi/prosedur lain */
 addrNode SearchNode (Graph G, int X){
-/* Mengembalikan address simpul dengan Id=X jika simpul ada pada graf, Nil jika belum */
+/* Mengembalikan address simpul dengan Id=X jika simpul ada pada graf, NilG jika belum */
     // KAMUS LOKAL
         addrNode N;
     // ALGORITMA
         N = FirstG(G);
-        while((N!=Nil) && (Id(N)!=X)){
+        while((N!=NilG) && (Id(N)!=X)){
             N = NextN(N);
         }
         return N;
 }
 
 addrSuccNode SearchEdge (Graph G, int prec, int succ){
-/* Mengembalikan address trailer yang menyimpan info edge jika edge ada pada graf, Nil jika belum */
+/* Mengembalikan address trailer yang menyimpan info edge jika edge ada pada graf, NilG jika belum */
     // KAMUS LOKAL
         addrNode P;
         addrSuccNode Q;
     // ALGORITMA
         P = SearchNode(G,prec);
-        if(P!=Nil){
+        if(P!=NilG){
             Q = Trail(P);
-            if (Q==Nil){
+            if (Q==NilG){
                 return Q;
             }
-            while(Id(Succ(Q))!=succ && NextT(Q)!=Nil){
+            while(Id(Succ(Q))!=succ && NextT(Q)!=NilG){
                 Q = NextT(Q);
             }
             if (Id(Succ(Q))==succ){
                 return Q;
             }else{
-                return Nil;
+                return NilG;
             }
         }
         else{
-            return Nil;
+            return NilG;
         }
 }
 
@@ -102,7 +102,7 @@ List MakeListEdge (Graph G, int X){
         Pnode = SearchNode(G,X);
         Ptrail = Trail(Pnode); 
         CreateList(&L);
-        while (Ptrail != Nil){
+        while (Ptrail != NilG){
             InsVLast(&L,Id(Succ(Ptrail)));
             Ptrail = NextT(Ptrail);
         }
@@ -113,15 +113,15 @@ void InsertNode (Graph* G, int X, addrNode* Pn){
 /* Menambahkan simpul X ke dalam graf jika alokasi X berhasil */
 /* I.S. G terdefinisi, X terdefinisi dan belum ada pada G */
 /* F.S. Jika alokasi berhasil, X menjadi elemen terakhir G, Pn berisi address simpul X.
-Jika alokasi gagal, G tetap, Pn berisi Nil */
+Jika alokasi gagal, G tetap, Pn berisi NilG */
     // KAMUS LOKAL
         addrNode P,Q;
     // ALGORITMA
         *Pn = AllocNode(X);
-        Q = Nil;
-        if(*Pn!=Nil){
+        Q = NilG;
+        if(*Pn!=NilG){
             P = FirstG(*G);
-            while(Id(P)<X && NextN(P)!=Nil){
+            while(Id(P)<X && NextN(P)!=NilG){
                 Q=P;
                 P=NextN(P);
             }
@@ -131,7 +131,7 @@ Jika alokasi gagal, G tetap, Pn berisi Nil */
             }
             else{
                 NextN(P)=*Pn;
-                NextN(*Pn)=Nil;
+                NextN(*Pn)=NilG;
             }
         }
 }
@@ -147,20 +147,20 @@ Jika sudah ada busur (prec,succ) di G, maka G tetap. */
     // ALGORITMA
         Pprec = SearchNode(*G,prec);
         Psucc = SearchNode(*G,succ);
-        if(Pprec==Nil){
+        if(Pprec==NilG){
             InsertNode(G,prec,&Pprec);
         }
-        if(Psucc==Nil){
+        if(Psucc==NilG){
             InsertNode(G,succ,&Psucc);
         }
         
-        if(SearchEdge(*G,prec,succ)==Nil){
+        if(SearchEdge(*G,prec,succ)==NilG){
             Ptrail = Trail(Pprec);
-            if(Ptrail==Nil){
+            if(Ptrail==NilG){
                 Trail(Pprec) = AllocSuccNode(Psucc);
             }
             else{
-                while(NextT(Ptrail)!=Nil){
+                while(NextT(Ptrail)!=NilG){
                     Ptrail = NextT(Ptrail);
                 }
                 NextT(Ptrail)=AllocSuccNode(Psucc);
