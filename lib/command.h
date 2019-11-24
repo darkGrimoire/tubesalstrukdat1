@@ -8,12 +8,6 @@
 #include "queue.h"
 #include "stackt.h"
 #include "bangunan.h"
-// #include "mesinkata.h"
-
-/* definitions */
-#define maxQueue 1000
-#define maxSkillName 5
-#define skillUndef "None"
 
 /* types */
 typedef struct FLAGS {
