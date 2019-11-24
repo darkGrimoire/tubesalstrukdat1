@@ -1,6 +1,6 @@
 #include <stdio.h>
-#include "lib\command.h"
 #include "lib\mesinkatainput.h"
+#include "lib\command.h"
 #include "lib\queue.h"
 #include "lib\saveload.h"
 #include "lib\peta.h"
@@ -153,7 +153,7 @@ int main()
         do
         {
             F = GFLAGS[curPlayer-1];
-            IsiPeta(&P, arrayBan);
+            IsiPeta(&P, arrBan);
             DisplayPeta(P);
             // nambah jumlah pasukan tiap bangunan untuk curplayer -> tambahpasukan
             printBuildings(GLIST[curPlayer-1]);

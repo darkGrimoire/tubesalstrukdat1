@@ -8,7 +8,7 @@
 
 #include "boolean.h"
 #include "bangunan.h"
-#include"arraydin.h"
+#include "arraydin.h"
 
 #define NilL NULL
 

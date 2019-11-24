@@ -187,17 +187,6 @@ int GetShieldCD(FLAGS F)
     return F.winF;
 }
 /*** Player ***/
-void GetSkill(Queue Q, Kata* S)
-/* I.S Q terdefinisi, S sembarang */
-/* F.S Q masih sama, S terisi dengan skill di queue terdepan */
-{
-    /* KAMUS */
-    int N;
-    /* ALGORITMA */
-    N = InfoHead(Q);
-    IntToSkill(N,S);
-}
-
 void IntToSkilltype(int N, Kata* S)
 /* I.S N terdefinisi, S sembarang */
 /* F.S N di convert menjadi char skilltype S */
@@ -228,6 +217,18 @@ void IntToSkilltype(int N, Kata* S)
             break;
     }
 }
+
+void GetSkill(Queue Q, Kata* S)
+/* I.S Q terdefinisi, S sembarang */
+/* F.S Q masih sama, S terisi dengan skill di queue terdepan */
+{
+    /* KAMUS */
+    int N;
+    /* ALGORITMA */
+    N = InfoHead(Q);
+    IntToSkill(N,S);
+}
+
 /********** SKILLS **********/
 void InstantUpgrade(int curP)
 /* I.S B terdefinisi */
