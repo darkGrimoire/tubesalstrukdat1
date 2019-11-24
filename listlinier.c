@@ -1,7 +1,7 @@
 /* File : listlinier.h */
 /* contoh ADT list berkait dengan representasi fisik pointer  */
 /* Representasi address dengan pointer */
-/* infotype adalah integer */
+/* infolist adalah integer */
 #include "lib\listlinier.h"
 #include <stdio.h>
 #include <math.h>
@@ -32,7 +32,7 @@ void CreateList (List *L)
 }
 
 /****************** Manajemen Memori ******************/
-address AlokasiList (infotype X)
+address AlokasiList (infolist X)
 /* Mengirimkan address hasil alokasi sebuah elemen */
 /* Jika alokasi berhasil, maka address tidak nil, dan misalnya */
 /* menghasilkan P, maka Info(P)=X, Next(P)=NilL */
@@ -64,7 +64,7 @@ void DealokasiList (address *P)
 }
 
 /****************** PENCARIAN SEBUAH ELEMEN LIST ******************/
-address SearchList (List L, infotype X)
+address SearchList (List L, infolist X)
 /* Mencari apakah ada elemen list dengan Info(P)= X */
 /* Jika ada, mengirimkan address elemen tersebut. */
 /* Jika tidak ada, mengirimkan NilL */
@@ -98,7 +98,7 @@ address SearchList (List L, infotype X)
 
 /****************** PRIMITIF BERDASARKAN NILAI ******************/
 /*** PENAMBAHAN ELEMEN ***/
-void InsVFirst (List *L, infotype X)
+void InsVFirst (List *L, infolist X)
 /* I.S. L mungkin kosong */
 /* F.S. Melakukan alokasi sebuah elemen dan */
 /* menambahkan elemen pertama dengan nilai X jika alokasi berhasil */
@@ -114,7 +114,7 @@ void InsVFirst (List *L, infotype X)
     }
 }
 
-void InsVLast (List *L, infotype X)
+void InsVLast (List *L, infolist X)
 /* I.S. L mungkin kosong */
 /* F.S. Melakukan alokasi sebuah elemen dan */
 /* menambahkan elemen list di akhir: elemen terakhir yang baru */
@@ -132,7 +132,7 @@ void InsVLast (List *L, infotype X)
 }
 
 /*** PENGHAPUSAN ELEMEN ***/
-void DelVFirst (List *L, infotype *X)
+void DelVFirst (List *L, infolist *X)
 /* I.S. List L tidak kosong  */
 /* F.S. Elemen pertama list dihapus: nilai info disimpan pada X */
 /*      dan alamat elemen pertama di-dealokasi */
@@ -148,7 +148,7 @@ void DelVFirst (List *L, infotype *X)
     DealokasiList(&P);
 }
 
-void DelVLast (List *L, infotype *X)
+void DelVLast (List *L, infolist *X)
 /* I.S. list tidak kosong */
 /* F.S. Elemen terakhir list dihapus: nilai info disimpan pada X */
 /*      dan alamat elemen terakhir di-dealokasi */
@@ -215,7 +215,7 @@ void DelFirst (List *L, address *P)
     First(*L) = Next(First(*L));
 }
 
-void DelP (List *L, infotype X)
+void DelP (List *L, infolist X)
 /* I.S. Sembarang */
 /* F.S. Jika ada elemen list beraddress P, dengan Info(P)=X  */
 /* Maka P dihapus dari list dan di-dealokasi */
@@ -332,11 +332,11 @@ int NbElmtList (List L)
 }
 
 /*** Prekondisi untuk Max/Min/rata-rata : List tidak kosong ***/
-infotype MaxList (List L)
+infolist MaxList (List L)
 /* Mengirimkan nilai Info(P) yang maksimum */
 {
     //KAMUS
-    infotype a;
+    infolist a;
     address P = First(L);
     
     //ALGORITMA
