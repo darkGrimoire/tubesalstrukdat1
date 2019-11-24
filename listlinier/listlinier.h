@@ -6,8 +6,8 @@
 #ifndef listlinier_H
 #define listlinier_H
 
-#include "boolean.h"
-#include "arraydin.h"
+#include "../boolean.h"
+#include "../arraydin/arraydin.h"
 
 #define NilL NULL
 

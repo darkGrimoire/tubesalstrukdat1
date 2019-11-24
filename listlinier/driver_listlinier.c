@@ -1,9 +1,9 @@
 #include <stdio.h>
-#include "lib/boolean.h"
-#include "lib/bangunan.h"
-#include "lib/listlinier.h"
-#include "lib/point.h"
-#include "lib/arraydin.h"
+#include "../boolean.h"
+#include "../bangunan/bangunan.h"
+#include "../listlinier/listlinier.h"
+#include "../point/point.h"
+#include "../arraydin/arraydin.h"
 
 void PrintBangunan(BANGUNAN B){
     printf("\n");

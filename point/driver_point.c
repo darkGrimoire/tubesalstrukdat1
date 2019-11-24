@@ -1,7 +1,7 @@
 /* File : driver_point.c */
 /* Driver untuk ADT Point */
 
-#include "lib/point.h"
+#include "../point/point.h"
 #include <stdio.h>
 
 int main() {

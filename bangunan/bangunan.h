@@ -3,9 +3,9 @@
 
 #include <stdio.h>
 #include <stdlib.h>
-#include "boolean.h"
-#include "point.h"
-#include "listlinier.h"
+#include "../boolean.h"
+#include "../point/point.h"
+#include "../listlinier/listlinier.h"
 
 typedef struct BANGUNAN
 {

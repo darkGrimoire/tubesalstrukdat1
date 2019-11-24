@@ -6,7 +6,7 @@ Created at: 17/10/2019
 **/
 
 #include <stdio.h>
-#include "lib/pcolor.h"
+#include "../pcolor.h"
 
 void print_red(char c) {
     printf("%s%c", RED, c);

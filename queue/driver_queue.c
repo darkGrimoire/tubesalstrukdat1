@@ -1,6 +1,6 @@
 // Driver queue
 
-#include "lib/queue.h"
+#include "../queue/queue.h"
 #include <stdio.h>
 
 void PrintQ (Queue Q)

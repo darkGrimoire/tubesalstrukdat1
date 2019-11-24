@@ -6,10 +6,10 @@
 #ifndef stackt_H
 #define stackt_H
 
-#include "boolean.h"
-#include "queue.h"
-#include "listlinier.h"
-#include "arraydin.h"
+#include "../boolean.h"
+#include "../queue/queue.h"
+#include "../listlinier/listlinier.h"
+#include "../arraydin/arraydin.h"
 // #include "command.h"
 // typedef struct FLAGS FLAGS;
 #define NilS 0

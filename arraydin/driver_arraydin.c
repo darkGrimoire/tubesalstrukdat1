@@ -1,10 +1,10 @@
 
-#include "lib/boolean.h"
-#include "lib/bangunan.h"
-#include "lib/point.h"
+#include "../boolean.h"
+#include "../bangunan/bangunan.h"
+#include "../point/point.h"
 #include <stdio.h>
-#include "lib/arraydin.h"
-#include "lib/listlinier.h"
+#include "../arraydin/arraydin.h"
+#include "../listlinier/listlinier.h"
 TabInt arrBan;
 List GLIST[2];
 

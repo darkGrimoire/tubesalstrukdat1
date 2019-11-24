@@ -5,7 +5,7 @@
 #ifndef queue_H
 #define queue_H
 
-#include "boolean.h"
+#include "../boolean.h"
 
 #define Nil 0
 /* Konstanta untuk mendefinisikan addressq tak terdefinisi */

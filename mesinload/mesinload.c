@@ -1,9 +1,9 @@
 /* File: mesinkata.c */
 /* Implementasi Mesin Kata */
 
-#include "lib/mesinload.h"
-#include "lib/mesinkarfile.h"
-#include "lib/boolean.h"
+#include "../mesinload/mesinload.h"
+#include "../mesinkar/mesinkarfile.h"
+#include "../boolean.h"
 #include <stdio.h>
 
 LoadDat CLData;

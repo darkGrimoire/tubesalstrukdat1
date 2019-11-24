@@ -4,8 +4,9 @@
 #ifndef graph_H
 #define graph_H
 
-#include "boolean.h"
-#include "listlinier.h"
+#include "../boolean.h"
+#include "../listlinier/listlinier.h"
+
 
 #define NilG NULL
 

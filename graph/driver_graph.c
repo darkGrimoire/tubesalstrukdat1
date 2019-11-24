@@ -2,7 +2,7 @@
 /* File driver dari graph */
 
 #include <stdio.h>
-#include "lib/graph.h"
+#include "../graph/graph.h"
 
 int main(){
     Graph G;

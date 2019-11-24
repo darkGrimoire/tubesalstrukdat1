@@ -1,9 +1,9 @@
 /* File : driver_saveload.c */
 /* Driver untuk modul save dan load */
 
-#include "lib/saveload.h"
-#include "lib/listlinier.h"
-#include "lib/command.h"
+#include "../saveload/saveload.h"
+#include "../listlinier/listlinier.h"
+#include "../command/command.h"
 #include <string.h>
 #include <stdlib.h>
 

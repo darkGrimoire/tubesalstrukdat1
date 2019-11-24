@@ -4,8 +4,8 @@
 #ifndef __MESINLOAD_H__
 #define __MESINLOAD_H__
 
-#include "boolean.h"
-#include "mesinkarfile.h"
+#include "../boolean.h"
+#include "../mesinkar/mesinkarfile.h"
 
 #define NMax 50
 #define BLANK ' '

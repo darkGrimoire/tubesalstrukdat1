@@ -3,11 +3,11 @@
 #ifndef peta_H
 #define peta_H
 
-#include "matriks.h"
-#include "boolean.h"
+#include "../matriks/matriks.h"
+#include "../boolean.h"
 #include <stdio.h>
-#include "pcolor.h"
-#include "arraydin.h"
+#include "../pcolor.h"
+#include "../arraydin/arraydin.h"
 
 typedef MATRIKS Peta;
 

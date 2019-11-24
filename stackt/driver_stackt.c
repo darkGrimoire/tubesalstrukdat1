@@ -1,15 +1,18 @@
 /* File : driver_stackt.c */
 /* Driver dari ADT Stack */
 
-#include "lib/bangunan.h"
-#include "lib/listlinier.h"
-#include "lib/queue.h"
-#include "lib/arraydin.h"
-#include "lib/stackt.h"
-#include "lib/command.h"
-#include "lib/point.h"
-#include "lib/listlinier.h"
+#include "../bangunan/bangunan.h"
+#include "../listlinier/listlinier.h"
+#include "../queue/queue.h"
+#include "../arraydin/arraydin.h"
+#include "../stackt/stackt.h"
+#include "../command/command.h"
+#include "../point/point.h"
+#include "../listlinier/listlinier.h"
 #include <stdio.h>
+
+TabInt arrBan;
+List GLIST[2];
 
 void printFlags(FLAGS F){
     printf("FLAGS: %d %d %d %d %d %d\n", GetSFlag(F), GetShieldCD(F), GetAUFlag(F), GetCHFlag(F), GetETFlag(F), GetWFlag(F));

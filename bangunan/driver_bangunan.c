@@ -1,8 +1,8 @@
 // Driver Bangunan
 
-#include "lib/boolean.h"
-#include "lib/bangunan.h"
-#include "lib/point.h"
+#include "../boolean.h"
+#include "../bangunan/bangunan.h"
+#include "../point/point.h"
 #include <stdio.h>
 
 TabInt arrBan;

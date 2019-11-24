@@ -1,7 +1,7 @@
 // Driver ADT Matriks
 
-#include "lib/boolean.h"
-#include "lib/matriks.h"
+#include "../boolean.h"
+#include "../matriks/matriks.h"
 
 int main(){
     // KAMUS

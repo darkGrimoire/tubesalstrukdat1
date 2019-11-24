@@ -1,8 +1,8 @@
-#include "lib/boolean.h"
+#include "../boolean.h"
 #include <stdio.h>
-#include "lib/arraydin.h"
+#include "../arraydin/arraydin.h"
 #include <stdlib.h>
-#include "lib/bangunan.h"
+#include "../bangunan/bangunan.h"
 /* ********** KONSTRUKTOR ********** */
 /* Konstruktor : create tabel kosong  */
 void MakeEmpty(TabInt *T, int maxel)

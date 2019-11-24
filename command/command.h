@@ -4,10 +4,10 @@
 #define COMMAND_H
 
 /* include files */
-#include "boolean.h"
-#include "queue.h"
-#include "stackt.h"
-#include "bangunan.h"
+#include "../boolean.h"
+#include "../queue/queue.h"
+#include "../stackt/stackt.h"
+#include "../bangunan/bangunan.h"
 
 /* types */
 typedef struct FLAGS {
