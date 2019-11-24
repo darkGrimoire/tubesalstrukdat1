@@ -112,6 +112,11 @@ int Kuadran (POINT P)
             }   
 
 }
+else
+{
+    return 0;
+}
+
 }
 
 /* *** KELOMPOK OPERASI LAIN TERHADAP TYPE *** */
