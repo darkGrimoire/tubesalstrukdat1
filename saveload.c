@@ -203,7 +203,20 @@ void WriteQueue(Queue Q)
 /* I.S. : Q tidak kosong */
 /* F.S. : Isi dari Q ditulis ke dalam file */
 {	/* Kamus lokal */
+	int i, j;
 	/* Algoritma */
+	for (i = Head(Q); i < NBElmtQ(Q) + Head(Q); i++) {
+		if (i > MaxElQ(Q)) {
+			j = i - MaxElQ(Q);
+		}
+		else {
+			j = i;
+		}
+		fprintf(src, "%d ", (Q).T[j]);
+		if (j == NBElmtQ(Q) + Head(Q) - 1) {
+			fprintf(src, "\n");
+		}
+	}
 }
 
 /* ********** PERINTAH-PERINTAH UTAMA ********** */
@@ -236,7 +249,7 @@ void LoadNewConfig(TabInt *T, Graph* G, Peta *P, const char *FileName)
     fclose(src);
 }
 
-void SaveConfig(TabInt T, Graph G, Peta P, FLAGS F1, FLAGS F2, Queue Q, const char *FileName)
+void SaveConfig(TabInt T, Graph G, Peta P, FLAGS F1, FLAGS F2, Queue Q1, Queue Q2, const char *FileName)
 /* I.S. : A, G, P, F terdefinisi, tidak kosong */
 /* F.S. : File eksternal diisi dengan konfigurasi berdasarkan A, G, F, P */
 /* Format penulisan : Ukuran peta, Jumlah Bangunan, Daftar Bangunan (meliputi Huruf (Simbol), Lokasi (X Y), Kepemilikan, Level, Kelengkapan Bangunan (A, M, P, U)), Flags, dan Graf */
@@ -249,11 +262,12 @@ void SaveConfig(TabInt T, Graph G, Peta P, FLAGS F1, FLAGS F2, Queue Q, const ch
     WriteGraf(G, Neff(T));
     WriteFLAGS(F1);
     WriteFLAGS(F2);
-    WriteQueue(Q);
+    WriteQueue(Q1);
+    WriteQueue(Q2);
     fclose(src);
 }
 
-void LoadExistingConfig(TabInt *T, Graph* G, Peta *P, FLAGS *F1, FLAGS *F2, Queue *Q, const char *FileName)
+void LoadExistingConfig(TabInt *T, Graph* G, Peta *P, FLAGS *F1, FLAGS *F2, Queue *Q1, Queue *Q2, const char *FileName)
 /* I.S. : A, G, P, F bebas, bisa kosong */
 /* F.S. : A, G, P, F diisi sesuai dengan konfigurrrasi dari file eksternal */
 {   /* Kamus lokal */
@@ -280,7 +294,8 @@ void LoadExistingConfig(TabInt *T, Graph* G, Peta *P, FLAGS *F1, FLAGS *F2, Queu
     ReadGraf(G, jmlhbang);
     ReadFLAGS(F1);
     ReadFLAGS(F2);
-    ReadQueue(Q);
+    ReadQueue(Q1);
+    ReadQueue(Q2);
     fclose(src);
 }
 
