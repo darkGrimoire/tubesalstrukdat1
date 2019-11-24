@@ -18,7 +18,7 @@ Peta P;
 Graph G;
 FLAGS F;
 TabInt arrBan;
-char* a,b;
+char a,b;
 int curPlayer, enemyPlayer, check, mulai, CAngka;
 
 boolean loseState (int player){
@@ -58,7 +58,7 @@ void availableSkill (Queue Q) {
 
 void printBuildings(List L){ // pake list L parameternya
     // KAMUS LOKAL
-        address P;
+        addrList P;
     // ALGORITMA
         P = First(L);
         while(P!=NilL){
@@ -143,7 +143,7 @@ int main()
         do{
             printf("Masukkan nama file yang ingin di-load: ");
             STARTKATA();
-            b = CKata;
+            b = CKata.TabKata;
             if(access(b, F_OK)!=-1){
                 LoadExistingConfig(&arrBan, &G, &P, &GFLAGS[0], &GFLAGS[1], &GQUEUE[0], &GQUEUE[1], &b);
             }
@@ -213,7 +213,7 @@ int main()
                     do{
                         printf("Masukkan nama file: ");
                         STARTKATA();
-                        a = CKata;
+                        a = CKata.TabKata;
                         if(access(a, F_OK)!=-1){
                             SaveConfig(arrBan, G, P, GFLAGS[0], GFLAGS[1], GQUEUE[0], GQUEUE[1], &a);
                         }
