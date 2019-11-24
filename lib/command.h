@@ -16,7 +16,7 @@
 #define skillUndef "None"
 
 /* types */
-typedef struct {
+typedef struct FLAGS {
     boolean shieldF;
     int shieldCD;
     boolean attackUpF;
@@ -26,6 +26,7 @@ typedef struct {
 } FLAGS;
 
 extern FLAGS GFLAGS[2];
+extern Stack S;
 
 /********** KONSTRUKTOR **********/
 /*** Flags ***/
@@ -148,7 +149,8 @@ void LEVEL_UP(int choice, int curP);
 void SKILL(FLAGS* F, Queue* Q, int curP);
 /* I.S B dan F terdefinisi */
 /* F.S Del Skill yang ada di Queue, lalu gunakan skillnya */
-void UNDO(Stack* S);
+void UpdateSTACK();
+void UNDO();
 /* Yang bisa di-undo: ATTACK, LEVEL_UP, MOVE */
 /* Stack bakal di-reset tiap: END_TURN, SKILL */
 void END_TURN(FLAGS* F, int curP);
