@@ -183,7 +183,7 @@ int GetShieldCD(FLAGS F)
 {
     /* KAMUS */
     /* ALGORITMA */
-    return F.winF;
+    return F.shieldCD;
 }
 /*** Player ***/
 // void GetSkill(Queue Q, Kata* S)
@@ -237,8 +237,10 @@ void InstantUpgrade(int curP)
 
     /* ALGORITMA */
     P = First(GLIST[curP-1]);
-    while (P != Nil){
+    while (P != NilL){
+        int pas = pasukan(bangunan(arrBan, Info(P)));
         LevelUp(&(bangunan(arrBan, Info(P))));
+        setpasukan(&bangunan(arrBan, Info(P)), pas);
         P = Next(P);
     }
 }
@@ -251,7 +253,7 @@ void InstantReinforcement(int curP)
 
     /* ALGORITMA */
     P = First(GLIST[curP-1]);
-    while (P != Nil){
+    while (P != NilL){
         IncreasePasukan(&(bangunan(arrBan, Info(P))), 5);
         P = Next(P);
     }
@@ -265,7 +267,7 @@ void Barrage(int curP)
 
     /* ALGORITMA */
     P = First(GLIST[curP-1]);
-    while (P != Nil){
+    while (P != NilL){
         DecreasePasukan(&(bangunan(arrBan, Info(P))), 10);
         P = Next(P);
     }
@@ -362,7 +364,7 @@ void GenerateAU(int curP)
     if (!IsFullQ(GQUEUE[curP-1])){
         count = 0;
         P = First(GLIST[enemyP-1]);
-        while (P!=Nil){
+        while (P!=NilL){
             if (jenis(bangunan(arrBan, Info(P))) == 'T'){
                 count++;
             }
@@ -398,7 +400,7 @@ void GenerateIR(int curP)
     if (!IsFullQ(GQUEUE[curP-1])){
         condPass = true;
         P = First(GLIST[curP-1]);
-        while (P!=Nil && condPass){
+        while (P!=NilL && condPass){
             if (level(bangunan(arrBan, Info(P))) < 4){
                 condPass = false;
             }
@@ -443,7 +445,7 @@ void ATTACK(List L, int targetBchoice, int myBchoice, int myPas, int curP)
     P = First(L);
     while (targetBchoice>1){P = Next(P); targetBchoice--;}
     targetBint = Info(P);
-    if (SearchList(GLIST[P2-1],Info(P))==Nil){
+    if (SearchList(GLIST[P2-1],Info(P))==NilL){
         P2 = 0; //Target bukanlah Player
     }
     // Prepare targetPas and targetB
@@ -465,7 +467,7 @@ void ATTACK(List L, int targetBchoice, int myBchoice, int myPas, int curP)
     // DEFAULT:
     checkPas = myPas; 
     calcPas = checkPas;
-    restPas = calcPas-targetPas; // printf("{%d|%d|%d|%d}", myPas, calcPas,targetPas, restPas);
+    restPas = calcPas-targetPas;
     
     // attacker punya attackup/criticalhit, shield/pertahanan diabaikan
     if (GetCHFlag(GFLAGS[P1-1])){
@@ -480,8 +482,8 @@ void ATTACK(List L, int targetBchoice, int myBchoice, int myPas, int curP)
     }
     // Mekanisme bangunan memiliki defense atau shield musuh on
     else if (IsTherePertahanan(targetB) || GetSFlag(GFLAGS[P2-1])){
-        // checkPas = myPas;
-        calcPas = (3*checkPas)/4;
+        checkPas = (3*checkPas)/4;
+        calcPas = checkPas;
         restPas = calcPas-targetPas;
     }
     // Mekanisme ordinary attack 
@@ -499,7 +501,7 @@ void ATTACK(List L, int targetBchoice, int myBchoice, int myPas, int curP)
         pasukan(bangunan(arrBan, targetBint)) = restPas;
         // DecreasePasukan(&bangunan(arrBan, myBint),myPas);
         pasukan(bangunan(arrBan, myBint)) -= myPas;
-        DelP(&GLIST[P2-1], targetBint);
+        if (P2 != 0){DelP(&GLIST[P2-1], targetBint);}
         InsVLast(&GLIST[P1-1], targetBint);
         printf("Bangunan menjadi milikmu!\n");
         // Skill Generator: S, ET
@@ -538,12 +540,12 @@ void LEVEL_UP(int choice, int curP)
         // Update Stack for Undo
         UpdateSTACK();
     }else{
-        printf("Jumlah pasukan ");
+        printf("Bangunan ");
         if (jenis(bangunan(arrBan, Info(P)))=='C'){printf("Castle");}
         else if (jenis(bangunan(arrBan, Info(P)))=='T'){printf("Tower");}
         else if (jenis(bangunan(arrBan, Info(P)))=='F'){printf("Fort");}
         else if (jenis(bangunan(arrBan, Info(P)))=='V'){printf("Village");}
-        printf(" kurang untuk level up\n");
+        printf(" tidak dapat di level up!\n");
     }
 }
 void SKILL(FLAGS* F, Queue* Q, int curP)
@@ -588,11 +590,22 @@ void UpdateSTACK()
     stackinfotype X;
     /* ALGORITMA */
     X.Q1 = GQUEUE[0]; 
-    X.Q2 = GQUEUE[1]; 
-    *X.GF = GFLAGS;
-    X.L1 = GLIST[0];
-    X.L2 = GLIST[1]; 
-    X.arrBan = arrBan; 
+    X.Q2 = GQUEUE[1];
+    X.F1[0] = GetSFlag(GFLAGS[0]);
+    X.F1[1] = GetShieldCD(GFLAGS[0]);
+    X.F1[2] = GetAUFlag(GFLAGS[0]);
+    X.F1[3] = GetCHFlag(GFLAGS[0]);
+    X.F1[4] = GetETFlag(GFLAGS[0]);
+    X.F1[5] = GetWFlag(GFLAGS[0]);
+    X.F2[0] = GetSFlag(GFLAGS[1]);
+    X.F2[1] = GetShieldCD(GFLAGS[1]);
+    X.F2[2] = GetAUFlag(GFLAGS[1]);
+    X.F2[3] = GetCHFlag(GFLAGS[1]);
+    X.F2[4] = GetETFlag(GFLAGS[1]);
+    X.F2[5] = GetWFlag(GFLAGS[1]);
+    CopyList(GLIST[0],&X.L1); 
+    CopyList(GLIST[1],&X.L2); 
+    CopyTab(arrBan, &X.arrBan2);
     Push(&S, X);
 }
 
@@ -602,16 +615,26 @@ void UNDO()
 {
     /* KAMUS */
     stackinfotype X;
-    /* ALGORITMA */
-    if (!IsEmptyStack(S)){
-        Pop(&S, &X);
+    /* ALGORITMA */ //printf("FLAGS: %d %d %d %d %d %d\n", GetSFlag(GFLAGS[0]), GetShieldCD(GFLAGS[0]), GetAUFlag(GFLAGS[0]), GetCHFlag(GFLAGS[0]), GetETFlag(GFLAGS[0]), GetWFlag(GFLAGS[0]));
+    if (Top(S)>1){
+        Pop(&S, &X); Pop(&S, &X);
         GQUEUE[0] = X.Q1;
         GQUEUE[1] = X.Q2;
-        GFLAGS[0] = *(X.GF[0]);
-        GFLAGS[1] = *(X.GF[1]);
-        GLIST[0] = X.L1;
-        GLIST[1] = X.L2;
-        arrBan = X.arrBan;
+        SetSFlag(&GFLAGS[0], X.F1[0]);
+        SetShieldCD(&GFLAGS[0], X.F1[1]);
+        SetAUFlag(&GFLAGS[0], X.F1[2]);
+        SetCHFlag(&GFLAGS[0], X.F1[3]);
+        SetETFlag(&GFLAGS[0], X.F1[4]);
+        SetWFlag(&GFLAGS[0], X.F1[5]);
+        SetSFlag(&GFLAGS[1], X.F2[0]);
+        SetShieldCD(&GFLAGS[1], X.F2[1]);
+        SetAUFlag(&GFLAGS[1], X.F2[2]);
+        SetCHFlag(&GFLAGS[1], X.F2[3]);
+        SetETFlag(&GFLAGS[1], X.F2[4]);
+        SetWFlag(&GFLAGS[1], X.F2[5]);
+        CopyList(X.L1,&GLIST[0]); 
+        CopyList(X.L2,&GLIST[1]); 
+        CopyTab(X.arrBan2, &arrBan);
     }
     else {
         printf("Tidak dapat undo\n");

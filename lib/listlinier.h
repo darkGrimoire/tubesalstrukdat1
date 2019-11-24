@@ -140,7 +140,7 @@ void Konkat1 (List *L1, List *L2, List *L3);
 /* dan L1 serta L2 menjadi list kosong.*/
 /* Tidak ada alokasi/dealokasi pada prosedur ini */
 
-void CopyList (List L1, List L2);
+void CopyList (List L1, List* L2);
 /* I.S. L1 terdefinisi 
    F.S. L2 berisi salinan semua elemen L1 */
 #endif

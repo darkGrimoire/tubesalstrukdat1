@@ -59,6 +59,7 @@ void availableSkill (Queue Q) {
         else if(skill==7){
             printf("Barrage");
         }
+        printf("\n");
 }
 
 void printBuildings(List L){ // pake list L parameternya
@@ -144,8 +145,6 @@ int main()
         for(int i=1;i<=CKata.Length;i++){tabkata[i-1]=CKata.TabKata[i];}
         c = tabkata;
         LoadNewConfig(&arrBan,&G,&P,&GLIST[0],&GLIST[1],c);
-        IsiPeta(&P,arrBan);
-        DisplayPeta(P);
         curPlayer = 1;
         if(curPlayer%2!=0){
             printf("Player 1's turn\n");
@@ -171,26 +170,39 @@ int main()
     while(!loseState(curPlayer)){
         List LAttackFlag;
         //copy list kepemilikan ke list baru
-        CopyList(GLIST[curPlayer-1],LAttackFlag);
+        // Update Stack for Undo
+        UpdateSTACK();
+        pasukan(bangunan(arrBan, 1)) = 200;
+        pasukan(bangunan(arrBan, 2)) = 100;
+        CopyList(GLIST[curPlayer-1], &LAttackFlag); //PrintInfo(GLIST[0]);
 
         do
         {
             F = GFLAGS[curPlayer-1];
             IsiPeta(&P, arrBan);
             DisplayPeta(P);
-            tambahpasukanauto(&GLIST[curPlayer-1]);
             printBuildings(GLIST[curPlayer-1]);
+            printf("\n");
             printf("Skill Available: ");
             availableSkill(GQUEUE[curPlayer-1]);
             inputCommand();
             switch(check){
                 case 1: {
-                    printf("Daftar bangunan: \n");
-                    printBuildings(GLIST[curPlayer-1]);
+                    if (!IsEmptyList(LAttackFlag))
+                    {printf("Daftar bangunan: \n");
+                    printBuildings(LAttackFlag);
                     printf("Bangunan yang digunakan untuk menyerang: ");
                     STARTANGKA();
                     choicePenyerang = CAngka;
-                    List Lattack = MakeListEdge(G,choicePenyerang);
+                    while(choicePenyerang>NbElmtList(LAttackFlag) || choicePenyerang<=0){
+                        printf("Input tidak valid. Bangunan yang digunakan untuk menyerang: ");
+                        STARTANGKA();
+                        choicePenyerang = CAngka;
+                    }
+                    address P = First(LAttackFlag); int target = choicePenyerang;
+                    while (target>1){P = Next(P); target--;}
+                    int myBPas = pasukan(bangunan(arrBan, Info(P)));
+                    List Lattack = MakeListEdge(G,Info(P));
                     address Q = First(GLIST[curPlayer-1]); // list kepemilikan player
                     while(Q!=NilL){
                         if(SearchList(Lattack,Info(Q))!=NilL){
@@ -200,14 +212,28 @@ int main()
                     }
                     printBuildings(Lattack);
                     printf("Bangunan yang diserang: "); 
-                    STARTANGKA();
+                    STARTANGKA(); 
                     choiceDiserang = CAngka;
+                    while(choiceDiserang>NbElmtList(Lattack) || choiceDiserang<=0){
+                        printf("Input tidak valid. Bangunan yang diserang: ");
+                        STARTANGKA();
+                        choiceDiserang = CAngka;
+                    }
                     printf("Jumlah pasukan: ");
                     STARTANGKA();
                     choicePasukan = CAngka;
+                    while(choicePasukan>myBPas || choicePasukan<0){
+                        printf("Input tidak valid. Jumlah pasukan: ");
+                        STARTANGKA();
+                        choicePasukan = CAngka;
+                    }
                     ATTACK(Lattack, choiceDiserang, choicePenyerang, choicePasukan, curPlayer);
+                    printf("\n");
                     DelP(&LAttackFlag,choicePenyerang);
                 }
+                else{
+                    printf("Anda tidak memiliki bangunan yang dapat digunakan untuk menyerang!\n\n");
+                }}
                     break; 
                 case 2: {
                     printBuildings(GLIST[curPlayer-1]);
@@ -242,23 +268,47 @@ int main()
                     printf("Pilih bangunan: ");
                     STARTANGKA();
                     choiceMove = CAngka;
-                    printf("Daftar bangunan terdekat: ");
-                    List Lmove = MakeListEdge(G,choiceMove);
-                    address Q = First(GLIST[enemyPlayer-1]); // list kepemilikan player
-                    while(Q!=NilL){
-                        if(SearchList(Lmove,Info(Q))!=NilL){
-                            DelP(&Lmove,Info(Q));
-                        }
-                        Q = Next(Q);
+                    address P = First(GLIST[curPlayer-1]); int target = choiceMove;
+                    while (target>1){P = Next(P); target--;}
+                    int myBPas = pasukan(bangunan(arrBan, Info(P))); int myB = Info(P);
+                    if(myBPas==0){
+                        printf("Anda tidak memiliki pasukan di bangunan tersebut!\n\n");
                     }
-                    printBuildings(Lmove);
-                    printf("Bangunan yang akan menerima: ");
-                    STARTANGKA();
-                    choiceMoveTo = CAngka;
-                    printf("Jumlah pasukan: ");
-                    STARTANGKA();
-                    choicePasukan = CAngka;
-                    MOVE(choiceMove,choiceMoveTo,choicePasukan,curPlayer);
+                    else
+                    {
+                        printf("Daftar bangunan terdekat: \n");
+                        List Lmove = MakeListEdge(G,myB);
+                        address Q = First(Lmove); 
+                        while(Q!=NilL){
+                            if(SearchList(GLIST[curPlayer-1],Info(Q))==NilL){
+                                DelP(&Lmove,Info(Q));
+                            }
+                            Q = Next(Q);
+                        }
+                        printBuildings(Lmove);
+                        if(!IsEmptyList(Lmove)){
+                            printf("Bangunan yang akan menerima: ");
+                            STARTANGKA();
+                            choiceMoveTo = CAngka;
+                            while(choiceMoveTo>NbElmtList(Lmove) || choiceMoveTo<=0){
+                                printf("Input tidak valid. Bangunan yang akan menerima: ");
+                                STARTANGKA();
+                                choiceMoveTo = CAngka;
+                            }
+                            printf("Jumlah pasukan: ");
+                            STARTANGKA();
+                            choicePasukan = CAngka;
+                            while(choicePasukan>myBPas || choicePasukan<=0){
+                                printf("Input tidak valid. Jumlah masukan: ");
+                                STARTANGKA();
+                                choicePasukan = CAngka;
+                            }
+                            MOVE(choiceMove,choiceMoveTo,choicePasukan,curPlayer);
+                        }
+                        else{
+                            printf("Anda tidak memiliki bangunan di dekat bangunan tersebut!\n\n");
+                        }
+                    }     
                 }
                     break;
                 case 7: {
