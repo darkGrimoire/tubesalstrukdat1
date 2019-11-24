@@ -8,7 +8,7 @@
 #include "lib/point.h"      
 #include "lib/boolean.h"    
 #include "lib/command.h"
-#include "lib/mesinkar.h"
+#include "lib/mesinkarfile.h"
 #include "lib/mesinload.h"
 #include "lib/saveload.h"
 #include <stdio.h>
@@ -28,7 +28,7 @@ void ReadGraf(Graph* G, int JmlhBang)
     CreateGraph(1, G);
     for (i = 2; i <= JmlhBang; i++) {
         P = AllocNode(i);
-        InsertNode(G, i, P);
+        InsertNode(G, i, &P);
     }
     for (i = 1; i <= JmlhBang; i++) {
         fgets(line, 100, src);

@@ -6,7 +6,6 @@
 #include <stdio.h>
 #include <math.h>
 #include <stdlib.h>
-#include "lib\bangunan.h"
 #include "lib\boolean.h"
 
 /* PROTOTYPE */
@@ -399,11 +398,4 @@ void CopyList (List L1, List L2){
             L=Next(L);
             P=Next(P);
         }
-}
-
-void ListBPemilik(){
-    for (int i =1;i<=Neff(arrBan);i++){
-        if (kepemilikan(bangunan(arrBan,i))==1) InsVLast(&GLIST[0],i);
-        else InsVLast(&GLIST[1],i);
-    }
 }

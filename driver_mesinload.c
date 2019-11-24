@@ -2,9 +2,9 @@
 /* Driver dari ADT Mesin Load */
 
 #include <stdio.h>
-#include "lib\mesinload.h"
-#include "lib\mesinkar.h"
-#include "lib\boolean.h"
+#include "lib/mesinload.h"
+#include "lib/mesinkarfile.h"
+#include "lib/boolean.h"
 
 static FILE * src;
 static FILE * src2;

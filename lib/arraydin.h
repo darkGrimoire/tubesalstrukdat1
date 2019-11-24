@@ -8,7 +8,7 @@
 #define ARRAYDIN_H
 
 #include "boolean.h"
-#include "bangunan.h"
+// #include "bangunan.h"
 
 /*  Kamus Umum */
 #define IdxMin 1
@@ -18,6 +18,7 @@
 
 /* Definisi elemen dan koleksi objek */
 typedef int IdxType;
+typedef struct BANGUNAN BANGUNAN;
 typedef struct
 {
   BANGUNAN *TI; /* memori tempat penyimpan elemen (container) */
@@ -165,6 +166,7 @@ void AddAsLastEl(TabInt *T, BANGUNAN *B);
 /* Proses: Menambahkan X sebagai elemen terakhir tabel */
 /* I.S. Tabel T boleh kosong, tetapi tidak penuh */
 /* F.S. X adalah elemen terakhir T yang baru */
+
 // /* ********** MENGHAPUS ELEMEN ********** */
 // void DelLastEl(TabInt *T, ElType *X);
 // /* Proses : Menghapus elemen terakhir tabel */

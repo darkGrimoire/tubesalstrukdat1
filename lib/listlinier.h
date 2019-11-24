@@ -7,8 +7,7 @@
 #define listlinier_H
 
 #include "boolean.h"
-#include "bangunan.h"
-#include"arraydin.h"
+#include "arraydin.h"
 
 #define NilL NULL
 
@@ -144,7 +143,4 @@ void Konkat1 (List *L1, List *L2, List *L3);
 void CopyList (List L1, List L2);
 /* I.S. L1 terdefinisi 
    F.S. L2 berisi salinan semua elemen L1 */
-
-void ListBPemilik();
-List GetLPemilik(int kepemilikan);
 #endif

@@ -8,7 +8,7 @@
 #include "queue.h"
 #include "stackt.h"
 #include "bangunan.h"
-#include "mesinkata.h"
+// #include "mesinkata.h"
 
 /* definitions */
 #define maxQueue 1000
