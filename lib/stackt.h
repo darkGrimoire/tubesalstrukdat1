@@ -26,13 +26,13 @@ typedef struct {
   List L2;
   TabInt arrBan;
 } stackinfotype;
-typedef int address;   /* indeks tabel */
+typedef int addrstack;   /* indeks tabel */
 
 /* Contoh deklarasi variabel bertype stack dengan ciri TOP : */
 /* Versi I : dengan menyimpan tabel dan alamat top secara eksplisit*/
 typedef struct {
   stackinfotype T[MaxElS+1]; /* tabel penyimpan elemen */
-  address TOP;  /* alamat TOP: elemen puncak */
+  addrstack TOP;  /* alamat TOP: elemen puncak */
 } Stack;
 /* Definisi stack S kosong : S.TOP = Nil */
 /* Elemen yang dipakai menyimpan nilai Stack T[1]..T[MaxElS] */
