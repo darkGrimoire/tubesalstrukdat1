@@ -100,7 +100,7 @@ void BacaMATRIKS (MATRIKS * M, int NB, int NK)
 	MakeMATRIKS(NB, NK, &(*M));
 	for (i = GetFirstIdxBrs(*M); i <= GetLastIdxBrs(*M); i++) {
 		for (j = GetFirstIdxKol(*M); j <= GetLastIdxKol(*M); j++) {
-			scanf("%d", &ElmtMatriks(*M, i, j));
+			scanf(" %c", &ElmtMatriks(*M, i, j));
 		}
 	}
 }
