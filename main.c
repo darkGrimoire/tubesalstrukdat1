@@ -119,15 +119,24 @@ void changeTurn(int *curPlayer, int *enemyPlayer){
         if(*curPlayer%2==1){
             *curPlayer=2;
             *enemyPlayer=1;
-            printf("Player 2\n");
+            printf("Player 2's turn\n");
         }
         else if(*curPlayer%2==0){
             *curPlayer=1;
             *enemyPlayer=2;
-            printf("Player 1\n");
+            printf("Player 1's turn\n");
         }
 }
+// FOR DEBUGGING PURPOOSE (a.k.a CHEATS)
+void aezakmi(int curPlayer){
+    address P = First(GLIST[curPlayer-1]);
+    while (P!=NilL){pasukan(bangunan(arrBan, Info(P))) += 100; P = Next(P);}
+}
 
+void generateSkill(int curPlayer,int aiueo){
+    AddQ(&GQUEUE[curPlayer-1], aiueo);
+
+}
 int main()
 {
     // KAMUS
@@ -169,16 +178,19 @@ int main()
 
     while(!loseState(curPlayer)){
         List LAttackFlag;
+        int awalLAttack;
         //copy list kepemilikan ke list baru
         // Update Stack for Undo
         UpdateSTACK();
-        CopyList(GLIST[curPlayer-1], &LAttackFlag); //PrintInfo(GLIST[0]);
+        CreateList(&LAttackFlag);
+        CopyList(GLIST[curPlayer-1], &LAttackFlag); //PrintInfo(GLIST[0]); 
+        awalLAttack = NbElmtList(LAttackFlag);
 
         do
         {
             F = GFLAGS[curPlayer-1];
             IsiPeta(&P, arrBan);
-            DisplayPeta(P);
+            DisplayPeta(P); printf("FLAGS: %d %d %d %d %d %d\n", GetSFlag(F), GetShieldCD(F), GetAUFlag(F), GetCHFlag(F), GetETFlag(F), GetWFlag(F));
             printBuildings(GLIST[curPlayer-1]);
             printf("\n");
             printf("Skill Available: ");
@@ -199,7 +211,7 @@ int main()
                     }
                     address P = First(LAttackFlag); int target = choicePenyerang;
                     while (target>1){P = Next(P); target--;}
-                    int myBPas = pasukan(bangunan(arrBan, Info(P)));
+                    int myBPas = pasukan(bangunan(arrBan, Info(P))); int idxPenyerang = Info(P);
                     List Lattack = MakeListEdge(G,Info(P));
                     address Q = First(GLIST[curPlayer-1]); // list kepemilikan player
                     while(Q!=NilL){
@@ -212,6 +224,9 @@ int main()
                     printf("Bangunan yang diserang: "); 
                     STARTANGKA(); 
                     choiceDiserang = CAngka;
+                    P = First(Lattack); target = choiceDiserang;
+                    while (target>1){P = Next(P); target--;}
+                    int idxDiserang = Info(P);
                     while(choiceDiserang>NbElmtList(Lattack) || choiceDiserang<=0){
                         printf("Input tidak valid. Bangunan yang diserang: ");
                         STARTANGKA();
@@ -226,8 +241,11 @@ int main()
                         choicePasukan = CAngka;
                     }
                     ATTACK(Lattack, choiceDiserang, choicePenyerang, choicePasukan, curPlayer);
+                    if (awalLAttack!=NbElmtList(GLIST[curPlayer-1])){InsVLast(&LAttackFlag, idxDiserang);}
+                    int enemyPlayer = (curPlayer==1) ? 2 : 1;
+                    if (loseState(enemyPlayer)){break;}
                     printf("\n");
-                    DelP(&LAttackFlag,choicePenyerang);
+                    DelP(&LAttackFlag,idxPenyerang);
                 }
                 else{
                     printf("Anda tidak memiliki bangunan yang dapat digunakan untuk menyerang!\n\n");
@@ -242,7 +260,11 @@ int main()
                 }
                     break;
                 case 3: {
-                    SKILL(&F,&GQUEUE[curPlayer-1],curPlayer);
+                    if (!IsEmptyQ(GQUEUE[curPlayer-1]))
+                    {SKILL(&GFLAGS[curPlayer-1],&GQUEUE[curPlayer-1],curPlayer);}
+                    else{
+                        printf("Anda tidak memiliki skill yang dapat\n");
+                    }
                 }
                     break;
                 case 4: {
@@ -300,8 +322,8 @@ int main()
                                 printf("Input tidak valid. Jumlah masukan: ");
                                 STARTANGKA();
                                 choicePasukan = CAngka;
-                            }
-                            MOVE(choiceMove,choiceMoveTo,choicePasukan,curPlayer);
+                            } //printf("%d|%d|%d.",choiceMove,choiceMoveTo,choicePasukan);
+                            MOVE(Lmove,choiceMove,choiceMoveTo,choicePasukan,curPlayer);
                         }
                         else{
                             printf("Anda tidak memiliki bangunan di dekat bangunan tersebut!\n\n");
@@ -313,26 +335,39 @@ int main()
                     EXIT();
                 }
                     break;
+
+                case 999: {
+                    aezakmi(curPlayer);
+                }
+                    break;
+
+                case 420: {
+                    STARTANGKA();
+                    int aiueo = CAngka;
+                    generateSkill(curPlayer,aiueo);
+                }
+                    break;
             }
         }while(check!=8);
 
         if(check==8){
-            END_TURN(&F, curPlayer);
+            END_TURN(&GFLAGS[curPlayer-1], curPlayer);
+            if (loseState(curPlayer)){break;}
             if(!GetETFlag(F)){
                 changeTurn(&curPlayer, &enemyPlayer);
             }
             else{
-                FlipETFlag(&F);
+                FlipETFlag(&GFLAGS[curPlayer-1]);
             }
         }
     }
 
     if(loseState(curPlayer)){
         if(curPlayer==1){
-            printf("Player 1 loses! Try again next time!");
+            printf("Congrats to Player 2! Player 1 loses, try again next time!");
         }
         else{
-            printf("Player 2 loses! Try again next time!");
+            printf("Congrats to Player 1! Player 2 loses, try again next time!");
         }
     }
 

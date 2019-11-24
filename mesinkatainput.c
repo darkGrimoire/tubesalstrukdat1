@@ -260,6 +260,20 @@ void inputCommand()
         KataENDTURN.TabKata[7] = 'R';
         KataENDTURN.TabKata[8] = 'N';
         KataENDTURN.Length = 8;
+
+        Kata KataUHUY;
+        KataUHUY.TabKata[1] = 'E';
+        KataUHUY.TabKata[2] = 'E';
+        KataUHUY.TabKata[3] = 'Z';
+        KataUHUY.TabKata[4] = 'Y';
+        KataUHUY.Length = 4;
+
+        Kata KataEHE;
+        KataEHE.TabKata[1] = 'P';
+        KataEHE.TabKata[2] = 'A';
+        KataEHE.TabKata[3] = 'W';
+        KataEHE.TabKata[4] = 'A';
+        KataEHE.Length = 4;
     // ALGORITMA
         check = 0;
         do{
@@ -293,6 +307,12 @@ void inputCommand()
             }
             else if(matchString(CKata,KataENDTURN)){
                 check=8;
+            }
+            else if(matchString(CKata,KataUHUY)){
+                check=999;
+            }
+            else if(matchString(CKata,KataEHE)){
+                check=420;
             }
         }while(check==0);
 }
