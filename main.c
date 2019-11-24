@@ -19,8 +19,8 @@ Graph G;
 FLAGS F, GFLAGS[2];
 List GLIST[2];
 TabInt arrBan;
-const char* a;
-const char* b;
+char* a;
+char* b;
 char* c;
 char tabkata[10];
 Kata CKata;
@@ -169,7 +169,8 @@ int main()
         do{
             printf("Masukkan nama file yang ingin di-load: ");
             STARTKATA();
-            b = CKata.TabKata;
+            for(int i=1;i<=CKata.Length;i++){tabkata[i-1]=CKata.TabKata[i];}
+            b = tabkata;
             if(access(b, F_OK)!=-1){
                 LoadExistingConfig(&arrBan, &G, &P, &GFLAGS[0], &GFLAGS[1], &GQUEUE[0], &GQUEUE[1], &GLIST[0], &GLIST[1], b);
             }
@@ -275,7 +276,7 @@ int main()
                     do{
                         printf("Masukkan nama file: ");
                         STARTKATA();
-                        tabkata = CKata.TabKata;
+                        for(int i=1;i<=CKata.Length;i++){tabkata[i-1]=CKata.TabKata[i];}
                         a = tabkata;
                         if(access(a, F_OK)!=-1){
                             SaveConfig(arrBan, G, P, GFLAGS[0], GFLAGS[1], GQUEUE[0], GQUEUE[1], a);
