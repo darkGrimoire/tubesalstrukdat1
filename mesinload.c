@@ -1,9 +1,9 @@
 /* File: mesinkata.c */
 /* Implementasi Mesin Kata */
 
-#include "lib\mesinload.h"
-#include "lib\mesinkar.h"
-#include "lib\boolean.h"
+#include "lib/mesinload.h"
+#include "lib/mesinkarfile.h"
+#include "lib/boolean.h"
 #include <stdio.h>
 
 LoadDat CLData;
@@ -14,8 +14,8 @@ void IgnoreBlank()
    I.S. : CC sembarang
    F.S. : CC ≠ BLANK atau CC = MARK */
 {
-	while (CC == BLANK) {
-		ADV();
+	while (CCf == BLANK) {
+		ADVFILE();
 	}
 }
 
@@ -25,9 +25,9 @@ void STARTDATA()
           atau EndKata = false, CKata adalah kata yang sudah diakuisisi,
           CC karakter pertama sesudah karakter terakhir kata */
 {
-    START();
+    STARTFILE();
     IgnoreBlank();
-    if (CC == MARK)
+    if (CCf == MARK)
     {
         EndLData = true;
     }
@@ -46,7 +46,7 @@ void ADVDATA()
    Proses : Akuisisi kata menggunakan procedure SalinKata */
 {
     IgnoreBlank();
-    if (CC == MARK)
+    if (CCf == MARK)
     {
         EndLData = true;
     }
@@ -72,18 +72,49 @@ void SalinData()
     // KAMUS LOKAL
     int sum, x;
     // ALGORITMA
-    while ((CC != MARK) && (CC != BLANK)) {
-		if (CC == 'C' || CC == 'T' || CC == 'F' || CC == 'V'){
-			CLData.Index = CC;
+    CLData.Index = 'X';
+	CLData.Value = 0;
+    while ((CCf != MARK) && (CCf != BLANK)) {
+		if (CCf == 'C' || CCf == 'T' || CCf == 'F' || CCf == 'V'){
+			CLData.Index = CCf;
 			CLData.Value = -999;
-			ADV();
+			ADVFILE();
 		}
 		else {
 			sum = 0;
-			while ((CC != MARK) && (CC != BLANK)) {
-				x = CC - '0';
-				ADV();
-				if (CC == BLANK || CC == MARK) {
+			while ((CCf != MARK) && (CCf != BLANK) && !EOPf) {
+				if (CCf == '0') {
+					x = 0;
+				}
+				else if (CCf == '1') {
+					x = 1;
+				}
+				else if (CCf == '2') {
+					x = 2;
+				}
+				else if (CCf == '3') {
+					x = 3;
+				}
+				else if (CCf == '4') {
+					x = 4;
+				}
+				else if (CCf == '5') {
+					x = 5;
+				}
+				else if (CCf == '6') {
+					x = 6;
+				}
+				else if (CCf == '7') {
+					x = 7;
+				}
+				else if (CCf == '8') {
+					x = 8;
+				}
+				else if (CCf == '9') {
+					x = 9;
+				}
+				ADVFILE();
+				if (CCf == BLANK || CCf == MARK) {
 					sum = sum + x;
 				}
 				else {

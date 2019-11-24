@@ -1,81 +1,81 @@
 /* File: mesinkata.c */
 /* Implementasi Mesin Kata */
 
-#include "lib\mesinkata.h"
+#include "lib\mesinkatafile.h"
 #include <stdio.h>
 
-Kata CKata;
-boolean EndKata;
+Kata CKataf;
+boolean EndKataf;
 
-void IgnoreBlank()
+void IgnoreBlankFile()
 /* Mengabaikan satu atau beberapa BLANK
-   I.S. : CC sembarang
-   F.S. : CC ≠ BLANK atau CC = MARK */
+   I.S. : CCf sembarang
+   F.S. : CCf ≠ BLANK atau CCf = MARK */
 {
-    while ((CC == BLANK) && (CC != MARK))
+    while ((CCf == BLANK) && (CCf != MARK))
     {
-        ADV();
+        ADVFILE();
     }  
 }
 
-void STARTKATA()
-/* I.S. : CC sembarang
-   F.S. : EndKata = true, dan CC = MARK;
+void STARTKATAFILE()
+/* I.S. : CCf sembarang
+   F.S. : EndKata = true, dan CCf = MARK;
           atau EndKata = false, CKata adalah kata yang sudah diakuisisi,
-          CC karakter pertama sesudah karakter terakhir kata */
+          CCf karakter pertama sesudah karakter terakhir kata */
 {
-    START();
-    IgnoreBlank();
-    if (CC == MARK)
+    STARTFILE();
+    IgnoreBlankFile();
+    if (CCf == MARK)
     {
-        EndKata = true;
+        EndKataf = true;
     }
     else
     {
-        EndKata = false;
-        SalinKata();
+        EndKataf = false;
+        SalinKataFile();
     } 
 }
 
-void ADVKATA()
-/* I.S. : CC adalah karakter pertama kata yang akan diakuisisi
+void ADVKATAFILE()
+/* I.S. : CCf adalah karakter pertama kata yang akan diakuisisi
    F.S. : CKata adalah kata terakhir yang sudah diakuisisi,
-          CC adalah karakter pertama dari kata berikutnya, mungkin MARK
-          Jika CC = MARK, EndKata = true.
+          CCf adalah karakter pertama dari kata berikutnya, mungkin MARK
+          Jika CCf = MARK, EndKata = true.
    Proses : Akuisisi kata menggunakan procedure SalinKata */
 {
-    IgnoreBlank();
-    if (CC == MARK)
+    IgnoreBlankFile();
+    if (CCf == MARK)
     {
-        EndKata = true;
+        EndKataf = true;
     }
     else
     {
-        SalinKata();
-        IgnoreBlank();
+        SalinKataFile();
+        IgnoreBlankFile();
     }
 }
 
-void SalinKata()
+void SalinKataFile()
 /* Mengakuisisi kata, menyimpan dalam CKata
-   I.S. : CC adalah karakter pertama dari kata
+   I.S. : CCf adalah karakter pertama dari kata
    F.S. : CKata berisi kata yang sudah diakuisisi;
-          CC = BLANK atau CC = MARK;
-          CC adalah karakter sesudah karakter terakhir yang diakuisisi.
+          CCf = BLANK atau CCf = MARK;
+          CCf adalah karakter sesudah karakter terakhir yang diakuisisi.
           Jika panjang kata melebihi NMax, maka sisa kata "dipotong" */
 /* Mengabaikan satu atau beberapa BLANK
-   I.S. : CC sembarang
-   F.S. : CC ≠ BLANK atau CC = MARK */
+   I.S. : CCf sembarang
+   F.S. : CCf ≠ BLANK atau CCf = MARK */
 {
     // KAMUS LOKAL
     int i = 0;
 
     // ALGORITMA
-    while((CC != BLANK) && (CC != MARK) && (i < NMax))
+    while((CCf != BLANK) && (CCf != MARK) && (i < NMax))
     {
         i = i+1;
-        CKata.TabKata[i] = CC;
-        ADV();
+        CKataf.TabKata[i] = CCf;
+        ADVFILE();
     }
-    CKata.Length = i;
+    CKataf.Length = i;
 }

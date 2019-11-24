@@ -5,7 +5,7 @@
 #define __MESINKATA_H__
 
 #include "boolean.h"
-#include "mesinkar.h"
+#include "mesinkarfile.h"
 
 #define NMax 50
 #define BLANK ' '
@@ -16,28 +16,28 @@ typedef struct {
 } Kata;
 
 /* State Mesin Kata */
-extern boolean EndKata;
-extern Kata CKata;
+extern boolean EndKataf;
+extern Kata CKataf;
 
-void IgnoreBlank();
+void IgnoreBlankFile();
 /* Mengabaikan satu atau beberapa BLANK
    I.S. : CC sembarang
    F.S. : CC ≠ BLANK atau CC = MARK */
 
-void STARTKATA();
+void STARTKATAFILE();
 /* I.S. : CC sembarang
    F.S. : EndKata = true, dan CC = MARK;
           atau EndKata = false, CKata adalah kata yang sudah diakuisisi,
           CC karakter pertama sesudah karakter terakhir kata */
 
-void ADVKATA();
+void ADVKATAFILE();
 /* I.S. : CC adalah karakter pertama kata yang akan diakuisisi
    F.S. : CKata adalah kata terakhir yang sudah diakuisisi,
           CC adalah karakter pertama dari kata berikutnya, mungkin MARK
           Jika CC = MARK, EndKata = true.
    Proses : Akuisisi kata menggunakan procedure SalinKata */
 
-void SalinKata();
+void SalinKataFile();
 /* Mengakuisisi kata, menyimpan dalam CKata
    I.S. : CC adalah karakter pertama dari kata
    F.S. : CKata berisi kata yang sudah diakuisisi;
