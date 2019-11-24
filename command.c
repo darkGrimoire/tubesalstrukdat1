@@ -266,7 +266,8 @@ void Barrage(int curP)
     address P;
 
     /* ALGORITMA */
-    P = First(GLIST[curP-1]);
+    int enemyP = (curP == 1) ? 2 : 1;
+    P = First(GLIST[enemyP-1]);
     while (P != NilL){
         DecreasePasukan(&(bangunan(arrBan, Info(P))), 10);
         P = Next(P);
@@ -283,7 +284,7 @@ void Shield_ON(FLAGS* F)
     if (GetSFlag(*F)){
         SetShieldCD(F, 2);
     }else{
-        SetSFlag(F, true);
+        SetSFlag(F, true); printf("abc");
         SetShieldCD(F, 2);
     }
 }
@@ -437,11 +438,13 @@ void ATTACK(List L, int targetBchoice, int myBchoice, int myPas, int curP)
     BANGUNAN targetB, myB;
     address P;
     infolist X;
+    boolean isGenerateS;
     /* ALGORITMA */
     /* PREPARATION */
     // Checks who's the attacker and the target
     P1 = curP;
     P2 = (curP == 1) ? 2 : 1; //Asumsi P2/target adalah Player
+    isGenerateS = NbElmtList(GLIST[P2-1])==3;
     P = First(L);
     while (targetBchoice>1){P = Next(P); targetBchoice--;}
     targetBint = Info(P);
@@ -505,7 +508,7 @@ void ATTACK(List L, int targetBchoice, int myBchoice, int myPas, int curP)
         InsVLast(&GLIST[P1-1], targetBint);
         printf("Bangunan menjadi milikmu!\n");
         // Skill Generator: S, ET
-        GenerateS(curP);
+        if (isGenerateS){GenerateS(curP);}
         if (jenis(targetB) == 'F' && P2 != 0){
             GenerateET(curP);
         }
@@ -664,26 +667,29 @@ void END_TURN(FLAGS* F, int curP)
     CreateStack(&S);
 }
 
-void MOVE(int curBchoice, int targetBchoice, int jumPas, int curP)
+void MOVE(List L,int curBchoice, int targetBchoice, int jumPas, int curP)
 /* I.S curP terdefinisi 1/2, curB dan targetB terdefinisi bagian dari GLIST[curP-1] */
 /* F.S Memindahkan pasukan dari curB ke targetB */
 {
     /* KAMUS */
     BANGUNAN *curB, *targetB;
+    int curBint, targetBint;
     address P;
     /* ALGORITMA */
     // Find bangunan
-    P = First(GLIST[curP-1]);
+    P = First(L);
     while (targetBchoice>1){P = Next(P); targetBchoice--;}
-    targetB = &bangunan(arrBan, Info(P));
+    targetB = &bangunan(arrBan, Info(P)); targetBint = Info(P);
     P = First(GLIST[curP-1]);
     while (curBchoice>1){P = Next(P); curBchoice--;}
-    curB = &bangunan(arrBan, Info(P));
+    curB = &bangunan(arrBan, Info(P)); curBint = Info(P);
 
     // Move Pasukan
     jumPas = (jumPas+pasukan(*curB)-abs(jumPas-pasukan(*curB)))/2;
-    IncreasePasukan(targetB, jumPas);
-    DecreasePasukan(curB, jumPas);
+    IncreasePasukan(&bangunan(arrBan, targetBint), jumPas);
+    // pasukan(bangunan(arrBan, targetBint)) += jumPas;
+    DecreasePasukan(&bangunan(arrBan, curBint), jumPas); 
+    // pasukan(bangunan(arrBan, curBint)) -= jumPas; printf("%d,%d", curBint,pasukan(bangunan(arrBan, curBint)));
 
     // Update Stack for Undo
     UpdateSTACK();

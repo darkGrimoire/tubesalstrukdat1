@@ -150,7 +150,7 @@ void UNDO();
 void END_TURN(FLAGS* F, int curP);
 /* I.S F terdefinisi */
 /* F.S Validasi kondisi game, mengubah turn dan shieldCD */
-void MOVE(int curBchoice, int targetBchoice, int jumPas, int curP);
+void MOVE(List L,int curBchoice, int targetBchoice, int jumPas, int curP);
 /* I.S curP terdefinisi 1/2 */
 /* F.S Memindahkan pasukan dari curB ke targetB */
 void EXIT();
