@@ -10,8 +10,8 @@
 #include "queue.h"
 #include "listlinier.h"
 #include "arraydin.h"
-#include "command.h"
-
+// #include "command.h"
+typedef struct FLAGS FLAGS;
 #define NilS 0
 #define MaxElS 30
 /* Nil adalah stack dengan elemen kosong . */
@@ -20,8 +20,8 @@
 typedef struct {
   Queue Q1;
   Queue Q2;
-  FLAGS F1;
-  FLAGS F2;
+  FLAGS *F1;
+  FLAGS *F2;
   List L1;
   List L2;
   TabInt arrBan;

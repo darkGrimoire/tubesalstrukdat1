@@ -191,11 +191,11 @@ void GetSkill(Queue Q, Kata* S)
 /* I.S Q terdefinisi, S sembarang */
 /* F.S Q masih sama, S terisi dengan skill di queue terdepan */
 {
-    /* KAMUS */
-    int N;
-    /* ALGORITMA */
-    N = InfoHead(Q);
-    IntToSkill(N,S);
+    // /* KAMUS */
+    // int N;
+    // /* ALGORITMA */
+    // N = InfoHead(Q);
+    // IntToSkill(N,S);
 }
 
 void IntToSkilltype(int N, Kata* S)
@@ -204,29 +204,29 @@ void IntToSkilltype(int N, Kata* S)
 {
     /* KAMUS */
     /* ALGORITMA */
-    switch(N){
-        case 1:
-            (*S).TabKata[0] = "I"; (*S).TabKata[1] = "U"; (*S).Length = 2;
-            break;
-        case 2:
-            (*S).TabKata[0] = "S"; (*S).Length = 1;
-            break;
-        case 3:
-            (*S).TabKata[0] = "E"; (*S).TabKata[1] = "T"; (*S).Length = 2;
-            break;
-        case 4:
-            (*S).TabKata[0] = "A"; (*S).TabKata[1] = "U"; (*S).Length = 2;
-            break;
-        case 5:
-            (*S).TabKata[0] = "C"; (*S).TabKata[1] = "H"; (*S).Length = 2;
-            break;
-        case 6:
-            (*S).TabKata[0] = "I"; (*S).TabKata[1] = "R"; (*S).Length = 2;
-            break;
-        case 7:
-            (*S).TabKata[0] = "B"; (*S).Length = 1;
-            break;
-    }
+    // switch(N){
+    //     case 1:
+    //         (*S).TabKata[0] = "I"; (*S).TabKata[1] = "U"; (*S).Length = 2;
+    //         break;
+    //     case 2:
+    //         (*S).TabKata[0] = "S"; (*S).Length = 1;
+    //         break;
+    //     case 3:
+    //         (*S).TabKata[0] = "E"; (*S).TabKata[1] = "T"; (*S).Length = 2;
+    //         break;
+    //     case 4:
+    //         (*S).TabKata[0] = "A"; (*S).TabKata[1] = "U"; (*S).Length = 2;
+    //         break;
+    //     case 5:
+    //         (*S).TabKata[0] = "C"; (*S).TabKata[1] = "H"; (*S).Length = 2;
+    //         break;
+    //     case 6:
+    //         (*S).TabKata[0] = "I"; (*S).TabKata[1] = "R"; (*S).Length = 2;
+    //         break;
+    //     case 7:
+    //         (*S).TabKata[0] = "B"; (*S).Length = 1;
+    //         break;
+    // }
 }
 /********** SKILLS **********/
 void InstantUpgrade(int curP)
@@ -433,6 +433,7 @@ void ATTACK(List L, int targetBchoice, int myBchoice, int myPas, int curP)
     int targetPas, calcPas, checkPas, restPas, P1, P2;
     BANGUNAN targetB, myB;
     address P;
+    infolist X;
     /* ALGORITMA */
     /* PREPARATION */
     // Checks who's the attacker and the target
@@ -489,9 +490,11 @@ void ATTACK(List L, int targetBchoice, int myBchoice, int myPas, int curP)
         printf("Bangunan gagal direbut.\n");
     } else if (checkPas >= targetPas){
         SetKepemilikan(&targetB,P1);
-        SetPasukan(&targetB, restPas);
-        SetLevel(&targetB, 1);
+        setpasukan(&targetB, restPas);
+        resetlevel(&targetB);
         DecreasePasukan(&myB,myPas);
+        DelP(&GLIST[P2-1], Info(P));
+        InsVLast(&GLIST[P1-1], Info(P));
         printf("Bangunan menjadi milikmu!\n");
         // Skill Generator: S, ET
         GenerateS(curP);
@@ -504,6 +507,8 @@ void ATTACK(List L, int targetBchoice, int myBchoice, int myPas, int curP)
     if (jenis(targetB) == 'T' && P2!=0){
         GenerateAU(curP);
     }
+    // Update Stack for Undo
+    UpdateSTACK();
 }
 void LEVEL_UP(int choice, int curP)
 /* I.S F terdefinisi */
@@ -524,6 +529,8 @@ void LEVEL_UP(int choice, int curP)
         else if (jenis(bangunan(arrBan, Info(P)))=='F'){printf("Fort");}
         else if (jenis(bangunan(arrBan, Info(P)))=='V'){printf("Village");}
         printf("-mu meningkat menjadi %d!\n",level(bangunan(arrBan, Info(P))));
+        // Update Stack for Undo
+        UpdateSTACK();
     }else{
         printf("Jumlah pasukan ");
         if (jenis(bangunan(arrBan, Info(P)))=='C'){printf("Castle");}
@@ -566,20 +573,37 @@ void SKILL(FLAGS* F, Queue* Q, int curP)
             Barrage(curP);
             break;
     }
+    CreateStack(&S);
 }
-void UNDO(Stack* S)
+
+void UpdateSTACK()
+{
+    /* KAMUS */
+    stackinfotype X;
+    /* ALGORITMA */
+    X.Q1 = GQUEUE[0];
+    X.Q2 = GQUEUE[1];
+    *(X.F1) = GFLAGS[0];
+    *(X.F2) = GFLAGS[1];
+    X.L1 = GLIST[0];
+    X.L2 = GLIST[1];
+    X.arrBan = arrBan;
+    Push(&S, X);
+}
+
+void UNDO()
 /* Yang bisa di-undo: ATTACK, LEVEL_UP, MOVE */
 /* Stack bakal di-reset tiap: END_TURN, SKILL */
 {
     /* KAMUS */
     stackinfotype X;
     /* ALGORITMA */
-    if (!IsEmptyStack(*S)){
+    if (!IsEmptyStack(S)){
         Pop(&S, &X);
         GQUEUE[0] = X.Q1;
         GQUEUE[1] = X.Q2;
-        GFLAGS[0] = X.F1;
-        GFLAGS[1] = X.F2;
+        GFLAGS[0] = *(X.F1);
+        GFLAGS[1] = *(X.F2);
         GLIST[0] = X.L1;
         GLIST[1] = X.L2;
         arrBan = X.arrBan;
@@ -609,6 +633,7 @@ void END_TURN(FLAGS* F, int curP)
     // Skill Generator: IR
     GenerateIR(curP);
     // tambahpasukan();
+    CreateStack(&S);
 }
 
 void MOVE(int curBchoice, int targetBchoice, int jumPas, int curP)
@@ -631,6 +656,9 @@ void MOVE(int curBchoice, int targetBchoice, int jumPas, int curP)
     jumPas = (jumPas+pasukan(curB)+abs(jumPas-pasukan(curB)))/2;
     IncreasePasukan(&targetB, jumPas);
     DecreasePasukan(&curB, jumPas);
+
+    // Update Stack for Undo
+    UpdateSTACK();
 }
 
 void EXIT()
