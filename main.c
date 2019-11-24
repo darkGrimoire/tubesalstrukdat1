@@ -21,6 +21,8 @@ List GLIST[2];
 TabInt arrBan;
 const char* a;
 const char* b;
+const char* c;
+Kata CKata;
 int curPlayer, enemyPlayer;
 
 boolean loseState (int player){
@@ -130,6 +132,12 @@ int main()
 
     inputStart();
     if(mulai==1){
+        printf("Masukkan file konfigurasi: ");
+        STARTKATA();
+        c = CKata.TabKata;
+        LoadNewConfig(&arrBan,&G,&P,c);
+        IsiPeta(&P,arrBan);
+        DisplayPeta(P);
         curPlayer = 1;
         if(curPlayer%2!=0){
             printf("Player 1");
