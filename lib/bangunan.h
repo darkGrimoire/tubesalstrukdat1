@@ -81,6 +81,7 @@ void setpasukan(BANGUNAN *B,int pasukan);
 void resetlevel(BANGUNAN *B);
 void tambahpasukanauto (List *L);//auto tiap turn nambah pasukannya
 void ListBPemilik();
+
 List GetLPemilik(int kepemilikan);
 
 #endif

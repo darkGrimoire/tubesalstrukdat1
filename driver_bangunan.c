@@ -5,6 +5,9 @@
 #include "lib/point.h"
 #include <stdio.h>
 
+TabInt arrBan;
+List GLIST[2];
+
 void PrintBangunan(BANGUNAN B){
     printf("Jenis bangunan: %c\n", jenis(B));
     printf("Kepemilikan: %d\n", kepemilikan(B));
@@ -106,20 +109,48 @@ int main(){
 
     // Level Up
     DecreasePasukan(&C1, 15);
-    printf("Pasukan di C1 menjadi %d", pasukan(C1));
+    printf("Pasukan di C1 menjadi %d\n", pasukan(C1));
     if (!CanLevelUp(C1))
     {
         printf("C1 tidak bisa level up\n");
     }
     
     IncreasePasukan(&C1, 25);
-    printf("Pasukan di C1 menjadi %d", pasukan(C1));
-    LevelUp(&C1);
+    printf("Pasukan di C1 menjadi %d\n", pasukan(C1));
     if (CanLevelUp(C1))
     {
-        printf("C1 level up!");
+        printf("C1 level up!\n");
+        LevelUp(&C1);
+    }
+    else
+    {
+        printf("C1 tidak bisa level up\n");
     }
     PrintBangunan(C1);
-    
+    printf("\n");
+
+    printf("Jumlah pasukan C2: %d\n", pasukan(C2));
+    setpasukan(&C2, 30);
+    printf("Pasukan di C2 menjadi %d\n", pasukan(C2));
+    printf("C2 milik player %d\n", kepemilikan(C2));
+    if (IsKepemilikan(C2,2))
+    {
+        SetKepemilikan(&C2, 1);
+    }
+    printf("C2 menjadi milik player %d\n", kepemilikan(C2));
+
+    if (validTambahA(C2))
+    {
+        printf("C2 dapat melakukan penambahan pasukan\n");
+    }
+    else
+    {
+        printf("C2 tidak dapat melakukan penambahna pasukan\n");
+    }
+
+    printf("C1 level: %d\n", level(C1));
+    resetlevel(&C1);
+    printf("C1 menjadi level: %d\n", level(C1));
+
     return 0;
 }
