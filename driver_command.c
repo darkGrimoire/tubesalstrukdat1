@@ -74,7 +74,7 @@ void printStat(){
 int main(){
     // Generate FLAGS
     CreateFlag(&GFLAGS[0]); 
-    CreateFlag(&GFLAGS[1]); SetAUFlag(&GFLAGS[0], true);
+    CreateFlag(&GFLAGS[1]); // SetAUFlag(&GFLAGS[0], true);
     // Generate Bangunan
     MakeEmpty(&arrBan, 100);
     BANGUNAN B[6];
@@ -82,7 +82,7 @@ int main(){
     B[1] = SetBangunan(1, 'T', MakePOINT(3,4));
     B[2] = SetBangunan(1, 'F', MakePOINT(5,6));
     B[3] = SetBangunan(2, 'C', MakePOINT(7,8));
-    B[4] = SetBangunan(2, 'T', MakePOINT(9,10));
+    B[4] = SetBangunan(2, 'V', MakePOINT(9,10));
     B[5] = SetBangunan(2, 'F', MakePOINT(11,12)); 
     for (int i=0; i<6;i++){
         arrBan.TI[i] = B[i];
@@ -99,9 +99,37 @@ int main(){
     CreateStack(&S); 
     UpdateSTACK();
     // Print kondisi awal
-    printStat();
+    // printStat();
     // Testing: Attack
-    ATTACK(GLIST[1],2,3,40,1);
+    // Testcase #1
+    // pasukan(bangunan(arrBan, 2)) = 44;
+    // pasukan(bangunan(arrBan, 4)) = 30;
+    // printStat();
+    // Testcase #2
+    // pasukan(bangunan(arrBan, 2)) = 44;
+    // pasukan(bangunan(arrBan, 4)) = 33; SetSFlag(&GFLAGS[1],true);
+    // printStat();
+    // Testcase #3
+    // pasukan(bangunan(arrBan, 2)) = 44;
+    // pasukan(bangunan(arrBan, 4)) = 30; SetSFlag(&GFLAGS[1],true);
+    // printStat();
+    // Testcase #4
+    // pasukan(bangunan(arrBan, 2)) = 44; SetAUFlag(&GFLAGS[0],true);
+    // pasukan(bangunan(arrBan, 4)) = 30; SetSFlag(&GFLAGS[1],true);
+    // printStat();
+    // Testcase #5
+    // pasukan(bangunan(arrBan, 2)) = 44; SetCHFlag(&GFLAGS[0],true);
+    // pasukan(bangunan(arrBan, 4)) = 30; SetSFlag(&GFLAGS[1],true);
+    // printStat();
+    // Testcase #6
+    // pasukan(bangunan(arrBan, 2)) = 15; SetCHFlag(&GFLAGS[0],true);
+    // pasukan(bangunan(arrBan, 4)) = 30; SetSFlag(&GFLAGS[1],true);
+    // printStat();
+    // Testcase #7
+    pasukan(bangunan(arrBan, 2)) = 14; SetCHFlag(&GFLAGS[0],true);
+    pasukan(bangunan(arrBan, 4)) = 30; SetSFlag(&GFLAGS[1],true);
+    printStat();
+    ATTACK(GLIST[1],2,3,14,1);
     printStat();
     
 

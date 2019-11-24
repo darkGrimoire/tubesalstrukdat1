@@ -465,7 +465,7 @@ void ATTACK(List L, int targetBchoice, int myBchoice, int myPas, int curP)
     // DEFAULT:
     checkPas = myPas; 
     calcPas = checkPas;
-    restPas = calcPas-targetPas; printf("{%d|%d|%d|%d}", myPas, calcPas,targetPas, restPas);
+    restPas = calcPas-targetPas; // printf("{%d|%d|%d|%d}", myPas, calcPas,targetPas, restPas);
     
     // attacker punya attackup/criticalhit, shield/pertahanan diabaikan
     if (GetCHFlag(GFLAGS[P1-1])){
@@ -498,7 +498,7 @@ void ATTACK(List L, int targetBchoice, int myBchoice, int myPas, int curP)
         resetlevel(&bangunan(arrBan, targetBint));
         pasukan(bangunan(arrBan, targetBint)) = restPas;
         // DecreasePasukan(&bangunan(arrBan, myBint),myPas);
-        pasukan(bangunan(arrBan, myBint)) = ((myPas+0+abs(myPas-0))/2);
+        pasukan(bangunan(arrBan, myBint)) -= myPas;
         DelP(&GLIST[P2-1], targetBint);
         InsVLast(&GLIST[P1-1], targetBint);
         printf("Bangunan menjadi milikmu!\n");
