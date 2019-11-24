@@ -111,24 +111,27 @@ int main(){
     scanf ("maxel %d", &maxel);
     MakeEmpty(&t1,maxel);
     MakeEmpty(&t2,maxel);
-
-    bangunan(t1,1) = C0;
-    bangunan(t1,2) = T0;
-    bangunan(t1,3) = V0;
-    bangunan(t1,4) = C1;
-    bangunan(t1,5) = T1;
-    bangunan(t1,6) = V1;
+    AddAsLastEl(&t1,&C0);
+    AddAsLastEl(&t1,&T0);
+    AddAsLastEl(&t1,&V0);
+    AddAsLastEl(&t1,&C1);
+    AddAsLastEl(&t1,&T1);
+    AddAsLastEl(&t1,&V1);
     AddAsLastEl(&t1,&C2);
     AddAsLastEl(&t1,&T2);
     AddAsLastEl(&t1,&V2);
 
     CopyTab(t1,&t2);
-
-    for (int i=GetFirstIdx(t1); i<=GetLastIdx(t1); i++){
+    printf("tab pertama\n");
+    for (int i=GetFirstIdx(t1); i<=Neff(t1); i++){
         PrintBangunan(bangunan(t1,i));
+        printf("\n bangunan ke-%d \n",i);
     }
-    for (int j=GetFirstIdx(t1); j<=GetLastIdx(t1); j++){
+    printf("tab kedua\n");
+    for (int j=GetFirstIdx(t2); j<=Neff(t2); j++){
         PrintBangunan(bangunan(t2,j));
+        printf("\n bangunan ke-%d \n",j);
     }
-
+    
+    return 0;
 }

@@ -637,7 +637,7 @@ void END_TURN(FLAGS* F, int curP)
     if (GetCHFlag(*F)){FlipCHFlag(F);}
     // Skill Generator: IR
     GenerateIR(curP);
-    // tambahpasukan();
+    tambahpasukanauto(&GLIST[curP-1]);
     CreateStack(&S);
 }
 
@@ -646,21 +646,21 @@ void MOVE(int curBchoice, int targetBchoice, int jumPas, int curP)
 /* F.S Memindahkan pasukan dari curB ke targetB */
 {
     /* KAMUS */
-    BANGUNAN curB, targetB;
+    BANGUNAN *curB, *targetB;
     address P;
     /* ALGORITMA */
     // Find bangunan
     P = First(GLIST[curP-1]);
     while (targetBchoice>1){P = Next(P); targetBchoice--;}
-    targetB = bangunan(arrBan, Info(P));
+    targetB = &bangunan(arrBan, Info(P));
     P = First(GLIST[curP-1]);
     while (curBchoice>1){P = Next(P); curBchoice--;}
-    curB = bangunan(arrBan, Info(P));
+    curB = &bangunan(arrBan, Info(P));
 
     // Move Pasukan
-    jumPas = (jumPas+pasukan(curB)+abs(jumPas-pasukan(curB)))/2;
-    IncreasePasukan(&targetB, jumPas);
-    DecreasePasukan(&curB, jumPas);
+    jumPas = (jumPas+pasukan(*curB)-abs(jumPas-pasukan(*curB)))/2;
+    IncreasePasukan(targetB, jumPas);
+    DecreasePasukan(curB, jumPas);
 
     // Update Stack for Undo
     UpdateSTACK();

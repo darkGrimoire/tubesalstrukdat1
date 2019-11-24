@@ -65,10 +65,12 @@ void printBuildings(List L){ // pake list L parameternya
 }
 
 void printStat(){
+    printf("\n");
     printFlags(GFLAGS[0]); printFlags(GFLAGS[1]);
     printf("Lists: "); PrintInfo(GLIST[0]); PrintInfo(GLIST[1]); printf("\n");
     printf("Head(Q): "); printf("%d ",headOfQueue(GQUEUE[0])); printf("%d\n",headOfQueue(GQUEUE[1]));
     printBuildings(GLIST[0]); printf("\n");printBuildings(GLIST[1]);
+    printf("\n");
 }
 
 int main(){
@@ -99,8 +101,9 @@ int main(){
     CreateStack(&S); 
     UpdateSTACK();
     // Print kondisi awal
-    // printStat();
-    // Testing: Attack
+    printStat();
+
+    /*** Testing: ATTACK ***/
     // Testcase #1
     // pasukan(bangunan(arrBan, 2)) = 44;
     // pasukan(bangunan(arrBan, 4)) = 30;
@@ -126,12 +129,23 @@ int main(){
     // pasukan(bangunan(arrBan, 4)) = 30; SetSFlag(&GFLAGS[1],true);
     // printStat();
     // Testcase #7
-    pasukan(bangunan(arrBan, 2)) = 14; SetCHFlag(&GFLAGS[0],true);
-    pasukan(bangunan(arrBan, 4)) = 30; SetSFlag(&GFLAGS[1],true);
-    printStat();
-    ATTACK(GLIST[1],2,3,14,1);
-    printStat();
+    // pasukan(bangunan(arrBan, 2)) = 14; SetCHFlag(&GFLAGS[0],true);
+    // pasukan(bangunan(arrBan, 4)) = 30; SetSFlag(&GFLAGS[1],true);
+    // printStat();
+    // ATTACK(GLIST[1],2,3,14,1);
+    // printStat();
     
+    /* Testing: MOVE */
+    // MOVE(1,3,20,1);
+    // printStat();
+
+    /* Testing: SKILL */
+    infotype X;
+    // 
+    DelQ(&GQUEUE[0],&X);
+    AddQ(&GQUEUE[0], 2);
+    SKILL(&GFLAGS[0], &GQUEUE[0],1);
+    printStat();
 
     return 0;
 }
