@@ -1,7 +1,7 @@
 /* File: mesinkar.c */
 /* Implementasi Mesin Karakter */
 
-#include "lib\mesinkarfile.h"
+#include "lib/mesinkarfile.h"
 #include <stdio.h>
 
 char CCf;
@@ -34,6 +34,6 @@ void ADVFILE() {
     retval = fscanf(pita,"%c",&CCf);
     EOPf = (CCf == MARK);
     if (EOPf) {
-       fclose(pita);
+       EOPf = !EOPf;
     }
 }

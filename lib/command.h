@@ -30,7 +30,7 @@ extern Stack S;
 
 /********** KONSTRUKTOR **********/
 /*** Flags ***/
-void CreateFlags(FLAGS* F);
+void CreateFlag(FLAGS* F);
 /* I.S F sembarang */
 /* F.S F terisi dengan default values untuk Type Data FLAGS */
 void SetFlag(FLAGS* F, boolean SF, int CD, boolean AU, boolean CH, boolean ET, boolean WF);

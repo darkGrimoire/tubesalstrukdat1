@@ -227,18 +227,6 @@ int GetShieldCD(FLAGS F)
 //     //         break;
 //     // }
 // }
-
-// void GetSkill(Queue Q, Kata* S)
-// /* I.S Q terdefinisi, S sembarang */
-// /* F.S Q masih sama, S terisi dengan skill di queue terdepan */
-// {
-//     /* KAMUS */
-//     int N;
-//     /* ALGORITMA */
-//     N = InfoHead(Q);
-//     IntToSkill(N,S);
-// }
-
 /********** SKILLS **********/
 void InstantUpgrade(int curP)
 /* I.S B terdefinisi */
@@ -378,6 +366,7 @@ void GenerateAU(int curP)
             if (jenis(bangunan(arrBan, Info(P))) == 'T'){
                 count++;
             }
+            P = Next(P);
         }
         condPass = count==3;
         if (condPass) {AddQ(&GQUEUE[curP-1], 4);}; 
@@ -413,6 +402,7 @@ void GenerateIR(int curP)
             if (level(bangunan(arrBan, Info(P))) < 4){
                 condPass = false;
             }
+            P = Next(P);
         }
         if (condPass) {AddQ(&GQUEUE[curP-1], 6);}; 
     }
@@ -441,7 +431,7 @@ void ATTACK(List L, int targetBchoice, int myBchoice, int myPas, int curP)
 {
     /* KAMUS */
     // P1 is the attacker, P2 is the target
-    int targetPas, calcPas, checkPas, restPas, P1, P2;
+    int targetPas, calcPas, checkPas, restPas, P1, P2, targetBint, myBint;
     BANGUNAN targetB, myB;
     address P;
     infolist X;
@@ -452,6 +442,7 @@ void ATTACK(List L, int targetBchoice, int myBchoice, int myPas, int curP)
     P2 = (curP == 1) ? 2 : 1; //Asumsi P2/target adalah Player
     P = First(L);
     while (targetBchoice>1){P = Next(P); targetBchoice--;}
+    targetBint = Info(P);
     if (SearchList(GLIST[P2-1],Info(P))==Nil){
         P2 = 0; //Target bukanlah Player
     }
@@ -465,15 +456,16 @@ void ATTACK(List L, int targetBchoice, int myBchoice, int myPas, int curP)
     // Prepare myB
     P = First(GLIST[P1-1]);
     while (myBchoice>1){P = Next(P); myBchoice--;}
+    myBint = Info(P);
     myB = bangunan(arrBan, Info(P));
     /* MEKANISME ATTACK */
     // checkPas = cuman berbeda dgn myPas di criticalhit
     // calcPas = jumlah pasukan yg di decrease di musuh
     // restPas = myPas - targetPas
     // DEFAULT:
-    checkPas = myPas;
+    checkPas = myPas; 
     calcPas = checkPas;
-    restPas = calcPas-targetPas;
+    restPas = calcPas-targetPas; printf("{%d|%d|%d|%d}", myPas, calcPas,targetPas, restPas);
     
     // attacker punya attackup/criticalhit, shield/pertahanan diabaikan
     if (GetCHFlag(GFLAGS[P1-1])){
@@ -495,17 +487,20 @@ void ATTACK(List L, int targetBchoice, int myBchoice, int myPas, int curP)
     // Mekanisme ordinary attack 
     if (checkPas < targetPas){
         if (P2!=0){
-            DecreasePasukan(&targetB, calcPas);
-            DecreasePasukan(&myB, myPas);
+            DecreasePasukan(&bangunan(arrBan, targetBint), calcPas);
+            DecreasePasukan(&bangunan(arrBan, myBint), myPas);
         }
         printf("Bangunan gagal direbut.\n");
     } else if (checkPas >= targetPas){
-        SetKepemilikan(&targetB,P1);
-        setpasukan(&targetB, restPas);
-        resetlevel(&targetB);
-        DecreasePasukan(&myB,myPas);
-        DelP(&GLIST[P2-1], Info(P));
-        InsVLast(&GLIST[P1-1], Info(P));
+        // SetKepemilikan(&bangunan(arrBan, targetBint),P1);
+        kepemilikan(bangunan(arrBan, targetBint)) = P1;
+        // setpasukan(&bangunan(arrBan, targetBint), restPas);
+        resetlevel(&bangunan(arrBan, targetBint));
+        pasukan(bangunan(arrBan, targetBint)) = restPas;
+        // DecreasePasukan(&bangunan(arrBan, myBint),myPas);
+        pasukan(bangunan(arrBan, myBint)) = ((myPas+0+abs(myPas-0))/2);
+        DelP(&GLIST[P2-1], targetBint);
+        InsVLast(&GLIST[P1-1], targetBint);
         printf("Bangunan menjadi milikmu!\n");
         // Skill Generator: S, ET
         GenerateS(curP);
@@ -592,13 +587,12 @@ void UpdateSTACK()
     /* KAMUS */
     stackinfotype X;
     /* ALGORITMA */
-    X.Q1 = GQUEUE[0];
-    X.Q2 = GQUEUE[1];
-    *(X.F1) = GFLAGS[0];
-    *(X.F2) = GFLAGS[1];
+    X.Q1 = GQUEUE[0]; 
+    X.Q2 = GQUEUE[1]; 
+    *X.GF = GFLAGS;
     X.L1 = GLIST[0];
-    X.L2 = GLIST[1];
-    X.arrBan = arrBan;
+    X.L2 = GLIST[1]; 
+    X.arrBan = arrBan; 
     Push(&S, X);
 }
 
@@ -613,8 +607,8 @@ void UNDO()
         Pop(&S, &X);
         GQUEUE[0] = X.Q1;
         GQUEUE[1] = X.Q2;
-        GFLAGS[0] = *(X.F1);
-        GFLAGS[1] = *(X.F2);
+        GFLAGS[0] = *(X.GF[0]);
+        GFLAGS[1] = *(X.GF[1]);
         GLIST[0] = X.L1;
         GLIST[1] = X.L2;
         arrBan = X.arrBan;
