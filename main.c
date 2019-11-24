@@ -103,6 +103,7 @@ void printBuildings(List L){ // pake list L parameternya
                 printf("lv. ");
                 printf("%d",level(bangunan(arrBan,Info(A))));
             }
+            Next(A);
         }
 }
 
