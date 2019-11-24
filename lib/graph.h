@@ -61,7 +61,7 @@ addrSuccNode SearchEdge (Graph G, int prec, int succ);
 List MakeListEdge (Graph G, int X);
 /* Membuat list yang berisi keterkaitan antarsimpul */
 
-void InsertNode (Graph* G, int X, addrNode Pn);
+void InsertNode (Graph* G, int X, addrNode* Pn);
 /* Menambahkan simpul X ke dalam graf jika alokasi X berhasil */
 /* I.S. G terdefinisi, X terdefinisi dan belum ada pada G */
 /* F.S. Jika alokasi berhasil, X menjadi elemen terakhir G, Pn berisi address simpul X.

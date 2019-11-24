@@ -2,32 +2,32 @@
 /* Implementasi Mesin Kata */
 
 #include "lib\mesinload.h"
-#include "lib\mesinkar.h"
+#include "lib\mesinkarfile.h"
 #include "lib\boolean.h"
 #include <stdio.h>
 
 LoadDat CLData;
 boolean EndLData;
 
-void IgnoreBlank()
+void IgnoreBlankData()
 /* Mengabaikan satu atau beberapa BLANK
-   I.S. : CC sembarang
-   F.S. : CC ≠ BLANK atau CC = MARK */
+   I.S. : CCf sembarang
+   F.S. : CCf ≠ BLANK atau CCf = MARK */
 {
-	while (CC == BLANK) {
-		ADV();
+	while (CCf == BLANK) {
+		ADVFILE();
 	}
 }
 
 void STARTDATA()
-/* I.S. : CC sembarang
-   F.S. : EndKata = true, dan CC = MARK;
+/* I.S. : CCf sembarang
+   F.S. : EndKata = true, dan CCf = MARK;
           atau EndKata = false, CKata adalah kata yang sudah diakuisisi,
-          CC karakter pertama sesudah karakter terakhir kata */
+          CCf karakter pertama sesudah karakter terakhir kata */
 {
-    START();
-    IgnoreBlank();
-    if (CC == MARK)
+    STARTFILE();
+    IgnoreBlankData();
+    if (CCf == MARK)
     {
         EndLData = true;
     }
@@ -39,14 +39,14 @@ void STARTDATA()
 }
 
 void ADVDATA()
-/* I.S. : CC adalah karakter pertama kata yang akan diakuisisi
+/* I.S. : CCf adalah karakter pertama kata yang akan diakuisisi
    F.S. : CKata adalah kata terakhir yang sudah diakuisisi,
-          CC adalah karakter pertama dari kata berikutnya, mungkin MARK
-          Jika CC = MARK, EndKata = true.
+          CCf adalah karakter pertama dari kata berikutnya, mungkin MARK
+          Jika CCf = MARK, EndKata = true.
    Proses : Akuisisi kata menggunakan procedure SalinKata */
 {
-    IgnoreBlank();
-    if (CC == MARK)
+    IgnoreBlankData();
+    if (CCf == MARK)
     {
         EndLData = true;
     }
@@ -54,36 +54,36 @@ void ADVDATA()
     {
 		EndLData = false;
         SalinData();
-        IgnoreBlank();
+        IgnoreBlankData();
     }
 }
 
 void SalinData()
 /* Mengakuisisi kata, menyimpan dalam CKata
-   I.S. : CC adalah karakter pertama dari kata
+   I.S. : CCf adalah karakter pertama dari kata
    F.S. : CKata berisi kata yang sudah diakuisisi;
-          CC = BLANK atau CC = MARK;
-          CC adalah karakter sesudah karakter terakhir yang diakuisisi.
+          CCf = BLANK atau CCf = MARK;
+          CCf adalah karakter sesudah karakter terakhir yang diakuisisi.
           Jika panjang kata melebihi NMax, maka sisa kata "dipotong" */
 /* Mengabaikan satu atau beberapa BLANK
-   I.S. : CC sembarang
-   F.S. : CC ≠ BLANK atau CC = MARK */
+   I.S. : CCf sembarang
+   F.S. : CCf ≠ BLANK atau CCf = MARK */
 {
     // KAMUS LOKAL
     int sum, x;
     // ALGORITMA
-    while ((CC != MARK) && (CC != BLANK)) {
-		if (CC == 'C' || CC == 'T' || CC == 'F' || CC == 'V'){
-			CLData.Index = CC;
+    while ((CCf != MARK) && (CCf != BLANK)) {
+		if (CCf == 'C' || CCf == 'T' || CCf == 'F' || CCf == 'V'){
+			CLData.Index = CCf;
 			CLData.Value = -999;
-			ADV();
+			ADVFILE();
 		}
 		else {
 			sum = 0;
-			while ((CC != MARK) && (CC != BLANK)) {
-				x = CC - '0';
-				ADV();
-				if (CC == BLANK || CC == MARK) {
+			while ((CCf != MARK) && (CCf != BLANK)) {
+				x = CCf - '0';
+				ADVFILE();
+				if (CCf == BLANK || CCf == MARK) {
 					sum = sum + x;
 				}
 				else {

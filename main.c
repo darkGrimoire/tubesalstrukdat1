@@ -16,7 +16,8 @@ extern Queue GQUEUE[2];
 Stack S;
 Peta P;
 Graph G;
-FLAGS F;
+FLAGS F, GFLAGS[2];
+List GLIST[2];
 TabInt arrBan;
 const char* a;
 const char* b;
@@ -122,10 +123,10 @@ int main()
     // KAMUS
         int choicePenyerang, choiceDiserang, choicePasukan, choiceLevelUp, choiceMove, choiceMoveTo;
     // ALGORITMA
-    printf("Welcome to Avatar World War!");
-    printf("Select Mode: ");
-    printf("1. New Game");
-    printf("2. Load Game");
+    printf("Welcome to Avatar World War!\n");
+    printf("Select Mode: \n");
+    printf("1. New Game\n");
+    printf("2. Load Game\n");
 
     inputStart();
     if(mulai==1){

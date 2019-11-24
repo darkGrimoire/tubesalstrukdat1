@@ -1,16 +1,16 @@
 /* File: mesinkar.c */
 /* Implementasi Mesin Karakter */
 
-#include "lib\mesinkar.h"
+#include "lib\mesinkarfile.h"
 #include <stdio.h>
 
-char CC;
-boolean EOP;
+char CCf;
+boolean EOPf;
 
 static FILE * pita;
 static int retval;
 
-void START() {
+void STARTFILE() {
 /* Mesin siap dioperasikan. Pita disiapkan untuk dibaca.
    Karakter pertama yang ada pada pita posisinya adalah pada jendela.
    I.S. : sembarang
@@ -19,10 +19,10 @@ void START() {
 
     /* Algoritma */
     pita = fopen("pitakar.txt","r");
-    ADV();
+    ADVFILE();
 }
 
-void ADV() {
+void ADVFILE() {
 /* Pita dimajukan satu karakter.
    I.S. : Karakter pada jendela =
           CC, CC != MARK
@@ -31,9 +31,9 @@ void ADV() {
           Jika  CC = MARK maka EOP akan menyala (true) */
 
     /* Algoritma */
-    retval = fscanf(pita,"%c",&CC);
-    EOP = (CC == MARK);
-    if (EOP) {
+    retval = fscanf(pita,"%c",&CCf);
+    EOPf = (CCf == MARK);
+    if (EOPf) {
        fclose(pita);
     }
 }

@@ -3,6 +3,7 @@
 #include "lib/boolean.h"
 #include "lib/bangunan.h"
 #include "lib/point.h"
+#include "lib\listlinier.h"
 
 // /*Selektor */
 // #define kepemilikan(B) (B).kepemilikan

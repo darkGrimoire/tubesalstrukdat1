@@ -5,7 +5,7 @@
 #define __MESINLOAD_H__
 
 #include "boolean.h"
-#include "mesinkar.h"
+#include "mesinkarfile.h"
 
 #define NMax 50
 #define BLANK ' '
@@ -19,7 +19,7 @@ typedef struct {
 extern boolean EndLData;
 extern LoadDat CLData;
 
-void IgnoreBlank();
+void IgnoreBlankData();
 /* Mengabaikan satu atau beberapa BLANK
    I.S. : CC sembarang
    F.S. : CC ≠ BLANK atau CC = MARK */

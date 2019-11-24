@@ -6,7 +6,6 @@
 #include <stdio.h>
 #include <math.h>
 #include <stdlib.h>
-#include "lib\bangunan.h"
 #include "lib\boolean.h"
 
 /* PROTOTYPE */
