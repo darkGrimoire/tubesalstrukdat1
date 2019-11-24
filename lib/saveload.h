@@ -56,7 +56,7 @@ void WriteQueue(Queue Q);
 
 /* ********** PERINTAH-PERINTAH UTAMA ********** */
 
-void LoadNewConfig(TabInt *T, Graph* G, Peta *P, const char *FileName);
+void LoadNewConfig(TabInt *T, Graph* G, Peta *P, List *L1, List *L2, const char *FileName);
 /* I.S. : A, G, P kosong */
 /* F.S. : A, G, dan P terisi sesuai konfigurasi dari file eksternal */
 

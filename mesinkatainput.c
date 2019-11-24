@@ -44,6 +44,7 @@ void STARTKATA()
 void STARTANGKA(){
     // KAMUS LOKAL
     // ALGORITMA
+        CAngka = 0;
         START();
         IgnoreBlank();
         if(CC==MARK){
@@ -115,7 +116,7 @@ void SalinAngka(){
     // KAMUS LOKAL
         int CCconv;
     // ALGORITMA
-        while((CC!=BLANK) && (CC!=MARK)){
+        while(CC!=MARK){
             CCconv = (int) CC - 48;
             CAngka = CAngka*10;
             CAngka = CAngka + CCconv;
@@ -240,6 +241,7 @@ void inputCommand()
         KataMOVE.TabKata[2] = 'O';
         KataMOVE.TabKata[3] = 'V';
         KataMOVE.TabKata[4] = 'E';
+        KataMOVE.Length = 4;
 
         Kata KataEXIT;
         KataEXIT.TabKata[1] = 'E';
@@ -263,7 +265,7 @@ void inputCommand()
         do{
             printf("Command yang tersedia: ");
             printf("%s", MAGENTA);
-            printf("ATTACK - LEVEL_UP - SKILL - UNDO - SAVE - END_TURN - EXIT");
+            printf("ATTACK - LEVEL_UP - SKILL - UNDO - SAVE - MOVE - END_TURN - EXIT");
             printf("%s", NORMAL);
             printf("\n");
             printf("ENTER COMMAND: ");

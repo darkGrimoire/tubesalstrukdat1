@@ -243,7 +243,7 @@ void DelP (List *L, infolist X)
                 prec = Next(prec);
             }
             Next(prec) = Next(temp);
-            Next(temp) = NilL;
+            temp = NilL;
             DealokasiList(&temp);
         }  
     }
@@ -384,18 +384,16 @@ void Konkat1 (List *L1, List *L2, List *L3)
 }
 
 
-void CopyList (List L1, List L2){
+void CopyList (List L1, List *L2){
 /* I.S. L1 terdefinisi 
    F.S. L2 berisi salinan semua elemen L1 */
     // KAMUS LOKAL
         address P,L,temp;
     // ALGORITMA
         P = First(L1);
-        L = First(L2);
+        CreateList(L2);
         while(P!=NilL){
-            temp=AlokasiList(Info(P));
-            L=temp;
-            L=Next(L);
+            InsVLast(L2, Info(P));
             P=Next(P);
         }
 }

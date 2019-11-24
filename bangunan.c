@@ -87,7 +87,7 @@ boolean CanLevelUp(BANGUNAN B){
 }
 void LevelUp(BANGUNAN *B){
     int q,w,e,r;
-    if (CanLevelUp(*B)){
+    // if (CanLevelUp(*B)){
         if(jenis(*B)=='C'){
             pasukan(*B) = pasukan(*B) - maks(*B)/2;
             q = tambahpas(*B);
@@ -124,7 +124,7 @@ void LevelUp(BANGUNAN *B){
             level(*B)+=1;
             SetMaxPasukan(B);
         }
-    }
+    // }
 }
 boolean IsTherePertahanan (BANGUNAN B){
     if (jenis(B) == 'F') {
@@ -175,16 +175,12 @@ void tambahpasukanauto(BANGUNAN *B){
 
 void tambahpasukanauto (List *L){
     int temp;
-    BANGUNAN B;
+    BANGUNAN *B;
     address P = First(*L);
     while(P!=NilL){
-        B = bangunan(arrBan, Info(P));
-        if(validTambahA(B)){
-            pasukan(B) += tambahpas(B);
-            if(pasukan(B)>maks(B)){
-                temp = pasukan(B)-maks(B);
-                pasukan(B) -= temp;
-            }
+        B = &bangunan(arrBan, Info(P));
+        if(validTambahA(*B)){
+            B->pasukan = pasukan(*B) + tambahpas(*B);
         }
         P = Next(P);
     }
@@ -193,6 +189,6 @@ void tambahpasukanauto (List *L){
 void ListBPemilik(){
     for (int i =1;i<=Neff(arrBan);i++){
         if (kepemilikan(bangunan(arrBan,i))==1) InsVLast(&GLIST[0],i);
-        else InsVLast(&GLIST[1],i);
+        else if (kepemilikan(bangunan(arrBan,i))==2) {InsVLast(&GLIST[1],i);}
     }
 }

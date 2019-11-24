@@ -11,7 +11,7 @@
 #include "listlinier.h"
 #include "arraydin.h"
 // #include "command.h"
-typedef struct FLAGS FLAGS;
+// typedef struct FLAGS FLAGS;
 #define NilS 0
 #define MaxElS 30
 /* Nil adalah stack dengan elemen kosong . */
@@ -20,10 +20,11 @@ typedef struct FLAGS FLAGS;
 typedef struct {
   Queue Q1;
   Queue Q2;
-  FLAGS *GF[2];
+  int F1[6];
+  int F2[6];
   List L1;
   List L2;
-  TabInt arrBan;
+  TabInt arrBan2;
 } stackinfotype;
 typedef int addrstack;   /* indeks tabel */
 
