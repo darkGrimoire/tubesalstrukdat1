@@ -160,6 +160,7 @@ void resetlevel(BANGUNAN *B){
     else if (jenis(*B) == 'V') MakeVillage(*&B);
 }
 
+/* 
 void tambahpasukanauto(BANGUNAN *B){
     int temp;
     if (validTambahA(*B)){
@@ -168,5 +169,29 @@ void tambahpasukanauto(BANGUNAN *B){
             temp = pasukan(*B)-maks(*B);
             pasukan(*B) -=temp;
         }
+    }
+} */
+
+void tambahpasukanauto (List *L){
+    int temp;
+    BANGUNAN B;
+    address P = First(*L);
+    while(P!=NilL){
+        B = bangunan(arrBan, Info(P));
+        if(validTambahA(B)){
+            pasukan(B) += tambahpas(B);
+            if(pasukan(B)>maks(B)){
+                temp = pasukan(B)-maks(B);
+                pasukan(B) -= temp;
+            }
+        }
+        P = Next(P);
+    }
+}
+
+void ListBPemilik(){
+    for (int i =1;i<=Neff(arrBan);i++){
+        if (kepemilikan(bangunan(arrBan,i))==1) InsVLast(&GLIST[0],i);
+        else InsVLast(&GLIST[1],i);
     }
 }

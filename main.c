@@ -3,12 +3,12 @@
 #include "lib\mesinkatainput.h"
 #include "lib\command.h"
 #include "lib\queue.h"
+#include "lib\bangunan.h"
 #include "lib\saveload.h"
 #include "lib\peta.h"
 #include "lib\arraydin.h"
 #include "lib\listlinier.h"
 #include "lib\graph.h"
-#include "lib\bangunan.h"
 #include "lib\stackt.h"
 #include "lib\point.h"
 
@@ -18,12 +18,13 @@ Peta P;
 Graph G;
 FLAGS F;
 TabInt arrBan;
-char a,b;
-int curPlayer, enemyPlayer, check, mulai, CAngka;
+const char* a;
+const char* b;
+int curPlayer, enemyPlayer;
 
 boolean loseState (int player){
     // KAMUS LOKAL
-        int i, count;
+        int i;
     // ALGORITMA
         return (NbElmtList(GLIST[curPlayer-1])==0);
 }
@@ -58,45 +59,45 @@ void availableSkill (Queue Q) {
 
 void printBuildings(List L){ // pake list L parameternya
     // KAMUS LOKAL
-        addrList P;
+        address A;
     // ALGORITMA
-        P = First(L);
-        while(P!=NilL){
-            if(jenis(bangunan(arrBan,Info(P))) == 'C'){
+        A = First(L);
+        while(A!=NilL){
+            if(jenis(bangunan(arrBan,Info(A))) == 'C'){
                 printf("Castle ");
-                TulisPOINT(lok(bangunan(arrBan,Info(P))));
+                TulisPOINT(lok(bangunan(arrBan,Info(A))));
                 printf(" ");
-                printf("%d",pasukan(bangunan(arrBan,Info(P))));
+                printf("%d",pasukan(bangunan(arrBan,Info(A))));
                 printf(" ");
                 printf("lv. ");
-                printf("%d",level(bangunan(arrBan,Info(P))));
+                printf("%d",level(bangunan(arrBan,Info(A))));
             }
-            else if(jenis(bangunan(arrBan,Info(P))) == 'T'){
+            else if(jenis(bangunan(arrBan,Info(A))) == 'T'){
                 printf("Tower ");
-                TulisPOINT(lok(bangunan(arrBan,Info(P))));
+                TulisPOINT(lok(bangunan(arrBan,Info(A))));
                 printf(" ");
-                printf("%d",pasukan(bangunan(arrBan,Info(P))));
+                printf("%d",pasukan(bangunan(arrBan,Info(A))));
                 printf(" ");
                 printf("lv. ");
-                printf("%d",level(bangunan(arrBan,Info(P))));
+                printf("%d",level(bangunan(arrBan,Info(A))));
             }
-            else if(jenis(bangunan(arrBan,Info(P))) == 'F'){
+            else if(jenis(bangunan(arrBan,Info(A))) == 'F'){
                 printf("Fort ");
-                TulisPOINT(lok(bangunan(arrBan,Info(P))));
+                TulisPOINT(lok(bangunan(arrBan,Info(A))));
                 printf(" ");
-                printf("%d",pasukan(bangunan(arrBan,Info(P))));
+                printf("%d",pasukan(bangunan(arrBan,Info(A))));
                 printf(" ");
                 printf("lv. ");
-                printf("%d",level(bangunan(arrBan,Info(P))));
+                printf("%d",level(bangunan(arrBan,Info(A))));
             }
-            else if(jenis(bangunan(arrBan,Info(P))) == 'V'){
+            else if(jenis(bangunan(arrBan,Info(A))) == 'V'){
                 printf("Village ");
-                TulisPOINT(lok(bangunan(arrBan,Info(P))));
+                TulisPOINT(lok(bangunan(arrBan,Info(A))));
                 printf(" ");
-                printf("%d",pasukan(bangunan(arrBan,Info(P))));
+                printf("%d",pasukan(bangunan(arrBan,Info(A))));
                 printf(" ");
                 printf("lv. ");
-                printf("%d",level(bangunan(arrBan,Info(P))));
+                printf("%d",level(bangunan(arrBan,Info(A))));
             }
         }
 }
@@ -145,7 +146,7 @@ int main()
             STARTKATA();
             b = CKata.TabKata;
             if(access(b, F_OK)!=-1){
-                LoadExistingConfig(&arrBan, &G, &P, &GFLAGS[0], &GFLAGS[1], &GQUEUE[0], &GQUEUE[1], &b);
+                LoadExistingConfig(&arrBan, &G, &P, &GFLAGS[0], &GFLAGS[1], &GQUEUE[0], &GQUEUE[1], b);
             }
         }while(access(b, F_OK)==-1);
     }
@@ -162,14 +163,14 @@ int main()
             F = GFLAGS[curPlayer-1];
             IsiPeta(&P, arrBan);
             DisplayPeta(P);
-            tambahpasukan(); // parameter jangan bangunan B, tapi list L kepemilikan player
+            tambahpasukanauto(&GLIST[curPlayer-1]);
             printBuildings(GLIST[curPlayer-1]);
             printf("Skill Available: ");
             availableSkill(GQUEUE[curPlayer-1]);
             inputCommand();
             switch(check){
                 case 1: {
-                    addrlist Q = First(GLIST[curPlayer-1]); // list kepemilikan player
+                    address Q = First(GLIST[curPlayer-1]); // list kepemilikan player
                     while(Q!=NilL){
                         if(SearchList(Lattack,Info(Q))!=NilL){
                             DelP(&Lattack,Info(Q));
@@ -206,7 +207,7 @@ int main()
                 }
                     break;
                 case 4: {
-                    UNDO(&S);
+                    UNDO();
                 }
                     break;
                 case 5: {
@@ -215,7 +216,7 @@ int main()
                         STARTKATA();
                         a = CKata.TabKata;
                         if(access(a, F_OK)!=-1){
-                            SaveConfig(arrBan, G, P, GFLAGS[0], GFLAGS[1], GQUEUE[0], GQUEUE[1], &a);
+                            SaveConfig(arrBan, G, P, GFLAGS[0], GFLAGS[1], GQUEUE[0], GQUEUE[1], a);
                         }
                     }while(access(a, F_OK)==-1);
                 }

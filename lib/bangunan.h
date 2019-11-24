@@ -5,8 +5,9 @@
 #include <stdlib.h>
 #include "boolean.h"
 #include "point.h"
+#include "listlinier.h"
 
-typedef struct
+typedef struct BANGUNAN
 {
   int kepemilikan;//'1' untuk player 1, '2' untuk player 2, '0' tidak dimiliki siapa siapa
   int pasukan;//jumlah pasukan
@@ -46,6 +47,8 @@ void delPasukan(BANGUNAN *B);
 void DecreasePasukan(BANGUNAN *B, int pasukan);
 void setpasukan(BANGUNAN *B,int pasukan);
 void resetlevel(BANGUNAN *B);
-void tambahpasukan (BANGUNAN *B);//auto tiap turn nambah pasukannya
+void tambahpasukanauto (List *L);//auto tiap turn nambah pasukannya
+void ListBPemilik();
+List GetLPemilik(int kepemilikan);
 
 #endif
