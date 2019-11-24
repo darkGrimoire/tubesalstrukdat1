@@ -185,7 +185,7 @@ void DisplayPeta (Peta P)
                     print_green('F');
                     break;
                 default:
-                    printf("%c", ElmtMatriks(P,i,j));
+                    printf("%c ", ElmtMatriks(P,i,j));
                     break;
                 }
             }

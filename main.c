@@ -1,16 +1,16 @@
 #include <stdio.h>
 #include <unistd.h>
-#include "lib\mesinkatainput.h"
-#include "lib\command.h"
-#include "lib\queue.h"
-#include "lib\bangunan.h"
-#include "lib\saveload.h"
-#include "lib\peta.h"
-#include "lib\arraydin.h"
-#include "lib\listlinier.h"
-#include "lib\graph.h"
-#include "lib\stackt.h"
-#include "lib\point.h"
+#include "lib/mesinkatainput.h"
+#include "lib/command.h"
+#include "lib/queue.h"
+#include "lib/bangunan.h"
+#include "lib/saveload.h"
+#include "lib/peta.h"
+#include "lib/arraydin.h"
+#include "lib/listlinier.h"
+#include "lib/graph.h"
+#include "lib/stackt.h"
+#include "lib/point.h"
 
 extern Queue GQUEUE[2];
 Stack S;
@@ -275,7 +275,8 @@ int main()
                     do{
                         printf("Masukkan nama file: ");
                         STARTKATA();
-                        a = CKata.TabKata;
+                        tabkata = CKata.TabKata;
+                        a = tabkata;
                         if(access(a, F_OK)!=-1){
                             SaveConfig(arrBan, G, P, GFLAGS[0], GFLAGS[1], GQUEUE[0], GQUEUE[1], a);
                         }

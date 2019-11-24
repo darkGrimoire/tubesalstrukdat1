@@ -1,8 +1,8 @@
 /* Driver Command ehe */
 /* By Fawwis */
 
-#include "lib\boolean.h"
-#include "lib\command.h"
+#include "lib/boolean.h"
+#include "lib/command.h"
 #include <stdlib.h>
 #include <stdio.h>
 

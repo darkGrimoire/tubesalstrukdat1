@@ -2,11 +2,11 @@
 /* contoh ADT list berkait dengan representasi fisik pointer  */
 /* Representasi address dengan pointer */
 /* infolist adalah integer */
-#include "lib\listlinier.h"
+#include "lib/listlinier.h"
 #include <stdio.h>
 #include <math.h>
 #include <stdlib.h>
-#include "lib\boolean.h"
+#include "lib/boolean.h"
 
 /* PROTOTYPE */
 /****************** TEST LIST KOSONG ******************/

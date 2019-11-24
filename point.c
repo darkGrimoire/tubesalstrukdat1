@@ -1,7 +1,7 @@
-#include "lib\point.h"
+#include "lib/point.h"
 #include <math.h>
 #include <stdio.h>
-#include "lib\boolean.h"
+#include "lib/boolean.h"
 #define PI 3.14159265359
 
 /* *** DEFINISI PROTOTIPE PRIMITIF *** */

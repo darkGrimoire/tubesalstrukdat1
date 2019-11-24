@@ -1,10 +1,10 @@
 /* include files */
-#include "lib\boolean.h"
-#include "lib\queue.h"
-#include "lib\stackt.h"
-#include "lib\bangunan.h"
-#include "lib\listlinier.h"
-#include "lib\command.h"
+#include "lib/boolean.h"
+#include "lib/queue.h"
+#include "lib/stackt.h"
+#include "lib/bangunan.h"
+#include "lib/listlinier.h"
+#include "lib/command.h"
 #include <stdlib.h>
 
 Queue GQUEUE[2];

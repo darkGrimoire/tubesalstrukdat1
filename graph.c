@@ -3,7 +3,7 @@
 
 #include <stdio.h>
 #include <stdlib.h>
-#include "lib\graph.h"
+#include "lib/graph.h"
 
 /* Konstruktor */
 void CreateGraph (int X, Graph* G){

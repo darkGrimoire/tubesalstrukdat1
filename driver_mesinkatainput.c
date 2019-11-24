@@ -1,5 +1,5 @@
 #include <stdio.h>
-#include "lib\mesinkatainput.h"
+#include "lib/mesinkatainput.h"
 
 // int check, CAngka;
 

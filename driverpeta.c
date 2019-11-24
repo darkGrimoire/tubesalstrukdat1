@@ -1,8 +1,8 @@
 // Driver peta
 
-#include "lib\peta.h"
-#include "lib\bangunan.h"
-#include "lib\arraydin.h"
+#include "lib/peta.h"
+#include "lib/bangunan.h"
+#include "lib/arraydin.h"
 TabInt arrBan;
 List GLIST[2];
 int main(){
