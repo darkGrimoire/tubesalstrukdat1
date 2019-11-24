@@ -99,7 +99,7 @@ List MakeListEdge (Graph G, int X){
         addrNode Pnode;
         addrSuccNode Ptrail;
     // ALGORITMA
-        Pnode = SearchNode(G,X);
+        Pnode = SearchNode(G,X); printf("%s", Pnode);
         Ptrail = Trail(Pnode); 
         CreateList(&L);
         while (Ptrail != NilG){

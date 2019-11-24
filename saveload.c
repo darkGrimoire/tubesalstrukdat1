@@ -44,7 +44,7 @@ void ReadBangunanOld(TabInt *T, int JmlhBang)
         x = CLData.Value;
         ADVDATA();
         y = CLData.Value;
-        P = MakePOINT(x, y);
+        P = MakePOINT(y, x);
         if (i == 1) {
             kep = 1;
         }
@@ -92,7 +92,7 @@ void ReadBangunanNew(TabInt *T, int JmlhBang)
         u = CLData.Value;
         ADVDATA();
         psk = CLData.Value;
-        MakeBangunan(&B, kep, psk, a, m, u, lvl, x, y, jns);
+        MakeBangunan(&B, kep, psk, a, m, u, lvl, y, x, jns);
         AddAsLastEl(T, &B);
     }
 }
@@ -301,7 +301,7 @@ void WriteQueue(Queue Q)
 
 /* ********** PERINTAH-PERINTAH UTAMA ********** */
 
-void LoadNewConfig(TabInt *T, Graph* G, Peta *P, const char *FileName)
+void LoadNewConfig(TabInt *T, Graph* G, Peta *P, List *L1, List *L2, const char *FileName)
 /* I.S. : A, G, P kosong */
 /* F.S. : A, G, dan P terisi sesuai konfigurasi dari file eksternal */
 {   /* Kamus lokal */
@@ -315,9 +315,9 @@ void LoadNewConfig(TabInt *T, Graph* G, Peta *P, const char *FileName)
     fprintf(src2, "%s", line);
     fclose(src2);
     STARTDATA();
-    NBrsEff(*P) = CLData.Value;
+    NBrsEff(*P) = CLData.Value; 
     ADVDATA();
-    NKolEff(*P) = CLData.Value;
+    NKolEff(*P) = CLData.Value; 
     fgets(line, 100, src);
     src2 = fopen("pitakar.txt", "wt");
     fprintf(src2, "%s", line);
@@ -325,6 +325,9 @@ void LoadNewConfig(TabInt *T, Graph* G, Peta *P, const char *FileName)
     STARTDATA();
     jmlhbang = CLData.Value;
     ReadBangunanOld(T, jmlhbang);
+    CreateList(L1);
+    CreateList(L2);
+    ListBPemilik();
     ReadGraf(G, jmlhbang);
     fclose(src);
 }
