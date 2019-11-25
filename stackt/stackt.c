@@ -3,7 +3,7 @@
 /* TOP adalah alamat elemen puncak */
 /* Implementasi dalam bahasa C dengan alokasi statik */
 
-#include "lib/stackt.h"
+#include "stackt.h"
 #include <stdio.h>
 
 /* ************ Prototype ************ */
