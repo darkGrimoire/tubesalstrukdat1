@@ -1,16 +1,16 @@
 #include <stdio.h>
 #include <unistd.h>
-#include "lib\mesinkatainput.h"
-#include "lib\command.h"
-#include "lib\queue.h"
-#include "lib\bangunan.h"
-#include "lib\saveload.h"
-#include "lib\peta.h"
-#include "lib\arraydin.h"
-#include "lib\listlinier.h"
-#include "lib\graph.h"
-#include "lib\stackt.h"
-#include "lib\point.h"
+#include "mesinkatainput/mesinkatainput.h"
+#include "command/command.h"
+#include "queue/queue.h"
+#include "bangunan/bangunan.h"
+#include "saveload/saveload.h"
+#include "peta/peta.h"
+#include "arraydin/arraydin.h"
+#include "listlinier/listlinier.h"
+#include "graph/graph.h"
+#include "stackt/stackt.h"
+#include "point/point.h"
 
 extern Queue GQUEUE[2];
 Stack S;
@@ -19,8 +19,8 @@ Graph G;
 FLAGS F, GFLAGS[2];
 List GLIST[2];
 TabInt arrBan;
-const char* a;
-const char* b;
+char* a;
+char* b;
 char* c;
 char tabkata[10];
 Kata CKata;
@@ -169,7 +169,8 @@ int main()
         do{
             printf("Masukkan nama file yang ingin di-load: ");
             STARTKATA();
-            b = CKata.TabKata;
+            for(int i=1;i<=CKata.Length;i++){tabkata[i-1]=CKata.TabKata[i];}
+            b = tabkata;
             if(access(b, F_OK)!=-1){
                 LoadExistingConfig(&arrBan, &G, &P, &GFLAGS[0], &GFLAGS[1], &GQUEUE[0], &GQUEUE[1], &GLIST[0], &GLIST[1], b);
             }
@@ -275,7 +276,8 @@ int main()
                     do{
                         printf("Masukkan nama file: ");
                         STARTKATA();
-                        a = CKata.TabKata;
+                        for(int i=1;i<=CKata.Length;i++){tabkata[i-1]=CKata.TabKata[i];}
+                        a = tabkata;
                         if(access(a, F_OK)!=-1){
                             SaveConfig(arrBan, G, P, GFLAGS[0], GFLAGS[1], GQUEUE[0], GQUEUE[1], a);
                         }
